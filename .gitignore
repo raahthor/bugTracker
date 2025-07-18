@@ -19,7 +19,7 @@ out/
 
 # production
 build
-backend/dist/
+server/dist/
 
 # misc
 .DS_Store
@@ -42,4 +42,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Prisma Generated files
-backend/src/generated/prisma
+server/src/generated/prisma
