@@ -1,11 +1,11 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DB_URL")
+  provider = "postgresql"
+  url      = env("DB_URL")
   // directUrl = env("DIRECT_URL")
 }
 
@@ -29,68 +29,68 @@ enum Priority {
 
 // models
 model Users {
-  id            String               @id @default(uuid())
-  name          String
-  email         String               @unique
-  username      String               @unique
-  password      String
-  createdAt     DateTime             @default(now())
-  updatedAt     DateTime             @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  username  String?  @unique
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  memberships   OrganizationUsers[]
-  ownedOrgs     Organizations[]      @relation("OrgOwner")
-  assignedBugs  Bugs[]               @relation("AssignedBugs")
-  raisedBugs    Bugs[]               @relation("RaisedBugs")
+  memberships  OrganizationUsers[]
+  ownedOrgs    Organizations[]     @relation("OrgOwner")
+  assignedBugs Bugs[]              @relation("AssignedBugs")
+  raisedBugs   Bugs[]              @relation("RaisedBugs")
 }
 
 model Organizations {
-  id           String               @id @default(uuid())
-  name         String
-  ownerId      String
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  owner        Users                @relation("OrgOwner", fields: [ownerId], references: [id])
-  members      OrganizationUsers[]
-  projects     Projects[]
+  owner    Users               @relation("OrgOwner", fields: [ownerId], references: [id])
+  members  OrganizationUsers[]
+  projects Projects[]
 }
 
 model OrganizationUsers {
-  id           String               @id @default(uuid())
-  userId       String
-  orgId        String
-  role         Role                 @default(MEMBER)
+  id     String @id @default(uuid())
+  userId String
+  orgId  String
+  role   Role   @default(MEMBER)
 
-  user         Users                @relation(fields: [userId], references: [id])
-  organization Organizations        @relation(fields: [orgId], references: [id])
+  user         Users         @relation(fields: [userId], references: [id])
+  organization Organizations @relation(fields: [orgId], references: [id])
 
   @@unique([userId, orgId]) // prevents duplicate memberships
 }
 
 model Projects {
-  id           String               @id @default(uuid())
-  name         String
-  orgId        String
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  orgId     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization Organizations        @relation(fields: [orgId], references: [id])
+  organization Organizations @relation(fields: [orgId], references: [id])
   bugs         Bugs[]
 }
 
 model Bugs {
-  id           String               @id @default(uuid())
-  name         String
-  description  String
-  status       BugStatus            @default(OPEN)
-  priority     Priority             @default(MEDIUM)
-  projectId    String
-  assignedTo   String
-  raisedBy     String
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  status      BugStatus @default(OPEN)
+  priority    Priority  @default(MEDIUM)
+  projectId   String
+  assignedTo  String
+  raisedBy    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  assignedUser Users                @relation("AssignedBugs", fields: [assignedTo], references: [id])
-  raisedByUser Users                @relation("RaisedBugs", fields: [raisedBy], references: [id])
-  project      Projects             @relation(fields: [projectId], references: [id])
+  assignedUser Users    @relation("AssignedBugs", fields: [assignedTo], references: [id])
+  raisedByUser Users    @relation("RaisedBugs", fields: [raisedBy], references: [id])
+  project      Projects @relation(fields: [projectId], references: [id])
 }
