@@ -10,6 +10,7 @@ if (
 ) {
   throw new Error("google's id or client not loaded");
 }
+
 passport.use(
   new GoogleStrategy(
     {
@@ -24,20 +25,26 @@ passport.use(
       done
     ) => {
       try {
+        let newUser = false;
         const userEmail = profile.emails?.[0]?.value as string;
         if (!userEmail) return done(new Error("no email found"));
+
         let user = await prisma.users.findUnique({
           where: { email: userEmail },
         });
+
         if (!user) {
           user = await prisma.users.create({
             data: {
               email: userEmail,
               name: profile.displayName,
+              avatar: profile.photos?.[0].value,
             },
           });
+          newUser = true;
         }
-        done(null, user);
+
+        done(null, { user, newUser });
       } catch (error) {
         done(error);
       }

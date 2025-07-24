@@ -1,10 +1,9 @@
-import { Router, Request, Response } from "express";
-import { handleLogin } from "../controllers/handleLogin.controller";
-import { createUser } from "../controllers/createUser.controller";
+import { Router, Request, Response, NextFunction } from "express";
 import passport from "passport";
 import "../auth/passport";
-import { User } from "../types/user";
-import { generateToken } from "../auth/jwt";
+import { handleLogin } from "../controllers/handleLogin";
+import { createUser } from "../controllers/createUser";
+import handleGoogleCallback from "../controllers/handleGoogleCallback";
 
 const router = Router();
 
@@ -19,19 +18,7 @@ router.get(
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-router.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    session: false,
-    failureRedirect: "/auth/failure",
-  }),
-  (req: Request, res: Response) => {
-    const user = req.user as User;
-    const token = generateToken(user);
-
-    res.json({ user });
-  }
-);
+router.get("/auth/google/callback", handleGoogleCallback);
 
 router.get("/auth/failure", (req, res) => {
   res.send("Authfailed");
