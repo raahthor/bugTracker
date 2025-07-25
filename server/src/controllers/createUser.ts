@@ -6,7 +6,7 @@ interface UserInput {
   email: string;
   password: string;
 }
-export const createUser = async (
+export default async function createUser(
   req: Request<{}, {}, UserInput>,
   res: Response
-) => {};
+) {}

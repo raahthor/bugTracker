@@ -5,9 +5,9 @@ interface UserInput {
   password: string;
 }
 
-export const handleLogin = async (
+export default async function handleLogin(
   req: Request<{}, {}, UserInput>,
   res: Response
-) => {
+) {
   const { username, password } = req.body;
-};
+}

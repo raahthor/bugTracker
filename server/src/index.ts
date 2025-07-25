@@ -3,17 +3,17 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import router from "./routes/routes";
+import authRouter from "./routes/auth.routes";
 
 const app = express();
-const port = Number(process.env.PORT || 400);
+const port = Number(process.env.PORT || 4000);
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/", router);
+app.use("/", authRouter);
 
 app.listen(port, () => {
   process.env.NODE_ENV !== "production" &&

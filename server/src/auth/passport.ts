@@ -33,7 +33,7 @@ passport.use(
           where: { email: userEmail },
         });
 
-        if (!user) {
+        if (!user)
           user = await prisma.users.create({
             data: {
               email: userEmail,
@@ -41,8 +41,8 @@ passport.use(
               avatar: profile.photos?.[0].value,
             },
           });
-          newUser = true;
-        }
+
+        if (!user.username) newUser = true;
 
         done(null, { user, newUser });
       } catch (error) {
