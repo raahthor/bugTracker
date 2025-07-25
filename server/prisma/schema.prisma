@@ -30,7 +30,7 @@ enum Priority {
 // models
 model Users {
   id        String   @id @default(uuid())
-  name      String
+  name      String?
   email     String   @unique
   username  String?  @unique
   password  String?

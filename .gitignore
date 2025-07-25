@@ -43,3 +43,5 @@ next-env.d.ts
 
 # Prisma Generated files
 server/src/generated/prisma
+
+server/src/test.ts

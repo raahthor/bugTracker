@@ -5,6 +5,7 @@ import handleLogin from "../controllers/handleLogin";
 import createUser from "../controllers/createUser";
 import handleGoogleCallback from "../controllers/handleGoogleCallback";
 import handleLogout from "../controllers/handleLogout";
+import { verifyCookie } from "../middlewares/verifyCookie";
 
 const authRouter = Router();
 
