@@ -18,14 +18,14 @@ export default function handleGoogleCallback(
       if (err || !userPayload)
         return res.status(400).json({
           success: false,
-          message: "Authorization failed :" + info,
+          message: "Authorization failed :" + err.message,
         });
 
       const { user, newUser } = userPayload as {
         user: User;
         newUser: boolean;
       };
-      const token = generateToken(user);
+      const token = generateToken(user.id);
 
       sendCookie(res, token);
 

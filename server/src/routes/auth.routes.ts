@@ -22,7 +22,7 @@ authRouter.get(
 
 authRouter.get("/auth/google/callback", handleGoogleCallback);
 
-authRouter.get("/api/complete-profile", createUser);
+authRouter.post("/api/complete-profile", verifyCookie, createUser);
 authRouter.post("/api/login", handleLogin);
 authRouter.get("/api/logout", handleLogout);
 
