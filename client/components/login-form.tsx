@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios";
+import APIResonse from "@/types/apiresponse";
+import { toast } from "sonner";
+import handleApiError from "@/utils/handleApiError";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -26,7 +29,7 @@ export function LoginForm({
     e.preventDefault();
     // console.log(email, " ", password);
     try {
-      const onLogin = await axios.post(
+      const onLogin = await axios.post<APIResonse>(
         `${apiUrl}/api/login`,
         {
           username: username,
@@ -35,12 +38,8 @@ export function LoginForm({
         { withCredentials: true }
       );
       console.log(onLogin.data);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("error from backend: ", err.response?.data.message);
-      } else {
-        console.log("Error: ", err.message);
-      }
+    } catch (err: unknown) {
+      handleApiError(err);
     }
   };
 
