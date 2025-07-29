@@ -22,6 +22,7 @@ export default async function handleLogin(
       return res.status(400).json({
         success: false,
         message: "Incorrect username",
+        data: null,
       });
     const isPassword = await argon2.verify(user.password!, password);
 
@@ -29,6 +30,7 @@ export default async function handleLogin(
       return res.status(401).json({
         success: false,
         message: "Incorrect username or password",
+        data: null,
       });
 
     const token = generateToken(user.id);
@@ -44,6 +46,7 @@ export default async function handleLogin(
     res.status(500).json({
       success: false,
       message: "something went wrong",
+      data: null,
     });
   }
 }
