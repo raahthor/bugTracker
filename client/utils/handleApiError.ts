@@ -10,6 +10,6 @@ export default function handleApiError(
     toast.error(msg);
   } else {
     toast.error(defMsg);
-    console.error(err); // for development only
+    // console.error(err); // for development only
   }
 }
