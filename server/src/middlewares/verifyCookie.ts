@@ -11,6 +11,7 @@ export const verifyCookie = async (
     return res.status(400).json({
       success: false,
       message: "Unauthorized, try logging-in again!",
+      data: null,
     });
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
@@ -20,6 +21,7 @@ export const verifyCookie = async (
     return res.status(400).json({
       success: false,
       message: "Invalid token",
+      data: null,
     });
   }
 };

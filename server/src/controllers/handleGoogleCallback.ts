@@ -5,6 +5,8 @@ import { User } from "../types/user";
 import { generateToken } from "../auth/jwt";
 import sendCookie from "../utils/sendCookie";
 
+const clientUrl = process.env.FRONTEND_URL;
+
 export default function handleGoogleCallback(
   req: Request,
   res: Response,
@@ -19,24 +21,22 @@ export default function handleGoogleCallback(
         return res.status(400).json({
           success: false,
           message: "Authorization failed :" + err.message,
+          data:null
         });
 
-      const { user, newUser } = userPayload as {
-        user: User;
-        newUser: boolean;
-      };
+      const user = userPayload as User; // removed newUser flag for now
       const token = generateToken(user.id);
 
       sendCookie(res, token);
-
-      res.status(newUser ? 201 : 200).json({
-        success: true,
-        message: newUser ? "Account created" : "Login successful",
-        data: {
-          newUser,
-          user,
-        },
-      });
+      res.redirect(`${clientUrl}/u/${user.username}`);
+      // res.status(newUser ? 201 : 200).json({
+      //   success: true,
+      //   message: newUser ? "Account created" : "Login successful",
+      //   data: {
+      //     newUser,
+      //     user,
+      //   },
+      // });
     }
   )(req, res, next);
 }

@@ -25,7 +25,7 @@ passport.use(
       done
     ) => {
       try {
-        let newUser = false;
+        // let newUser = false;
         const userEmail = profile.emails?.[0]?.value as string;
         if (!userEmail) return done(new Error("no email found"));
 
@@ -41,9 +41,9 @@ passport.use(
             },
           });
 
-        if (!user.username) newUser = true;
+        // if (!user.username) newUser = true;
 
-        done(null, { user, newUser });
+        done(null, user); // not sending newUser flag for now
       } catch (error) {
         done(error);
       }

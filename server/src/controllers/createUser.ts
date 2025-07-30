@@ -28,11 +28,17 @@ export default async function createUser(
     const checkUsername = await prisma.users.findUnique({
       where: { username },
     });
-
+    if (username === "null")
+      return res.status(400).json({
+        success: false,
+        message: "username can't be 'null'!",
+        data: null,
+      });
     if (checkUsername)
       return res.status(202).json({
         success: false,
         message: "username already in use",
+        data: null,
       });
 
     const hashedPass = await hashPassword(password);
@@ -53,6 +59,7 @@ export default async function createUser(
     res.status(500).json({
       success: false,
       message: "Something went wrong!",
+      data: null,
     });
   }
 }
