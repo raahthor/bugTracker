@@ -44,13 +44,18 @@ export function SignupForm({
     try {
       const response = await axios.post(
         `${apiUrl}/api/complete-profile`,
-        userInput,
+        {
+          name: userInput.fullName,
+          username: userInput.username,
+          password: userInput.password,
+        },
         {
           withCredentials: true,
         }
       );
-
-      console.log(response.data);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else toast.error(response.data.message);
     } catch (error: unknown) {
       handleApiError(error);
     }

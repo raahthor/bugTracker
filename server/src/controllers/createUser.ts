@@ -30,6 +30,15 @@ export default async function createUser(req: AuthRequest, res: Response) {
         message: "username can't be 'null'!",
         data: null,
       });
+    const existedUser = await prisma.users.findUnique({
+      where: { id },
+    });
+    if (existedUser?.username !== null)
+      return res.status(403).json({
+        success: false,
+        message: "Account already exists!",
+        data: null,
+      });
     const checkUsername = await prisma.users.findUnique({
       where: { username },
     });
@@ -54,7 +63,7 @@ export default async function createUser(req: AuthRequest, res: Response) {
       },
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({
       success: false,
       message: "Something went wrong!",
