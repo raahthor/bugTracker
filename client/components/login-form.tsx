@@ -16,27 +16,24 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [userInput, setUserInput] = useState<{
+    username: string;
+    password: string;
+  }>({ username: "", password: "" });
 
-  const handleUsernameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
+  const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserInput((prev) => ({ ...prev, [name]: value.trim() }));
   };
-  const handlePassInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value.trim());
-  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const onLogin = await axios.post<APIResonse>(
-        `${apiUrl}/api/login`,
-        {
-          username: username,
-          password: password,
-        },
-        { withCredentials: true }
-      );
+      const onLogin = await axios.post<APIResonse>(`${apiUrl}/api/login`, {
+        username: userInput.username,
+        password: userInput.password,
+      });      
       console.log(onLogin.data);
     } catch (err: unknown) {
       handleApiError(err);
@@ -61,11 +58,10 @@ export function LoginForm({
               <div className="grid gap-3">
                 <Label htmlFor="username">Username</Label>
                 <Input
-                  id="username"
-                  type="username"
-                  value={username}
-                  onChange={handleUsernameInput}
-                  placeholder="username"
+                  name="username"
+                  type="text"
+                  value={userInput.username}
+                  onChange={handleUserInput}
                   required
                 />
               </div>
@@ -80,10 +76,10 @@ export function LoginForm({
                   </a>
                 </div>
                 <Input
-                  id="password"
+                  name="password"
                   type="password"
-                  value={password}
-                  onChange={handlePassInput}
+                  value={userInput.password}
+                  onChange={handleUserInput}
                   required
                 />
               </div>
@@ -131,10 +127,6 @@ export function LoginForm({
           </div>
         </CardContent>
       </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </div>
     </div>
   );
 }

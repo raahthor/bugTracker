@@ -9,11 +9,13 @@ interface UserInput {
   password: string;
 }
 
+// fix this route, redirect to frontend/u/username instead of sending data and response
+
 export default async function handleLogin(
   req: Request<{}, {}, UserInput>,
   res: Response
 ) {
-  const { username, password } = req.body as UserInput;
+  const { username, password } = req.body;
   try {
     const user = await prisma.users.findUnique({
       where: { username },

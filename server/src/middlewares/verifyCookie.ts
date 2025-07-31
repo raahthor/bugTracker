@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { JWTDecoded, AuthRequest } from "../types/auth.types";
 
@@ -9,9 +9,9 @@ export const verifyCookie = async (
 ) => {
   const token = req.cookies.token as string;
   if (!token)
-    return res.status(400).json({
+    return res.status(403).json({
       success: false,
-      message: "Unauthorized, try logging-in again!",
+      message: "Unauthorized, try again!",
       data: null,
     });
   try {

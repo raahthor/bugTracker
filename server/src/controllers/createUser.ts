@@ -18,6 +18,8 @@ const hashPassword = async (password: string): Promise<string> => {
   return hash;
 };
 
+// after successful creation redirect user to frontend/u/username instead of sending data here
+
 export default async function createUser(req: AuthRequest, res: Response) {
   const { name, username, password } = req.body as UserInput;
   const { id, email } = req.userData as JWTDecoded;
