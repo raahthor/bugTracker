@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy, Profile } from "passport-google-oauth20";
 import prisma from "../utils/client";
-import { User } from "../types/user";
+import { User } from "../types/user.types";
 
 if (
   !process.env.GOOGLE_CLIENT_ID ||

@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { JWTDecoded, AuthRequest } from "../types/auth.types";
 
 export const verifyCookie = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -14,8 +15,8 @@ export const verifyCookie = async (
       data: null,
     });
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    // req.userId=decoded.id;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JWTDecoded;
+    req.userData = decoded;
     next();
   } catch (error) {
     return res.status(400).json({

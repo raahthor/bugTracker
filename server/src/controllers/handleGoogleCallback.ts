@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 import "../auth/passport";
-import { User } from "../types/user";
+import { User } from "../types/user.types";
 import { generateToken } from "../auth/jwt";
 import sendCookie from "../utils/sendCookie";
 
@@ -21,11 +21,11 @@ export default function handleGoogleCallback(
         return res.status(400).json({
           success: false,
           message: "Authorization failed :" + err.message,
-          data:null
+          data: null,
         });
 
       const user = userPayload as User; // removed newUser flag for now
-      const token = generateToken(user.id);
+      const token = generateToken(user.id, user.email);
 
       sendCookie(res, token);
       res.redirect(`${clientUrl}/u/${user.username}`);

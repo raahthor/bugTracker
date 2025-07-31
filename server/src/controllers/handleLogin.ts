@@ -33,7 +33,7 @@ export default async function handleLogin(
         data: null,
       });
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, user.email);
     sendCookie(res, token);
 
     res.status(200).json({

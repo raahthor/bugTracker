@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.routes";
+import dataRouter from "./routes/data.routes";
 
 const app = express();
 const port = Number(process.env.PORT || 4000);
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/", authRouter);
+app.use("/", dataRouter);
 
 app.listen(port, () => {
   process.env.NODE_ENV !== "production" &&
