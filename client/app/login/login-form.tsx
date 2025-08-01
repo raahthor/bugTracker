@@ -6,16 +6,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios";
-import APIResonse from "@/types/apiresponse";
 import handleApiError from "@/lib/handleApiError";
-import { toast } from "sonner";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { env } from "@/lib/env";
+import APIResponse from "@/types/apiResponse";
+import UserData from "@/types/userData";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const [userInput, setUserInput] = useState<{
     username: string;
     password: string;
@@ -30,17 +31,24 @@ export function LoginForm({
     e.preventDefault();
 
     try {
-      const onLogin = await axios.post<APIResonse>(`${apiUrl}/api/login`, {
-        username: userInput.username,
-        password: userInput.password,
-      });      
-      console.log(onLogin.data);
-    } catch (err: unknown) {
+      setIsSubmitting(true);
+      const response: APIResponse<UserData> = await axios.post(
+        `${env.API_URL}/api/login`,
+        {
+          username: userInput.username,
+          password: userInput.password,
+        }
+      );
+      // handle success login
+      console.log(response.data);
+    } catch (err) {
       handleApiError(err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   const handleGoogleLogin = () => {
-    window.location.href = `${apiUrl}/auth/google`;
+    window.location.href = `${env.API_URL}/auth/google`;
   };
 
   return (
@@ -83,8 +91,8 @@ export function LoginForm({
                   required
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Logging-in" : "Login"}
               </Button>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
@@ -110,7 +118,7 @@ export function LoginForm({
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <a
-                  href={`${apiUrl}/auth/google`}
+                  href={`${env.API_URL}/auth/google`}
                   className="underline underline-offset-4"
                 >
                   Sign up

@@ -9,8 +9,6 @@ interface UserInput {
   password: string;
 }
 
-// fix this route, redirect to frontend/u/username instead of sending data and response
-
 export default async function handleLogin(
   req: Request<{}, {}, UserInput>,
   res: Response
@@ -41,7 +39,7 @@ export default async function handleLogin(
     res.status(200).json({
       success: true,
       message: "logged-in",
-      data: { user },
+      data: { userData: user },
     });
   } catch (error) {
     console.log(error);

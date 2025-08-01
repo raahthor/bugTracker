@@ -1,14 +1,12 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
-
 export default function Dashboard() {
+  const router = useRouter();
   const { user } = useParams();
   useEffect(() => {
-    if (user === "null") window.location.href = `/signup`;
-    console.log(user);
+    if (user === "null") router.push("/signup");
   }, [user]);
 
   return <div>{user}</div>;

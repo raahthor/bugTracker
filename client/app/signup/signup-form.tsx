@@ -14,6 +14,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import handleApiError from "@/lib/handleApiError";
+import { env } from "@/lib/env";
+import { useRouter } from "next/navigation";
+import APIResponse from "@/types/apiResponse";
+import UserData from "@/types/userData";
 
 type FormData = {
   fullName: string;
@@ -21,12 +25,11 @@ type FormData = {
   password: string;
 };
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<FormData>({
     fullName: "",
@@ -52,8 +55,8 @@ export function SignupForm({
 
     try {
       setIsSubmitting(true);
-      const response = await axios.post(
-        `${apiUrl}/api/complete-profile`,
+      const response: APIResponse<UserData> = await axios.post(
+        `${env.API_URL}/api/complete-profile`,
         {
           name: userInput.fullName,
           username: userInput.username,
@@ -64,11 +67,17 @@ export function SignupForm({
         }
       );
 
-      if (response.data.success) {
+      if (response.data?.success) {
         toast.success(response.data.message);
-      } else toast.error(response.data.message);
-    } catch (error: unknown) {
-      handleApiError(error);
+        router.push(`/u/${response.data.data.userData.username}`);
+      }
+    } catch (err) {
+      handleApiError(err);
+      if (
+        axios.isAxiosError<APIErrorRes>(err) &&
+        err.response?.data?.data?.existedUser?.username
+      )
+        router.push(`/u/${err.response?.data?.data?.existedUser?.username}`);
     } finally {
       setIsSubmitting(false);
     }

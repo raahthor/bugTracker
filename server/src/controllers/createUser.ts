@@ -18,8 +18,6 @@ const hashPassword = async (password: string): Promise<string> => {
   return hash;
 };
 
-// after successful creation redirect user to frontend/u/username instead of sending data here
-
 export default async function createUser(req: AuthRequest, res: Response) {
   const { name, username, password } = req.body as UserInput;
   const { id, email } = req.userData as JWTDecoded;
@@ -38,14 +36,14 @@ export default async function createUser(req: AuthRequest, res: Response) {
       return res.status(403).json({
         success: false,
         message: "Account already exists!",
-        data: null,
+        data: { userData: existedUser },
       });
 
     const existedUsername = await prisma.users.findUnique({
       where: { username },
     });
     if (existedUsername)
-      return res.status(202).json({
+      return res.status(409).json({
         success: false,
         message: "username already in use",
         data: null,
