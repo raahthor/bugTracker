@@ -8,5 +8,5 @@ type ErrorUser = {
 type APIErrorRes = {
   success: boolean;
   message: string;
-  data: { existedUser: ErrorUser };
+  data: { userData: ErrorUser };
 };

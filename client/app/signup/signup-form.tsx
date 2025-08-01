@@ -75,9 +75,9 @@ export function SignupForm({
       handleApiError(err);
       if (
         axios.isAxiosError<APIErrorRes>(err) &&
-        err.response?.data?.data?.existedUser?.username
+        err.response?.data?.data?.userData?.username
       )
-        router.push(`/u/${err.response?.data?.data?.existedUser?.username}`);
+        router.push(`/u/${err.response?.data?.data?.userData?.username}`);
     } finally {
       setIsSubmitting(false);
     }

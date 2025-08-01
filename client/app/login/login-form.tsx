@@ -10,11 +10,14 @@ import handleApiError from "@/lib/handleApiError";
 import { env } from "@/lib/env";
 import APIResponse from "@/types/apiResponse";
 import UserData from "@/types/userData";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const [userInput, setUserInput] = useState<{
@@ -39,8 +42,10 @@ export function LoginForm({
           password: userInput.password,
         }
       );
-      // handle success login
-      console.log(response.data);
+      if (response.data?.success) {
+        toast.success(response.data.message);
+        router.push(`/u/${response.data.data.userData.username}`);
+      }
     } catch (err) {
       handleApiError(err);
     } finally {
