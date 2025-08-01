@@ -1,4 +1,4 @@
-import Dashboard from "./Dashboard";
+import Dashboard from "@/app/u/[user]/dashboard";
 
 export default function UserPage() {
   

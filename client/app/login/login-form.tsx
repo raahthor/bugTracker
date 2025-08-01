@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios";
 import APIResonse from "@/types/apiresponse";
-import handleApiError from "@/utils/handleApiError";
+import handleApiError from "@/lib/handleApiError";
 import { toast } from "sonner";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;

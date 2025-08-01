@@ -13,7 +13,13 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
-import handleApiError from "@/utils/handleApiError";
+import handleApiError from "@/lib/handleApiError";
+
+type FormData = {
+  fullName: string;
+  username: string;
+  password: string;
+};
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -21,11 +27,12 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [userInput, setUserInput] = useState<{
-    fullName: string;
-    username: string;
-    password: string;
-  }>({ fullName: "", username: "", password: "" });
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [userInput, setUserInput] = useState<FormData>({
+    fullName: "",
+    username: "",
+    password: "",
+  });
 
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,14 +41,17 @@ export function SignupForm({
       : value;
     setUserInput((prev) => ({ ...prev, [name]: inputVal }));
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (userInput.username.length < 4)
       return toast.error("Username must be larger than 4 chars");
     else if (userInput.password.length < 6)
       return toast.error("Password must be larger than 6 chars");
-    console.log(userInput);
+
     try {
+      setIsSubmitting(true);
       const response = await axios.post(
         `${apiUrl}/api/complete-profile`,
         {
@@ -53,11 +63,14 @@ export function SignupForm({
           withCredentials: true,
         }
       );
+
       if (response.data.success) {
         toast.success(response.data.message);
       } else toast.error(response.data.message);
     } catch (error: unknown) {
       handleApiError(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -104,8 +117,12 @@ export function SignupForm({
                 />
               </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
-                  Create Account
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Creating Account..." : "Create Account"}
                 </Button>
               </div>
             </div>
