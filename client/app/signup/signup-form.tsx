@@ -49,9 +49,9 @@ export function SignupForm({
     e.preventDefault();
 
     if (userInput.username.length < 4)
-      return toast.error("Username must be larger than 4 chars");
+      return toast.error("Username must be atleast 4 chars");
     else if (userInput.password.length < 6)
-      return toast.error("Password must be larger than 6 chars");
+      return toast.error("Password must be atleast 6 chars");
 
     try {
       setIsSubmitting(true);

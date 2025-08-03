@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import e, { Request, Response, NextFunction } from "express";
 import passport from "passport";
 import "../auth/passport";
 import { User } from "../types/user.types";
@@ -28,7 +28,9 @@ export default function handleGoogleCallback(
       const token = generateToken(user.id, user.email);
 
       sendCookie(res, token);
-      res.redirect(`${clientUrl}/u/${user.username}`);
+      if (user.username !== null)
+        res.redirect(`${clientUrl}/u/${user.username}`);
+      else res.redirect(`${clientUrl}/u/new`);
       // res.status(newUser ? 201 : 200).json({
       //   success: true,
       //   message: newUser ? "Account created" : "Login successful",

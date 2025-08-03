@@ -22,10 +22,10 @@ export default async function createUser(req: AuthRequest, res: Response) {
   const { name, username, password } = req.body as UserInput;
   const { id, email } = req.userData as JWTDecoded;
   try {
-    if (username === "null")
+    if (username.length < 4)
       return res.status(400).json({
         success: false,
-        message: "username can't be 'null'!",
+        message: "Username must be atleast 4 characters!",
         data: null,
       });
 
