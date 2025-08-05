@@ -40,7 +40,8 @@ export function LoginForm({
         {
           username: userInput.username,
           password: userInput.password,
-        }
+        },
+        { withCredentials: true }
       );
       if (response.data?.success) {
         toast.success(response.data.message);

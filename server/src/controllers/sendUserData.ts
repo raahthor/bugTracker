@@ -20,7 +20,7 @@ export default async function sendUserData(req: AuthRequest, res: Response) {
     res.status(200).json({
       success: true,
       message: "User Found",
-      data: null,
+      data: { userData: user },
     });
   } catch (err) {
     console.error(err);
