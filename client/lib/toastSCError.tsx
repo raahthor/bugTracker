@@ -2,11 +2,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function ErrorClientWrapper({
-  error,
-}: {
-  error: string | null;
-}) {
+export default function SCErrorToaster({ error }: { error: string | null }) {
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {

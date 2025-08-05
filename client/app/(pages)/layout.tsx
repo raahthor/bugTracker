@@ -1,6 +1,12 @@
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+// import { env } from "@/lib/env";
+// import APIResponse from "@/types/apiResponse";
+// import UserData from "@/types/userData";
+// import axios from "axios";
+// import { cookies } from "next/headers";
+// import { redirect } from "next/navigation";
 // import { Geist, Geist_Mono } from "next/font/google";
 
 // const geistSans = Geist({
@@ -13,7 +19,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 //   subsets: ["latin"],
 // });
 
-export default function PagesLayout({
+export default async function PagesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -29,7 +35,7 @@ export default function PagesLayout({
         }
       >
         <AppSidebar
-          userData={{ id: "", name: "", email: "", username: "" }}
+          userData={{ id: "", username: "", name: "", email: "" }}
           variant="inset"
         />
         <SidebarInset>

@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
-import handleApiError from "@/lib/handleApiError";
+import toastError from "@/lib/toastError";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import APIResponse from "@/types/apiResponse";
@@ -72,7 +72,7 @@ export function SignupForm({
         router.push(`/u/${response.data.data.userData.username}`);
       }
     } catch (err) {
-      handleApiError(err);
+      toastError(err);
       if (
         axios.isAxiosError<APIErrorRes>(err) &&
         err.response?.data?.data?.userData?.username

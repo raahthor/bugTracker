@@ -4,20 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import handleApiError from "@/lib/handleApiError";
+import toastError, { toastErrorUseEffect } from "@/lib/toastError";
 import { env } from "@/lib/env";
 import APIResponse from "@/types/apiResponse";
 import UserData from "@/types/userData";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
+  toastErrorUseEffect(useSearchParams().get("message"));
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const [userInput, setUserInput] = useState<{
@@ -48,7 +50,7 @@ export function LoginForm({
         router.push(`/u/${response.data.data.userData.username}`);
       }
     } catch (err) {
-      handleApiError(err);
+      toastError(err);
     } finally {
       setIsSubmitting(false);
     }
