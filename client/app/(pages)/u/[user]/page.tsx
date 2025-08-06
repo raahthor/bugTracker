@@ -1,34 +1,9 @@
 import { DataTable } from "@/components/dashboard/data-table";
 import { SectionCards } from "@/components/dashboard/section-cards";
 import data from "./data.json";
-import axios from "axios";
-import { env } from "@/lib/env";
-import APIResponse from "@/types/apiResponse";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import UserData from "@/types/userData";
-
-async function getUserData(user: string) {
-  const cookieHeader = (await cookies()).get("token")?.value;
-  try {
-    const response: APIResponse<UserData> = await axios.get(
-      `${env.API_URL}/api/user-data/${user}`,
-      {
-        headers: { Cookie: `token=${cookieHeader}` },
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (err) {
-    // console.log(err);
-    if (
-      axios.isAxiosError(err) &&
-      (err.response?.status === 401 || err.response?.status === 400)
-    )
-      redirect("/login?message=Unauthorized, Login again!");
-    else redirect("/login?message=Something went wrong");
-  }
-}
+import A from "@/components/pages/dashboard/a";
+import getUserData from "@/lib/getUserData";
 
 export default async function DashboardPage({
   params,
@@ -37,13 +12,15 @@ export default async function DashboardPage({
 }) {
   const { user } = await params;
   if (user === "new") redirect("/signup");
-  
-  const result = await getUserData(user);
+  const result = await getUserData();
+  if (user !== result.data.userData.username)
+    redirect("/login?message=Unauthorized!");
   return (
     <>
-      <SectionCards />
+      <A />
+      {/* <SectionCards /> */}
 
-      <DataTable data={data} />
+      {/* <DataTable data={data} /> */}
     </>
   );
 }

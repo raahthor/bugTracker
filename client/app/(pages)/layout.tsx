@@ -1,29 +1,16 @@
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-// import { env } from "@/lib/env";
-// import APIResponse from "@/types/apiResponse";
-// import UserData from "@/types/userData";
-// import axios from "axios";
-// import { cookies } from "next/headers";
-// import { redirect } from "next/navigation";
-// import { Geist, Geist_Mono } from "next/font/google";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import getUserData from "@/lib/getUserData";
+import { redirect } from "next/navigation";
 
 export default async function PagesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const result = await getUserData();
+  if (!result.data.userData.username) redirect("/signup");
   return (
     <>
       <SidebarProvider
@@ -34,10 +21,7 @@ export default async function PagesLayout({
           } as React.CSSProperties
         }
       >
-        <AppSidebar
-          userData={{ id: "", username: "", name: "", email: "" }}
-          variant="inset"
-        />
+        <AppSidebar userData={result.data.userData} variant="inset" />
         <SidebarInset>
           <SiteHeader />
           <div className="flex flex-1 flex-col">

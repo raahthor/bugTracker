@@ -35,24 +35,24 @@ type CustomSidebarProps = UserData & React.ComponentProps<typeof Sidebar>;
 export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
   const data = {
     user: {
-      name: "userData.name",
-      email: "userData.email",
-      avatar: "userData.avatar",
+      name: userData.name,
+      email: userData.email,
+      avatar: userData.avatar,
     },
     navMain: [
       {
         title: "Dashboard",
-        url: `/u/{userData.username}`,
+        url: `/u/${userData.username}`,
         icon: IconDashboard,
       },
       {
         title: "Organizations",
-        url: "#",
+        url: "/org",
         icon: IconUsersGroup,
       },
       {
         title: "My Issues",
-        url: "#",
+        url: "/my-issues",
         icon: IconBug,
       },
       {
@@ -83,23 +83,23 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
         icon: IconSearch,
       },
     ],
-    documents: [
-      {
-        name: "Data Library",
-        url: "#",
-        icon: IconDatabase,
-      },
-      {
-        name: "Reports",
-        url: "#",
-        icon: IconReport,
-      },
-      {
-        name: "Word Assistant",
-        url: "#",
-        icon: IconFileWord,
-      },
-    ],
+    // documents: [
+    //   {
+    //     name: "Data Library",
+    //     url: "#",
+    //     icon: IconDatabase,
+    //   },
+    //   {
+    //     name: "Reports",
+    //     url: "#",
+    //     icon: IconReport,
+    //   },
+    //   {
+    //     name: "Word Assistant",
+    //     url: "#",
+    //     icon: IconFileWord,
+    //   },
+    // ],
   };
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -110,7 +110,7 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <a href={`/u/${userData.username}`}>
                 <IconBugFilled className="!size-6" />
                 <span className="text-xl font-semibold">Bug Tracker</span>
               </a>
@@ -120,7 +120,7 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
+        {/* <NavDocuments items={data.documents} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
