@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { AuthRequest, JWTDecoded } from "../types/auth.types";
+import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
-import { User } from "../types/user.types";
+import { User } from "../types/user";
 
 export default async function sendUserData(req: AuthRequest, res: Response) {
   const { id, email } = req.userData as JWTDecoded;

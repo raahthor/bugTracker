@@ -14,7 +14,6 @@ export default async function DashboardPage({
   params: { user: string };
 }) {
   const { user } = await params;
-  if (user === "new") redirect("/signup");
   const resultUser = await getData<UserData>("api/user-data");
 
   if (user !== resultUser.data.data.userData.username)

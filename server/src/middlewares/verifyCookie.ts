@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
-import { JWTDecoded, AuthRequest } from "../types/auth.types";
+import { JWTDecoded, AuthRequest } from "../types/authRequest";
 
 export const verifyCookie = async (
   req: AuthRequest,

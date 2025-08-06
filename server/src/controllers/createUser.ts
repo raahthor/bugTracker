@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as argon2 from "argon2";
 import prisma from "../utils/client";
-import { AuthRequest, JWTDecoded } from "../types/auth.types";
+import { AuthRequest, JWTDecoded } from "../types/authRequest";
 interface UserInput {
   name: string;
   username: string;

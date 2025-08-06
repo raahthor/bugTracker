@@ -1,7 +1,7 @@
 import e, { Request, Response, NextFunction } from "express";
 import passport from "passport";
 import "../auth/passport";
-import { User } from "../types/user.types";
+import { User } from "../types/user";
 import { generateToken } from "../auth/jwt";
 import sendCookie from "../utils/sendCookie";
 

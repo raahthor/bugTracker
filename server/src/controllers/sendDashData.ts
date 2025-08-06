@@ -1,16 +1,19 @@
 import { Response } from "express";
-import { AuthRequest, JWTDecoded } from "../types/auth.types";
+import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
 export default async function sendDashData(req: AuthRequest, res: Response) {
   const { id, email } = req.userData as JWTDecoded;
   try {
     //   fetch dashboard data here
-    // const recentOrgs=prisma // fetch recent orgs here
+    const recentOrgs = await prisma.organizationUsers.findMany({
+      where: { userId: id },
+    });
+    
     res.status(200).json({
       success: true,
       message: "Data sent",
-      data: null,
+      data: {recentOrgs},
     });
   } catch (error) {
     res.status(500).json({
