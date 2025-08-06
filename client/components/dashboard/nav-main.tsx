@@ -9,7 +9,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
-import { joinOrganization, createOrganization } from "@/lib/manageOrganization";
 
 export function NavMain({
   items,
@@ -29,7 +28,7 @@ export function NavMain({
             <SidebarMenuButton
               tooltip="Create Organization"
               className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
-              onClick={createOrganization}
+              onClick={() => router.push("/create-org")}
             >
               <IconCirclePlusFilled />
               <span>Create Organization</span>
@@ -37,7 +36,7 @@ export function NavMain({
             <SidebarMenuButton
               tooltip="Join Organization"
               className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
-              onClick={joinOrganization}
+              onClick={() => router.push("/join-org")}
             >
               <IconCirclePlusFilled />
               <span>Join Organization</span>

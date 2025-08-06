@@ -1,25 +1,26 @@
 import APIResponse from "@/types/apiResponse";
-import UserData from "@/types/userData";
 import axios from "axios";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { env } from "./env";
+import { redirect } from "next/navigation";
 
-export default async function getUserData() {
-  const cookieHeader = (await cookies()).get("token")?.value;
+export default async function getData<T>(
+  endpoint: string
+): Promise<APIResponse<T>> {
   try {
-    const response: APIResponse<UserData> = await axios.get(
-      `${env.API_URL}/api/user-data`,
+    const cookieHeader = (await cookies()).get("token")?.value;
+
+    const response: APIResponse<T> = await axios.get(
+      `${env.API_URL}/${endpoint}`,
       {
         headers: { Cookie: `token=${cookieHeader}` },
         withCredentials: true,
       }
     );
-    return response.data;
+    return response;
   } catch (err) {
-    // console.log(err);
     if (axios.isAxiosError(err) && err.response?.status === 400)
-      redirect("/login?message=Unauthorized, Login again!");
+      redirect("/login?message=Unauthorized, login again!");
     else redirect("/login?message=Something went wrong");
   }
 }

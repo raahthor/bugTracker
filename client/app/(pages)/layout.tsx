@@ -1,7 +1,8 @@
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import getUserData from "@/lib/getUserData";
+import getData from "@/lib/getData";
+import UserData from "@/types/userData";
 import { redirect } from "next/navigation";
 
 export default async function PagesLayout({
@@ -9,8 +10,9 @@ export default async function PagesLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const result = await getUserData();
-  if (!result.data.userData.username) redirect("/signup");
+  const result = await getData<UserData>("api/user-data");
+  if (!result.data.data.userData.username) redirect("/signup");
+  
   return (
     <>
       <SidebarProvider
@@ -21,7 +23,7 @@ export default async function PagesLayout({
           } as React.CSSProperties
         }
       >
-        <AppSidebar userData={result.data.userData} variant="inset" />
+        <AppSidebar userData={result.data.data.userData} variant="inset" />
         <SidebarInset>
           <SiteHeader />
           <div className="flex flex-1 flex-col">

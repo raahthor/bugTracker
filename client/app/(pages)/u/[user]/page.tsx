@@ -2,8 +2,11 @@ import { DataTable } from "@/components/dashboard/data-table";
 import { SectionCards } from "@/components/dashboard/section-cards";
 import data from "./data.json";
 import { redirect } from "next/navigation";
-import A from "@/components/pages/dashboard/a";
-import getUserData from "@/lib/getUserData";
+import Welcome from "@/components/pages/dashboard/welcome";
+import OrgButtons from "@/components/pages/dashboard/orgButtons";
+import RecentOrgs from "@/components/pages/dashboard/recentOrgs";
+import getData from "@/lib/getData";
+import UserData from "@/types/userData";
 
 export default async function DashboardPage({
   params,
@@ -12,12 +15,18 @@ export default async function DashboardPage({
 }) {
   const { user } = await params;
   if (user === "new") redirect("/signup");
-  const result = await getUserData();
-  if (user !== result.data.userData.username)
+  const resultUser = await getData<UserData>("api/user-data");
+
+  if (user !== resultUser.data.data.userData.username)
     redirect("/login?message=Unauthorized!");
+
+  const resultDash = await getData<unknown>("api/dashboard-data");
+  console.log(resultDash.data);
   return (
     <>
-      <A />
+      <Welcome name={resultUser.data.data.userData.name!} />
+      <OrgButtons />
+      <RecentOrgs />
       {/* <SectionCards /> */}
 
       {/* <DataTable data={data} /> */}
