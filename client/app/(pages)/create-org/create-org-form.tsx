@@ -13,6 +13,9 @@ import { cn } from "@/lib/utils";
 import { env } from "@/lib/env";
 import { useState } from "react";
 import toastError, { isLengthError } from "@/lib/toastError";
+import APIResponse from "@/types/apiResponse";
+import axios from "axios";
+import { toast } from "sonner";
 
 export default function CreateOrgForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -20,11 +23,13 @@ export default function CreateOrgForm() {
     name: "",
     handle: "",
   });
+
   function handleUserInput(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     const inputVal = name === "handle" ? value.trim() : value;
     setUserInput((prev) => ({ ...prev, [name]: inputVal }));
   }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (
@@ -35,8 +40,13 @@ export default function CreateOrgForm() {
 
     setIsSubmitting(true);
     try {
-      console.log("got try block");
-      throw "";
+      const response: APIResponse = await axios.post(
+        `${env.API_URL}/api/create-org`,
+        { name: userInput.name.trim(), handle: userInput.handle },
+        { withCredentials: true }
+      );
+      if (response.data.success) toast.success(response.data.message);
+      console.log(response.data);
     } catch (error) {
       toastError(error);
     } finally {

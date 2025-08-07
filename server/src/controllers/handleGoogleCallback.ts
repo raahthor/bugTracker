@@ -1,4 +1,4 @@
-import e, { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 import "../auth/passport";
 import { User } from "../types/user";
@@ -24,21 +24,13 @@ export default function handleGoogleCallback(
           data: null,
         });
 
-      const user = userPayload as User; // removed newUser flag for now
+      const user = userPayload as User;
       const token = generateToken(user.id, user.email);
 
       sendCookie(res, token);
       if (user.username !== null)
         res.redirect(`${clientUrl}/u/${user.username}`);
       else res.redirect(`${clientUrl}/u/new`);
-      // res.status(newUser ? 201 : 200).json({
-      //   success: true,
-      //   message: newUser ? "Account created" : "Login successful",
-      //   data: {
-      //     newUser,
-      //     user,
-      //   },
-      // });
     }
   )(req, res, next);
 }
