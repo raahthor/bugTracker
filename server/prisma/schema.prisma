@@ -47,6 +47,8 @@ model Users {
 model Organizations {
   id        String   @id @default(uuid())
   name      String
+  handle    String   @unique
+  joinCode  String   @unique
   ownerId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -57,10 +59,12 @@ model Organizations {
 }
 
 model OrganizationUsers {
-  id     String @id @default(uuid())
-  userId String
-  orgId  String
-  role   Role   @default(MEMBER)
+  id        String   @id @default(uuid())
+  userId    String
+  orgId     String
+  role      Role     @default(MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user         Users         @relation(fields: [userId], references: [id])
   organization Organizations @relation(fields: [orgId], references: [id])

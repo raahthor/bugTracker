@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
-import toastError from "@/lib/toastError";
+import toastError, { isLengthError } from "@/lib/toastError";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import APIResponse from "@/types/apiResponse";
@@ -48,17 +48,17 @@ export function SignupForm({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (userInput.username.length < 4)
-      return toast.error("Username must be atleast 4 chars");
-    else if (userInput.password.length < 6)
-      return toast.error("Password must be atleast 6 chars");
-
+    if (
+      isLengthError("Username", userInput.username, 4) ||
+      isLengthError("Password", userInput.password, 6)
+    )
+      return;
     try {
       setIsSubmitting(true);
       const response: APIResponse<UserData> = await axios.post(
         `${env.API_URL}/api/complete-profile`,
         {
-          name: userInput.fullName,
+          name: userInput.fullName.trim(),
           username: userInput.username,
           password: userInput.password,
         },
@@ -96,7 +96,7 @@ export function SignupForm({
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
-                <Label htmlFor="email">Full Name</Label>
+                <Label htmlFor="name">Full Name</Label>
                 <Input
                   name="fullName"
                   type="text"
@@ -106,7 +106,7 @@ export function SignupForm({
                 />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="email">Username</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
                   name="username"
                   type="text"

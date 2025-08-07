@@ -28,3 +28,11 @@ export function toastErrorUseEffect(err: string | null) {
     }
   }, [hasMounted, err]);
 }
+
+export function isLengthError(type: string, val: string, len: number) {
+  if (val.trim().length < len) {
+    toast.error(`${type} should be atleast ${len} characters`);
+    return true;
+  }
+  return false;
+}
