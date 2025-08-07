@@ -63,7 +63,7 @@ export default async function createUser(req: AuthRequest, res: Response) {
       },
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.status(500).json({
       success: false,
       message: "Something went wrong!",

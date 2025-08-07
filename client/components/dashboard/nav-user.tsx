@@ -50,7 +50,6 @@ export function NavUser({
           withCredentials: true,
         }
       );
-      console.log(response.data);
       toast.success(response.data.message);
       router.push("/login");
     } catch (err) {

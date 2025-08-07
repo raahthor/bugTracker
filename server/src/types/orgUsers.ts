@@ -4,4 +4,3 @@ export interface OrgUsers {
   orgId: string;
   role: "OWNER" | "MEMBER";
 }
-// 

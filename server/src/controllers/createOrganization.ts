@@ -33,13 +33,21 @@ export default async function createOrganization(
         name,
         handle,
         joinCode,
-        owner: { connect: { id } },
+        owner: { connect: { id } }, // or = ownerId:id,
       },
     });
+    const membership = await prisma.organizationUsers.create({
+      data: {
+        role: "OWNER",
+        organization: { connect: { id: createdOrg.id } }, // or = orgId: createdOrg.id,
+        user: { connect: { id } }, // or = userId: id,
+      },
+    });
+
     res.status(201).json({
       success: true,
       message: "Organization created successfully",
-      data: null,
+      data: { createdOrg },
     });
   } catch (error) {
     res.status(500).json({

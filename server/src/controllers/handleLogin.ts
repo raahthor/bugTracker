@@ -42,7 +42,7 @@ export default async function handleLogin(
       data: { userData: user },
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({
       success: false,
       message: "something went wrong",

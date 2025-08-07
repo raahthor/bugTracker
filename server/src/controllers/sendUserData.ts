@@ -15,7 +15,7 @@ export default async function sendUserData(req: AuthRequest, res: Response) {
       data: { userData: user },
     });
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     res.status(500).json({
       success: false,
       message: "something went wrong",
