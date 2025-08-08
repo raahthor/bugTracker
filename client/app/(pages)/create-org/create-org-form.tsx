@@ -16,8 +16,12 @@ import toastError, { isLengthError } from "@/lib/toastError";
 import APIResponse from "@/types/apiResponse";
 import axios from "axios";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Organization } from "@/types/organization";
 
 export default function CreateOrgForm() {
+  const router = useRouter();
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<{ name: string; handle: string }>({
     name: "",
@@ -40,19 +44,20 @@ export default function CreateOrgForm() {
 
     setIsSubmitting(true);
     try {
-      const response: APIResponse = await axios.post(
+      const response: APIResponse<Organization> = await axios.post(
         `${env.API_URL}/api/create-org`,
         { name: userInput.name.trim(), handle: userInput.handle },
         { withCredentials: true }
       );
-      if (response.data.success) toast.success(response.data.message);
-      console.log(response.data);
+      if (response.data.success) {
+        toast.success(response.data.message);
+        router.push(`/org/${response.data.data?.createdOrg.handle}`);
+      }
     } catch (error) {
       toastError(error);
     } finally {
       setIsSubmitting(false);
     }
-    // create org
   }
   return (
     <div className={cn("flex flex-col gap-6")}>
