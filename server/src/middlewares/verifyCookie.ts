@@ -9,7 +9,7 @@ export const verifyCookie = async (
 ) => {
   const token = req.cookies.token as string;
   if (!token)
-    return res.status(403).json({
+    return res.status(401).json({
       success: false,
       message: "Unauthorized, try again!",
       data: null,
@@ -19,7 +19,7 @@ export const verifyCookie = async (
     req.userData = decoded;
     next();
   } catch (error) {
-    return res.status(400).json({
+    return res.status(401).json({
       success: false,
       message: "Invalid token",
       data: null,

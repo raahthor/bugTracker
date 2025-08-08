@@ -5,13 +5,15 @@ import { env } from "./env";
 import { redirect } from "next/navigation";
 
 export default async function getData<T>(
-  endpoint: string
+  endpoint: string,
+  red = "/login",
+  message = "Something went wrong"
 ): Promise<APIResponse<T>> {
   try {
     const cookieHeader = (await cookies()).get("token")?.value;
 
     const response: APIResponse<T> = await axios.get(
-      `${env.API_URL}/${endpoint}`,
+      `${env.API_URL}${endpoint}`,
       {
         headers: { Cookie: `token=${cookieHeader}` },
         withCredentials: true,
@@ -19,8 +21,8 @@ export default async function getData<T>(
     );
     return response;
   } catch (err) {
-    if (axios.isAxiosError(err) && err.response?.status === 400)
+    if (axios.isAxiosError(err) && err.response?.status === 401)
       redirect("/login?message=Unauthorized, login again!");
-    else redirect("/login?message=Something went wrong");
+    else redirect(`${red}?message=${message}`);
   }
 }

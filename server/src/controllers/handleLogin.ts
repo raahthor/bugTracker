@@ -27,7 +27,7 @@ export default async function handleLogin(
     const isPassword = await argon2.verify(user.password!, password);
 
     if (!isPassword)
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
         message: "Incorrect username or password",
         data: null,

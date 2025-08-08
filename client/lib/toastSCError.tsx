@@ -2,7 +2,11 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function SCErrorToaster({ error }: { error: string | null }) {
+export default function ToastSCError({
+  error,
+}: {
+  error: string | null | undefined;
+}) {
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {

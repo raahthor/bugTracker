@@ -14,12 +14,12 @@ export default async function DashboardPage({
   params: { user: string };
 }) {
   const { user } = await params;
-  const resultUser = await getData<UserData>("api/user-data");
+  const resultUser = await getData<UserData>("/api/user-data");
 
   if (user !== resultUser.data.data.userData.username)
     redirect("/login?message=Unauthorized!");
 
-  const resultDash = await getData<unknown>("api/dashboard-data");
+  const resultDash = await getData<unknown>("/api/dashboard-data");
   console.log(resultDash.data);
   return (
     <>

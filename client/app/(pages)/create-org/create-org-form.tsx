@@ -37,8 +37,8 @@ export default function CreateOrgForm() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (
-      isLengthError("Name", userInput.name, 6) ||
-      isLengthError("Handle", userInput.handle, 4)
+      isLengthError("Name", userInput.name, 8) ||
+      isLengthError("Handle", userInput.handle, 6)
     )
       return;
 

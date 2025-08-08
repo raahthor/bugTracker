@@ -10,7 +10,7 @@ export default async function PagesLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const result = await getData<UserData>("api/user-data");
+  const result = await getData<UserData>("/api/user-data");
   if (!result.data.data.userData.username) redirect("/signup");
   
   return (
