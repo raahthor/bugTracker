@@ -35,8 +35,8 @@ export default async function createUser(req: AuthRequest, res: Response) {
     if (existedUser?.username !== null)
       return res.status(403).json({
         success: false,
-        message: "Account already exists!",
-        data: { userData: existedUser },
+        message: "Your account already exists!",
+        data: null,
       });
 
     const existedUsername = await prisma.users.findUnique({
