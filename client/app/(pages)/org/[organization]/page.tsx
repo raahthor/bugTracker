@@ -12,6 +12,6 @@ export default async function OrganizationPage({
     "/org",
     "Organization not found"
   );
-  console.log(result.data);
+  // console.log(result.data);
   return <div>Organization handle:{organization}</div>;
 }

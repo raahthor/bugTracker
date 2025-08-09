@@ -1,4 +1,7 @@
+import OrgCards from "@/components/pages/organization/org-cards";
+import getData from "@/lib/getData";
 import ToastSCError from "@/lib/toastSCError";
+import { OrgUsersList } from "@/types/orgUsers";
 
 export default async function OrganizationsPage({
   searchParams,
@@ -6,12 +9,15 @@ export default async function OrganizationsPage({
   searchParams: { [key: string]: string | undefined };
 }) {
   const { message } = await searchParams;
-  console.log(message);
-  // get all orgs from backend
-  // may be handle query param messaage in different way, like directly using toastError utils
+  const response = await getData<OrgUsersList>("/api/orgs-list", "/org");
+  const orgList = response.data.data.orgList;
+  console.log(orgList)
   return (
-    <div>
+    <div className="p-5">
       <ToastSCError error={message} />
+      {orgList.map((org, idx) => (
+        <OrgCards key={idx}  />
+      ))}
     </div>
   );
 }

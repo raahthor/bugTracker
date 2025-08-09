@@ -1,11 +1,12 @@
+export type User = {
+  id: string;
+  name?: string;
+  email: string;
+  username?: string;
+  password?: string;
+  avatar?: string;
+};
 type UserData = {
-  userData: {
-    id: string;
-    name?: string;
-    email: string;
-    username?: string;
-    password?: string;
-    avatar?: string;
-  };
+  userData: User;
 };
 export default UserData;
