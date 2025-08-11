@@ -7,6 +7,7 @@ interface Organization {
   ownerId: string;
   createdAt: string;
   updatedAt: string;
+  projects: Projects[];
 }
 interface Membership {
   id: string;
@@ -23,12 +24,9 @@ interface Projects {
   createdAt: string;
   updatedAt: string;
 }
-interface Members{
-  
-}
+interface Members {}
 export interface OrgnaizationData {
   orgData: Organization;
   membership: Membership;
-  projects: Projects[];
 }
 // add more types like all members and projects

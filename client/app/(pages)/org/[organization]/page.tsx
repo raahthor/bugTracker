@@ -1,3 +1,5 @@
+import OrgHeader from "@/components/pages/organization/org-header";
+import ProjectsCards from "@/components/pages/organization/projects-cards";
 import getData from "@/lib/getData";
 import { OrgnaizationData } from "@/types/organizationData";
 
@@ -13,6 +15,29 @@ export default async function OrganizationPage({
     "/org",
     "Organization not found"
   );
-  console.log(result.data);
-  return <div></div>;
+  const orgData = result.data.data.orgData;
+  const membership = result.data.data.membership;
+  const projects = result.data.data.orgData.projects;
+  return (
+    <div>
+      <OrgHeader
+        name={orgData.name}
+        joinCode={orgData.joinCode}
+        description={orgData.description}
+        createdAt={orgData.createdAt}
+      />
+      <div>
+        {projects.map((project, idx) => (
+          <ProjectsCards
+            key={idx}
+            id={project.id}
+            name={project.name}
+            orgId={project.orgId}
+            createdAt={project.createdAt}
+            updatedAt={project.updatedAt}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }

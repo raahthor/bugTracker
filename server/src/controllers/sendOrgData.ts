@@ -8,6 +8,7 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
   try {
     const org = await prisma.organizations.findUnique({
       where: { handle },
+      include: { projects: true },
     });
     if (!org)
       return res.status(400).json({
@@ -29,7 +30,7 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
         message: "You're not a member",
         data: null,
       });
-    //   send projects and bugs here too
+    //   send projects here too
     res.status(200).json({
       success: true,
       message: "OK",
