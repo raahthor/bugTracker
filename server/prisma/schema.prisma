@@ -74,14 +74,18 @@ model OrganizationUsers {
 }
 
 model Projects {
-  id        String   @id @default(uuid())
-  name      String
-  orgId     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  name        String
+  orgId       String
+  description String
+  slug        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   organization Organizations @relation(fields: [orgId], references: [id])
   bugs         Bugs[]
+
+  @@unique([slug, orgId])
 }
 
 model Bugs {

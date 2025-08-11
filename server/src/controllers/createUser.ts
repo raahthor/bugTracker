@@ -59,7 +59,7 @@ export default async function createUser(req: AuthRequest, res: Response) {
       success: true,
       message: "Profile completed",
       data: {
-        userData,
+        username: userData.username,
       },
     });
   } catch (error) {

@@ -23,13 +23,13 @@ export default function OrgHeader({
       <div>
         <p>{name}</p>
         <div className="flex px-4 justify-end items-center">
-          <p id="joinCode" className="border px-2.5 rounded-l-md">
+          <p id="joinCode" className="border border-gray-500 px-2.5 rounded-l-md">
             {joinCode}
           </p>
           <Button
             // onClick={copyToClip}
             variant="outline"
-            className="h-6.25 w-6.25 rounded-l-none "
+            className="h-6.25 w-6.25 border-gray-500 rounded-l-none "
           >
             <IconCopy />
           </Button>

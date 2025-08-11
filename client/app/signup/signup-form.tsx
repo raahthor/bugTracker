@@ -17,7 +17,6 @@ import toastError, { isLengthError } from "@/lib/toastError";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import APIResponse from "@/types/apiResponse";
-import UserData from "@/types/userData";
 
 type FormData = {
   fullName: string;
@@ -55,7 +54,7 @@ export function SignupForm({
       return;
     try {
       setIsSubmitting(true);
-      const response: APIResponse<UserData> = await axios.post(
+      const response: APIResponse<{ username: string }> = await axios.post(
         `${env.API_URL}/api/complete-profile`,
         {
           name: userInput.fullName.trim(),
@@ -69,10 +68,12 @@ export function SignupForm({
 
       if (response.data?.success) {
         toast.success(response.data.message);
-        router.push(`/u/${response.data.data.userData.username}`);
+        router.push(`/u/${response.data.data.username}`);
       }
     } catch (err) {
       toastError(err);
+      if (axios.isAxiosError(err) && err.response?.status === 401)
+        router.push("/login?message=Unauthorized!");
     } finally {
       setIsSubmitting(false);
     }

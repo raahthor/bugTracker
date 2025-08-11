@@ -4,4 +4,6 @@ import createProject from "../controllers/createProject";
 
 const projectRouter = Router();
 
-projectRouter.post("/api/create-project", verifyCookie, createProject);
+projectRouter.post("/api/:handle/create-project", verifyCookie, createProject);
+
+export default projectRouter;

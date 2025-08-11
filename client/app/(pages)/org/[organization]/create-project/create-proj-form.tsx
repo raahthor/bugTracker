@@ -19,17 +19,19 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function CreateOrgForm() {
+export default function CreateProjForm({
+  organization,
+}: {
+  organization: string;
+}) {
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<{
     name: string;
-    handle: string;
     description: string;
   }>({
     name: "",
-    handle: "",
     description: "",
   });
 
@@ -39,33 +41,30 @@ export default function CreateOrgForm() {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) {
     const { name, value } = e.target;
-    const inputVal = name === "handle" ? value.trim() : value;
-    setUserInput((prev) => ({ ...prev, [name]: inputVal }));
+    setUserInput((prev) => ({ ...prev, [name]: value }));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (
       isLengthError("Name", userInput.name, 8) ||
-      isLengthError("Handle", userInput.handle, 6) ||
       isLengthError("Description", userInput.description, 20)
     )
       return;
 
     setIsSubmitting(true);
     try {
-      const response: APIResponse<{ handle: string }> = await axios.post(
-        `${env.API_URL}/api/create-org`,
+      const response: APIResponse<{ slug: string }> = await axios.post(
+        `${env.API_URL}/api/${organization}/create-project`,
         {
           name: userInput.name.trim(),
-          handle: userInput.handle,
           description: userInput.description.trim(),
         },
         { withCredentials: true }
       );
       if (response.data.success) {
         toast.success(response.data.message);
-        router.push(`/org/${response.data.data?.handle}`);
+        router.push(`/org/${organization}/${response.data.data?.slug}`);
       }
     } catch (err) {
       toastError(err);
@@ -79,16 +78,16 @@ export default function CreateOrgForm() {
     <div className={cn("flex flex-col gap-6")}>
       <Card>
         <CardHeader>
-          <CardTitle>Create Organization</CardTitle>
+          <CardTitle>Create Project</CardTitle>
           <CardDescription>
-            Fill up the details to create your organization
+            Fill up the details to create project.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
-                <Label htmlFor="name">Organization Name</Label>
+                <Label htmlFor="name">Project Name</Label>
                 <Input
                   name="name"
                   type="text"
@@ -98,17 +97,7 @@ export default function CreateOrgForm() {
                 />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="handle">Handle</Label>
-                <Input
-                  name="handle"
-                  type="text"
-                  value={userInput.handle}
-                  onChange={handleUserInput}
-                  required
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="description">About Your Organization</Label>
+                <Label htmlFor="description">About Your Project</Label>
                 <Textarea
                   name="description"
                   value={userInput.description}
@@ -122,7 +111,7 @@ export default function CreateOrgForm() {
                   className="w-full"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Creating ..." : "Create Organization"}
+                  {isSubmitting ? "Creating ..." : "Create Project"}
                 </Button>
               </div>
             </div>
