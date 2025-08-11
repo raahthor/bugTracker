@@ -33,8 +33,11 @@ export default async function OrganizationPage({
             id={project.id}
             name={project.name}
             orgId={project.orgId}
+            slug={project.slug}
+            description={project.description}
             createdAt={project.createdAt}
             updatedAt={project.updatedAt}
+            organization={organization}
           />
         ))}
       </div>

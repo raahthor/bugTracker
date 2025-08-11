@@ -20,7 +20,9 @@ interface Membership {
 interface Projects {
   id: string;
   name: string;
+  description: string;
   orgId: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
 }

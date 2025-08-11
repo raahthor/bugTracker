@@ -15,28 +15,38 @@ export default function ProjectsCards({
   id,
   name,
   orgId,
+  slug,
+  description,
   createdAt,
   updatedAt,
+  organization,
 }: {
   id: string;
   name: string;
   orgId: string;
+  slug: string;
+  description: string;
   createdAt: string;
   updatedAt: string;
+  organization: string;
 }) {
   const router = useRouter();
-  // const date = new Date(updatedAt).toLocaleString("en-IN");
+  const date = new Date(updatedAt).toLocaleDateString("en-IN", {
+    dateStyle: "medium",
+  });
   return (
     <Card>
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p></p>
+        <p>Last Update: {date}</p>
       </CardContent>
       <CardFooter>
-        {/* <Button onClick={() => router.push(`/org/${handle}`)}>Open</Button> */}
+        <Button onClick={() => router.push(`/org/${organization}/${slug}`)}>
+          Open
+        </Button>
       </CardFooter>
     </Card>
   );
