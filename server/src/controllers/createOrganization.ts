@@ -12,7 +12,7 @@ export default async function createOrganization(
   req: AuthRequest,
   res: Response
 ) {
-  const { name, handle } = req.body;
+  const { name, handle, description } = req.body;
   const { id, email } = req.userData as JWTDecoded;
 
   try {
@@ -36,6 +36,7 @@ export default async function createOrganization(
       data: {
         name,
         handle,
+        description,
         joinCode,
         owner: { connect: { id } }, // or = ownerId:id,
       },
@@ -51,7 +52,7 @@ export default async function createOrganization(
     res.status(201).json({
       success: true,
       message: "Organization created successfully",
-      data: { createdOrg },
+      data: { handle: createdOrg.handle },
     });
   } catch (error) {
     res.status(500).json({

@@ -34,8 +34,8 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
       success: true,
       message: "OK",
       data: {
-        orgData: isMember,
-        joinCode: org.joinCode,
+        membership: isMember,
+        orgData: org,
       },
     });
   } catch (error) {

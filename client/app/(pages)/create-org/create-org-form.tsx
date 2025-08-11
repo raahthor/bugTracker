@@ -17,18 +17,27 @@ import APIResponse from "@/types/apiResponse";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Organization } from "@/types/organization";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function CreateOrgForm() {
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [userInput, setUserInput] = useState<{ name: string; handle: string }>({
+  const [userInput, setUserInput] = useState<{
+    name: string;
+    handle: string;
+    description: string;
+  }>({
     name: "",
     handle: "",
+    description: "",
   });
 
-  function handleUserInput(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleUserInput(
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
     const inputVal = name === "handle" ? value.trim() : value;
     setUserInput((prev) => ({ ...prev, [name]: inputVal }));
@@ -38,20 +47,25 @@ export default function CreateOrgForm() {
     e.preventDefault();
     if (
       isLengthError("Name", userInput.name, 8) ||
-      isLengthError("Handle", userInput.handle, 6)
+      isLengthError("Handle", userInput.handle, 6) ||
+      isLengthError("Description", userInput.description, 20)
     )
       return;
 
     setIsSubmitting(true);
     try {
-      const response: APIResponse<Organization> = await axios.post(
+      const response: APIResponse<{ handle: string }> = await axios.post(
         `${env.API_URL}/api/create-org`,
-        { name: userInput.name.trim(), handle: userInput.handle },
+        {
+          name: userInput.name.trim(),
+          handle: userInput.handle,
+          description: userInput.description.trim(),
+        },
         { withCredentials: true }
       );
       if (response.data.success) {
         toast.success(response.data.message);
-        router.push(`/org/${response.data.data?.createdOrg.handle}`);
+        router.push(`/org/${response.data.data?.handle}`);
       }
     } catch (error) {
       toastError(error);
@@ -87,6 +101,15 @@ export default function CreateOrgForm() {
                   name="handle"
                   type="text"
                   value={userInput.handle}
+                  onChange={handleUserInput}
+                  required
+                />
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="description">About Your Organization</Label>
+                <Textarea
+                  name="description"
+                  value={userInput.description}
                   onChange={handleUserInput}
                   required
                 />

@@ -45,13 +45,14 @@ model Users {
 }
 
 model Organizations {
-  id        String   @id @default(uuid())
-  name      String
-  handle    String   @unique
-  joinCode  String   @unique
-  ownerId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  handle      String   @unique
+  joinCode    String   @unique
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   owner    Users               @relation("OrgOwner", fields: [ownerId], references: [id])
   members  OrganizationUsers[]

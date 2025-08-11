@@ -3,8 +3,9 @@ export interface OrganizationUsers {
   userId: string;
   orgId: string;
   role: "OWNER" | "MEMBER";
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
+  organization: { name: string; handle: string; description: string };
 }
 export interface OrgUsersList {
   orgList: OrganizationUsers[];

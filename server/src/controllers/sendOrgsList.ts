@@ -7,6 +7,12 @@ export default async function sendOrgsList(req: AuthRequest, res: Response) {
   try {
     const orgList = await prisma.organizationUsers.findMany({
       where: { userId: id },
+      orderBy: { createdAt: "desc" },
+      include: {
+        organization: {
+          select: { name: true, handle: true, description: true },
+        },
+      },
     });
     res.status(200).json({
       success: true,

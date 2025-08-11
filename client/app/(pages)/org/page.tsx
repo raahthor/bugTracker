@@ -11,12 +11,19 @@ export default async function OrganizationsPage({
   const { message } = await searchParams;
   const response = await getData<OrgUsersList>("/api/orgs-list", "/org");
   const orgList = response.data.data.orgList;
-  console.log(orgList)
+  // console.log(orgList);
   return (
     <div className="p-5">
       <ToastSCError error={message} />
       {orgList.map((org, idx) => (
-        <OrgCards key={idx}  />
+        <OrgCards
+          key={idx}
+          name={org.organization.name}
+          description={org.organization.description}
+          role={org.role}
+          handle={org.organization.handle}
+          updatedAt={org.updatedAt}
+        />
       ))}
     </div>
   );

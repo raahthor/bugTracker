@@ -1,3 +1,5 @@
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -7,20 +9,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
-export default function OrgCards() {
+export default function OrgCards({
+  name,
+  role,
+  updatedAt,
+  handle,
+  description,
+}: {
+  name: string;
+  role: string;
+  updatedAt: string;
+  handle: string;
+  description: string;
+}) {
+  const router = useRouter();
+  // const date = new Date(updatedAt).toLocaleString("en-IN");
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
+        <CardTitle>{name}</CardTitle>
         <CardDescription>Card Description</CardDescription>
-        <CardAction>Card Action</CardAction>
+        <CardAction>You're {role}</CardAction>
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        <p>{description}</p>
       </CardContent>
       <CardFooter>
-        <p>Card Footer</p>
+        <Button onClick={() => router.push(`/org/${handle}`)}>Open</Button>
       </CardFooter>
     </Card>
   );
