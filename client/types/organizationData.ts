@@ -26,9 +26,15 @@ interface Projects {
   createdAt: string;
   updatedAt: string;
 }
-interface Members {}
+export interface Member {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar: string;
+}
 export interface OrgnaizationData {
   orgData: Organization;
   membership: Membership;
+  members: Member[];
 }
-// add more types like all members and projects

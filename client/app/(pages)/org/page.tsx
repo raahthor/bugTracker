@@ -12,6 +12,7 @@ export default async function OrganizationsPage({
   const response = await getData<OrgUsersList>("/api/orgs-list", "/org");
   const orgList = response.data.data.orgList;
   // console.log(orgList);
+  // separate out organizations as owner at and member at
   return (
     <div className="p-5">
       <ToastSCError error={message} />

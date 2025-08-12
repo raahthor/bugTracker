@@ -15,8 +15,10 @@ export default async function OrganizationPage({
     "/org",
     "Organization not found"
   );
+
   const orgData = result.data.data.orgData;
   const membership = result.data.data.membership;
+  const members = result.data.data.members;
   const projects = result.data.data.orgData.projects;
   return (
     <div>
@@ -25,6 +27,8 @@ export default async function OrganizationPage({
         joinCode={orgData.joinCode}
         description={orgData.description}
         createdAt={orgData.createdAt}
+        organization={organization}
+        members={members}
       />
       <div>
         {projects.map((project, idx) => (
