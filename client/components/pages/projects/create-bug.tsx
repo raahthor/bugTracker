@@ -78,8 +78,8 @@ function BugDialogBox({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (
-      isLengthError("Name", userInput.name, 6) ||
-      isLengthError("Description", userInput.description, 20)
+      isLengthError("Name", userInput.name, 5) ||
+      isLengthError("Description", userInput.description, 10)
     )
       return;
     try {
