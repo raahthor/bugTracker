@@ -9,4 +9,5 @@ const orgRouter = Router();
 orgRouter.post("/api/create-org", verifyCookie, createOrganization);
 orgRouter.get("/api/org-data/:handle", verifyCookie, sendOrgData);
 orgRouter.get("/api/orgs-list", verifyCookie, sendOrgsList);
+
 export default orgRouter;

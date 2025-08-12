@@ -95,12 +95,12 @@ model Bugs {
   status      BugStatus @default(OPEN)
   priority    Priority  @default(MEDIUM)
   projectId   String
-  assignedTo  String
+  assignedTo  String?
   raisedBy    String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  assignedUser Users    @relation("AssignedBugs", fields: [assignedTo], references: [id])
+  assignedUser Users?   @relation("AssignedBugs", fields: [assignedTo], references: [id])
   raisedByUser Users    @relation("RaisedBugs", fields: [raisedBy], references: [id])
   project      Projects @relation(fields: [projectId], references: [id])
 }

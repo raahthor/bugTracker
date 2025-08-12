@@ -52,8 +52,8 @@ export default function CreateOrgForm() {
     )
       return;
 
-    setIsSubmitting(true);
     try {
+      setIsSubmitting(true);
       const response: APIResponse<{ handle: string }> = await axios.post(
         `${env.API_URL}/api/create-org`,
         {

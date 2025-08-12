@@ -1,4 +1,4 @@
-interface Bug {
+export interface Bug {
   id: string;
   name: string;
   description: string;

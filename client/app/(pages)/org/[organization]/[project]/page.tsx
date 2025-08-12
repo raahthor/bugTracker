@@ -1,3 +1,5 @@
+import CreateBug from "@/components/pages/projects/create-bug";
+import ProjHeader from "@/components/pages/projects/proj-header";
 import getData from "@/lib/getData";
 import { ProjectData } from "@/types/ProjectData";
 
@@ -12,19 +14,15 @@ export default async function ProjectPage({
     `/org/${organization}`
   );
   const projectData = result.data.data.projectData;
-  // const bugs = projectData.bugs;
   return (
-    <div>
-      <header>
-        <p>{projectData.name}</p>
-        <p>{projectData.description}</p>
-        {projectData.bugs.map((bug) => (
-          <div>
-            <p>{bug.name}</p>
-            <p>{bug.description}</p>
-          </div>
-        ))}
-      </header>
+    <div className="">
+      <ProjHeader
+        name={projectData.name}
+        description={projectData.description}
+        createdAt={projectData.createdAt}
+        bugs={projectData.bugs}
+      />
+      <CreateBug organization={organization} project={project} />
     </div>
   );
 }

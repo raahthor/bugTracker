@@ -52,8 +52,8 @@ export default function CreateProjForm({
     )
       return;
 
-    setIsSubmitting(true);
     try {
+      setIsSubmitting(true);
       const response: APIResponse<{ slug: string }> = await axios.post(
         `${env.API_URL}/api/${organization}/create-project`,
         {
