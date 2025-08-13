@@ -12,21 +12,15 @@ import {
 import { useRouter } from "next/navigation";
 
 export default function ProjectsCards({
-  id,
   name,
-  orgId,
   slug,
   description,
-  createdAt,
   updatedAt,
   organization,
 }: {
-  id: string;
   name: string;
-  orgId: string;
   slug: string;
   description: string;
-  createdAt: string;
   updatedAt: string;
   organization: string;
 }) {
@@ -35,16 +29,24 @@ export default function ProjectsCards({
     dateStyle: "medium",
   });
   return (
-    <Card>
+    <Card className="@container/card">
       <CardHeader>
-        <CardTitle>{name}</CardTitle>
+        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          {name}
+        </CardTitle>
         <CardDescription>{description}</CardDescription>
+        <CardAction>{/* <Badge variant="outline">{role}</Badge> */}</CardAction>
       </CardHeader>
-      <CardContent>
-        <p>Last Update: {date}</p>
-      </CardContent>
-      <CardFooter>
-        <Button onClick={() => router.push(`/org/${organization}/${slug}`)}>
+      {/* <CardContent>
+        <p>{description}</p>
+      </CardContent> */}
+      <CardFooter className="flex-col items-start gap-2 text-xs">
+        <div className="text-muted-foreground">Updated : {date}</div>
+        {/* <div className="line-clamp-1 flex gap-2 font-medium"></div> */}
+        <Button
+          className=" w-20"
+          onClick={() => router.push(`/org/${organization}/${slug}`)}
+        >
           Open
         </Button>
       </CardFooter>

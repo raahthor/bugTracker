@@ -14,18 +14,20 @@ export default async function OrganizationsPage({
   // console.log(orgList);
   // separate out organizations as owner at and member at
   return (
-    <div className="p-5">
+    <>
       <ToastSCError error={message} />
-      {orgList.map((org, idx) => (
-        <OrgCards
-          key={idx}
-          name={org.organization.name}
-          description={org.organization.description}
-          role={org.role}
-          handle={org.organization.handle}
-          updatedAt={org.updatedAt}
-        />
-      ))}
-    </div>
+      <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 ">
+        {orgList.map((org, idx) => (
+          <OrgCards
+            key={idx}
+            name={org.organization.name}
+            description={org.organization.description}
+            role={org.role}
+            handle={org.organization.handle}
+            updatedAt={org.updatedAt}
+          />
+        ))}
+      </div>
+    </>
   );
 }

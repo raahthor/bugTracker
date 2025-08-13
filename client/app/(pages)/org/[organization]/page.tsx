@@ -21,7 +21,7 @@ export default async function OrganizationPage({
   const members = result.data.data.members;
   const projects = result.data.data.orgData.projects;
   return (
-    <div>
+    <>
       <OrgHeader
         name={orgData.name}
         joinCode={orgData.joinCode}
@@ -30,21 +30,18 @@ export default async function OrganizationPage({
         organization={organization}
         members={members}
       />
-      <div>
+      <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 ">
         {projects.map((project, idx) => (
           <ProjectsCards
             key={idx}
-            id={project.id}
             name={project.name}
-            orgId={project.orgId}
             slug={project.slug}
             description={project.description}
-            createdAt={project.createdAt}
             updatedAt={project.updatedAt}
             organization={organization}
           />
         ))}
       </div>
-    </div>
+    </>
   );
 }

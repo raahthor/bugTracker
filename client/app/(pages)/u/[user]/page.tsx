@@ -26,9 +26,8 @@ export default async function DashboardPage({
       <Welcome name={resultUser.data.data.userData.name!} />
       <OrgButtons />
       <RecentOrgs />
-      {/* <SectionCards /> */}
-
-      {/* <DataTable data={data} /> */}
+      
+      <DataTable data={data} />
     </>
   );
 }
