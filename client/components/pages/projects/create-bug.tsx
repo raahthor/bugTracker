@@ -88,7 +88,7 @@ function BugDialogBox({
         `${env.API_URL}/api/${organization}/${project}/create-bug`,
         {
           name: userInput.name.trim(),
-          priority: priorityVal,
+          priority: priorityVal || "MEDIUM",
           description: userInput.description.trim(),
         },
         {

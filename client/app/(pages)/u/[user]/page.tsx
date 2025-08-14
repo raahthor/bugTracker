@@ -1,6 +1,4 @@
-import { DataTable } from "@/components/dashboard/data-table";
 import { SectionCards } from "@/components/dashboard/section-cards";
-import data from "./data.json";
 import { redirect } from "next/navigation";
 import Welcome from "@/components/pages/dashboard/welcome";
 import OrgButtons from "@/components/pages/dashboard/orgButtons";
@@ -26,8 +24,6 @@ export default async function DashboardPage({
       <Welcome name={resultUser.data.data.userData.name!} />
       <OrgButtons />
       <RecentOrgs />
-      
-      <DataTable data={data} />
     </>
   );
 }
