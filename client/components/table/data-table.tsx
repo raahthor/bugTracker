@@ -86,6 +86,7 @@ export const columns: ColumnDef<Bug>[] = [
   {
     accessorKey: "priority",
     header: ({ column }) => {
+      return "Priority";
       return (
         <Button
           variant="ghost"
@@ -101,13 +102,11 @@ export const columns: ColumnDef<Bug>[] = [
       return (
         <Badge
           variant={"outline"}
-          className={
+          className={`${
             priority === "HIGH"
               ? "bg-red-400"
-              : priority === "MEDIUM"
-              ? "bg-orange-300"
-              : ""
-          }
+              : priority === "MEDIUM" && "bg-orange-300"
+          }`}
         >
           {row.getValue("priority")}
         </Badge>
@@ -122,13 +121,11 @@ export const columns: ColumnDef<Bug>[] = [
       return (
         <Badge
           variant="outline"
-          className={
+          className={`${
             status === "OPEN"
               ? "bg-green-500"
-              : status === "IN_PROGRESS"
-              ? "bg-yellow-300"
-              : ""
-          }
+              : status === "IN_PROGRESS" && "bg-yellow-300"
+          }`}
         >
           {row.getValue("status")}
         </Badge>
@@ -138,7 +135,11 @@ export const columns: ColumnDef<Bug>[] = [
   {
     accessorKey: "assignedTo",
     header: "Assigned",
-    cell: ({ row }) => <div className="max-w-20 overflow-hidden">{row.getValue("assignedTo")}</div>,
+    cell: ({ row }) => (
+      <div className="max-w-20 overflow-hidden">
+        {row.getValue("assignedTo")}
+      </div>
+    ),
   },
   {
     accessorKey: "updatedAt",
@@ -168,7 +169,7 @@ export const columns: ColumnDef<Bug>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(payment.name)}
             >
               Copy payment ID
             </DropdownMenuItem>
@@ -182,8 +183,8 @@ export const columns: ColumnDef<Bug>[] = [
   },
 ];
 
-function bugDetailedView() {
-  alert();
+function bugDetailedView(id: string) {
+  alert(id);
 }
 
 export function DataTableDemo({ bugs }: { bugs: Bug[] }) {
@@ -278,7 +279,7 @@ export function DataTableDemo({ bugs }: { bugs: Bug[] }) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   className="cursor-pointer"
-                  onClick={bugDetailedView}
+                  onClick={() => bugDetailedView(row.original.id)}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Member } from "@/types/organizationData";
 import { IconCopy } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function OrgHeader({
   name,
@@ -23,8 +24,13 @@ export default function OrgHeader({
   const date = new Date(createdAt).toLocaleDateString("en-IN", {
     dateStyle: "medium",
   });
-  function copyToClip(e: React.ClipboardEvent<HTMLTextAreaElement>) {
-    e.preventDefault();
+  function copyToClip() {
+    try {
+      navigator.clipboard.writeText(joinCode);
+      toast.success("Copied");
+    } catch (error) {
+      toast.error("An error occured while copying!");
+    }
   }
   return (
     <div>
@@ -34,7 +40,7 @@ export default function OrgHeader({
           {joinCode}
         </p>
         <Button
-          // onClick={copyToClip}
+          onClick={copyToClip}
           variant="outline"
           className="h-6.25 w-6.25 border-gray-400 rounded-l-none "
         >
