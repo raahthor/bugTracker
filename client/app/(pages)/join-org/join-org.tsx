@@ -33,8 +33,8 @@ export default function JoinOrg() {
   const debounceSearch = useMemo(() => debounce(getSearchList), []);
 
   return (
-    <div>
-      <div className="flex-col gap-2">
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 p-4">
         <Label>Search Organization</Label>
         <Input
           placeholder="Start typing..."
