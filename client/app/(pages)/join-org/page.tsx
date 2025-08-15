@@ -1,5 +1,5 @@
+import JoinOrg from "./join-org";
+
 export default function JoinOrgPage() {
-  return (
-    <div>JoinOrgPage</div>
-  )
+  return <JoinOrg />;
 }
