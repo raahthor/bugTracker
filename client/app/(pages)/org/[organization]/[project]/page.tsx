@@ -1,5 +1,4 @@
 import { DataTableDemo } from "@/components/table/data-table";
-import BugCard from "@/components/pages/projects/bug-card";
 import CreateBug from "@/components/pages/projects/create-bug";
 import ProjHeader from "@/components/pages/projects/proj-header";
 import getData from "@/lib/getData";
@@ -16,7 +15,8 @@ export default async function ProjectPage({
     `/org/${organization}`
   );
   const projectData = result.data.data.projectData;
-  const bugs = projectData.bugs;
+  const bugs = result.data.data.bugs;
+  const members = result.data.data.members;
   return (
     <div className="">
       <ProjHeader
@@ -25,7 +25,7 @@ export default async function ProjectPage({
         createdAt={projectData.createdAt}
       />
       <CreateBug organization={organization} project={project} />
-      <DataTableDemo bugs={bugs}/>
+      <DataTableDemo bugs={bugs} members={members} />
     </div>
   );
 }

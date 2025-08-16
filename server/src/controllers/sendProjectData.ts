@@ -6,9 +6,28 @@ export default async function sendProjectData(req: AuthRequest, res: Response) {
   const { handle, slug } = req.params;
   const { id, email } = req.userData as JWTDecoded;
   try {
-    const isOrg = await prisma.organizations.findUnique({
-      where: { handle },
-      include: { projects: { where: { slug }, include: { bugs: true } } },
+    const isOrg = await prisma.organizations.findFirst({
+      where: {
+        handle,
+        members: { some: { userId: id } },
+      },
+      include: {
+        projects: {
+          where: { slug },
+          include: {
+            bugs: {
+              include: {
+                assignedUser: {
+                  select: { name: true, avatar: true, username: true },
+                },
+                raisedByUser: {
+                  select: { name: true, avatar: true, username: true },
+                },
+              },
+            },
+          },
+        },
+      },
     });
     if (!isOrg)
       return res.status(400).json({
@@ -16,34 +35,27 @@ export default async function sendProjectData(req: AuthRequest, res: Response) {
         message: "Organization not found",
         data: null,
       });
-
-    const isMember = await prisma.organizationUsers.findUnique({
-      where: {
-        userId_orgId: {
-          userId: id,
-          orgId: isOrg.id,
-        },
-      },
-    });
-    if (!isMember)
-      return res.status(403).json({
-        success: false,
-        message: "Your not a member here",
-        data: null,
-      });
-
     if (isOrg.projects.length === 0)
       return res.status(400).json({
         success: false,
         message: "Project not found",
         data: null,
       });
+    const members = await prisma.organizationUsers.findMany({
+      where: { orgId: isOrg.id },
+      include: {
+        user: { select: { name: true, username: true, avatar: true } },
+      },
+    });
+    const bugs = isOrg.projects[0].bugs;
 
     res.status(200).json({
       success: true,
       message: "Project data sent",
       data: {
         projectData: isOrg.projects[0],
+        bugs: bugs,
+        members,
       },
     });
   } catch (error) {

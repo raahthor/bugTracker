@@ -23,6 +23,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -40,32 +49,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Bug } from "@/types/ProjectData";
+import { Bug, Member } from "@/types/ProjectData";
 import { Badge } from "@/components/ui/badge";
+import { Avatar } from "../ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
+import APIResponse from "@/types/apiResponse";
+import axios from "axios";
+import { env } from "@/lib/env";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<Bug>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomePageRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -133,13 +127,21 @@ export const columns: ColumnDef<Bug>[] = [
     },
   },
   {
-    accessorKey: "assignedTo",
+    accessorKey: "assignedUser",
     header: "Assigned",
-    cell: ({ row }) => (
-      <div className="max-w-20 overflow-hidden">
-        {row.getValue("assignedTo")}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const bug = row.original as Bug;
+      return bug.assignedUser ? (
+        <div className="flex gap-1">
+          <Avatar className="h-5 w-5">
+            <AvatarImage src={bug.assignedUser.avatar} alt="avatar" />
+          </Avatar>
+          {bug.assignedUser.name}
+        </div>
+      ) : (
+        <div>Not Assigned</div>
+      );
+    },
   },
   {
     accessorKey: "updatedAt",
@@ -156,38 +158,56 @@ export const columns: ColumnDef<Bug>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
-
+      const bug = row.original;
+      const created = new Date(bug.createdAt).toLocaleString("en-IN", {
+        dateStyle: "short",
+        timeStyle: "short",
+      });
+      const updated = new Date(bug.updatedAt).toLocaleString("en-IN", {
+        dateStyle: "short",
+        timeStyle: "short",
+      });
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <Dialog>
+          <DialogTrigger asChild>
             <Button variant="outline" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
               <MoreVertical />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.name)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{bug.name}</DialogTitle>
+              <DialogDescription>{bug.description}</DialogDescription>
+              <div className="text-sm">
+                Updated : {updated}, Opened : {created}
+                <div className="flex gap-1 my-1 items-center">
+                  Raised By : 
+                  <Avatar className="h-5 w-5">
+                    <AvatarImage src={bug.raisedByUser.avatar} alt="avatar" />
+                  </Avatar>
+                  {bug.raisedByUser.name}
+                </div>
+              </div>
+            </DialogHeader>
+            <div></div>
+            <DialogFooter>
+              <Button variant={"destructive"}>Delete</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       );
     },
   },
 ];
 
-function bugDetailedView(id: string) {
-  alert(id);
-}
-
-export function DataTableDemo({ bugs }: { bugs: Bug[] }) {
+export function DataTableDemo({
+  bugs,
+  members,
+}: {
+  bugs: Bug[];
+  members: Member[];
+}) {
   const data = bugs;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -278,8 +298,6 @@ export function DataTableDemo({ bugs }: { bugs: Bug[] }) {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className="cursor-pointer"
-                  onClick={() => bugDetailedView(row.original.id)}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
@@ -307,10 +325,6 @@ export function DataTableDemo({ bugs }: { bugs: Bug[] }) {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
         <div className="space-x-2">
           <Button
             variant="outline"

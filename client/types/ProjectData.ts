@@ -1,3 +1,6 @@
+export interface Member {
+  user: { name: string; username: string; avatar: string };
+}
 export interface Bug {
   id: string;
   name: string;
@@ -5,10 +8,10 @@ export interface Bug {
   status: "OPEN" | "IN_PROGRESS" | "CLOSED";
   priority: "LOW" | "MEDIUM" | "HIGH";
   projectId: string;
-  assignedTo: string;
-  raisedBy: string;
   createdAt: string;
   updatedAt: string;
+  assignedUser: { name: string; avatar: string; username: string };
+  raisedByUser: { name: string; avatar: string; username: string };
 }
 
 interface Project {
@@ -19,8 +22,9 @@ interface Project {
   slug: string;
   createdAt: string;
   updatedAt: string;
-  bugs: Bug[];
 }
 export interface ProjectData {
   projectData: Project;
+  bugs: Bug[];
+  members: Member[];
 }

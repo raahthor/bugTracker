@@ -41,11 +41,15 @@ export default function JoinOrg() {
           onChange={(e) => debounceSearch(e.target.value)}
         />
       </div>
-      <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 ">
-        {searchList?.map((org, idx) => (
-          <SearchCards key={idx} org={org} />
-        ))}
-      </div>
+      {searchList?.length !== 0 ? (
+        <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 ">
+          {searchList?.map((org, idx) => (
+            <SearchCards key={idx} org={org} />
+          ))}
+        </div>
+      ) : (
+        <div className="p-4 font-semibold text-lg">No organization found</div>
+      )}
     </div>
   );
 }

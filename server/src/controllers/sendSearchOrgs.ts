@@ -13,8 +13,8 @@ export default async function (req: AuthRequest, res: Response) {
     const orgList = await prisma.organizations.findMany({
       where: {
         OR: [
-          { name: { contains: title, mode: "insensitive" } },
-          { handle: { contains: title, mode: "insensitive" } },
+          { name: { startsWith: title, mode: "insensitive" } },
+          { handle: { startsWith: title, mode: "insensitive" } },
         ],
       },
       select: {
