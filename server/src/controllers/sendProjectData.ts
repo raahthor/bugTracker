@@ -24,27 +24,30 @@ export default async function sendProjectData(req: AuthRequest, res: Response) {
                   select: { name: true, avatar: true, username: true },
                 },
               },
+              orderBy: { updatedAt: "desc" },
             },
           },
         },
       },
     });
     if (!isOrg)
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "Organization not found",
         data: null,
       });
     if (isOrg.projects.length === 0)
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "Project not found",
         data: null,
       });
     const members = await prisma.organizationUsers.findMany({
       where: { orgId: isOrg.id },
-      include: {
-        user: { select: { name: true, username: true, avatar: true } },
+      select: {
+        user: {
+          select: { id: true, name: true, username: true, avatar: true },
+        },
       },
     });
     const bugs = isOrg.projects[0].bugs;

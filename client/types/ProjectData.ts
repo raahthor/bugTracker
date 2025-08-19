@@ -1,5 +1,5 @@
 export interface Member {
-  user: { name: string; username: string; avatar: string };
+  user: { id: string; name: string; username: string; avatar: string };
 }
 export interface Bug {
   id: string;

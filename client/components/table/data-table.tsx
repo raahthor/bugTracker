@@ -58,148 +58,8 @@ import axios from "axios";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
-export const columns: ColumnDef<Bug>[] = [
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Bug Name
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="capitalize font-semibold">{row.getValue("name")}</div>
-    ),
-  },
-  {
-    accessorKey: "priority",
-    header: ({ column }) => {
-      return "Priority";
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Priority
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const priority = row.getValue("priority");
-      return (
-        <Badge
-          variant={"outline"}
-          className={`${
-            priority === "HIGH"
-              ? "bg-red-400"
-              : priority === "MEDIUM" && "bg-orange-300"
-          }`}
-        >
-          {row.getValue("priority")}
-        </Badge>
-      );
-    },
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.getValue("status");
-      return (
-        <Badge
-          variant="outline"
-          className={`${
-            status === "OPEN"
-              ? "bg-green-500"
-              : status === "IN_PROGRESS" && "bg-yellow-300"
-          }`}
-        >
-          {row.getValue("status")}
-        </Badge>
-      );
-    },
-  },
-  {
-    accessorKey: "assignedUser",
-    header: "Assigned",
-    cell: ({ row }) => {
-      const bug = row.original as Bug;
-      return bug.assignedUser ? (
-        <div className="flex gap-1">
-          <Avatar className="h-5 w-5">
-            <AvatarImage src={bug.assignedUser.avatar} alt="avatar" />
-          </Avatar>
-          {bug.assignedUser.name}
-        </div>
-      ) : (
-        <div>Not Assigned</div>
-      );
-    },
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "Updated",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("updatedAt")).toLocaleString("en-IN", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      });
-      return <div>{date}</div>;
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const bug = row.original;
-      const created = new Date(bug.createdAt).toLocaleString("en-IN", {
-        dateStyle: "short",
-        timeStyle: "short",
-      });
-      const updated = new Date(bug.updatedAt).toLocaleString("en-IN", {
-        dateStyle: "short",
-        timeStyle: "short",
-      });
-      return (
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreVertical />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{bug.name}</DialogTitle>
-              <DialogDescription>{bug.description}</DialogDescription>
-              <div className="text-sm">
-                Updated : {updated}, Opened : {created}
-                <div className="flex gap-1 my-1 items-center">
-                  Raised By : 
-                  <Avatar className="h-5 w-5">
-                    <AvatarImage src={bug.raisedByUser.avatar} alt="avatar" />
-                  </Avatar>
-                  {bug.raisedByUser.name}
-                </div>
-              </div>
-            </DialogHeader>
-            <div></div>
-            <DialogFooter>
-              <Button variant={"destructive"}>Delete</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      );
-    },
-  },
-];
+import AssigneeSelector from "./assignee-selector";
+import DeleteBug from "./deleteBug";
 
 export function DataTableDemo({
   bugs,
@@ -208,6 +68,148 @@ export function DataTableDemo({
   bugs: Bug[];
   members: Member[];
 }) {
+  const columns: ColumnDef<Bug>[] = [
+    {
+      accessorKey: "name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Bug Name
+            <ArrowUpDown />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="capitalize font-semibold">{row.getValue("name")}</div>
+      ),
+    },
+    {
+      accessorKey: "priority",
+      header: ({ column }) => {
+        return "Priority";
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Priority
+            <ArrowUpDown />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const priority = row.getValue("priority");
+        return (
+          <Badge
+            variant={"outline"}
+            className={`${
+              priority === "HIGH"
+                ? "bg-red-400"
+                : priority === "MEDIUM" && "bg-orange-300"
+            }`}
+          >
+            {row.getValue("priority")}
+          </Badge>
+        );
+      },
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.getValue("status");
+        return (
+          <Badge
+            variant="outline"
+            className={`${
+              status === "OPEN"
+                ? "bg-green-500"
+                : status === "IN_PROGRESS" && "bg-yellow-300"
+            }`}
+          >
+            {row.getValue("status")}
+          </Badge>
+        );
+      },
+    },
+    {
+      accessorKey: "assignedUser",
+      header: "Assigned",
+      cell: ({ row }) => {
+        const bug = row.original as Bug;
+        return bug.assignedUser ? (
+          <div className="flex gap-1">
+            <Avatar className="h-5 w-5">
+              <AvatarImage src={bug.assignedUser.avatar} alt="avatar" />
+            </Avatar>
+            {bug.assignedUser.name}
+          </div>
+        ) : (
+          <div>Not Assigned</div>
+        );
+      },
+    },
+    {
+      accessorKey: "updatedAt",
+      header: "Updated",
+      cell: ({ row }) => {
+        const date = new Date(row.getValue("updatedAt")).toLocaleString(
+          "en-IN",
+          {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }
+        );
+        return <div>{date}</div>;
+      },
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const bug = row.original;
+        const created = new Date(bug.createdAt).toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+
+        return (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreVertical />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <div className=" flex flex-col gap-2 text-sm items-start">
+                <DialogTitle className=" capitalize">{bug.name}</DialogTitle>
+                <DialogDescription>{bug.description}</DialogDescription>
+                Opened : {created}
+                <div className="flex gap-1 my-1 items-center">
+                  Raised By :
+                  <Avatar className="h-5 w-5">
+                    <AvatarImage src={bug.raisedByUser.avatar} alt="avatar" />
+                  </Avatar>
+                  {bug.raisedByUser.name}
+                </div>
+              </div>
+              <div className="flex gap-3 justify-between min-[450px]:justify-start">
+                <AssigneeSelector bugId={bug.id} members={members} />
+              </div>
+              <div className="flex flex-row-reverse">
+                <DeleteBug bugId={bug.id} />
+              </div>
+            </DialogContent>
+          </Dialog>
+        );
+      },
+    },
+  ];
+
   const data = bugs;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
