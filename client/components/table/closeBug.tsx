@@ -17,17 +17,18 @@ import { toast } from "sonner";
 
 export default function DeleteBug({ bugId }: { bugId: string }) {
   const router = useRouter();
-  async function deleteBug() {
+  async function closeBug() {
     try {
-      const result = await axios.delete(
-        `${env.API_URL}/api/delete-bug/${bugId}`,
+      const result = await axios.patch(
+        `${env.API_URL}/api/close-bug`,
+        { bugId },
         {
           withCredentials: true,
         }
       );
-      console.log(result)
+
       if (result.data.success) {
-        toast.success("Bug deleted");
+        toast.success("Bug closed");
         router.refresh();
       }
     } catch (err) {
@@ -39,18 +40,16 @@ export default function DeleteBug({ bugId }: { bugId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="destructive">Delete</Button>
+        <Button variant="secondary">Close Bug</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Delete Bug</DialogTitle>
-          <DialogDescription>
-            Are you sure? This action is irreversible!
-          </DialogDescription>
+          <DialogTitle>Close Bug</DialogTitle>
+          <DialogDescription>Are you sure?</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="destructive" onClick={deleteBug}>
-            Delete
+          <Button variant="secondary" onClick={closeBug}>
+            Close Bug
           </Button>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>

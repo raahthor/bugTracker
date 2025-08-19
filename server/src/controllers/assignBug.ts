@@ -12,7 +12,7 @@ export default async function assignBug(req: AuthRequest, res: Response) {
         id: bugId,
         project: { organization: { members: { some: { userId: id } } } },
       },
-      select: { id: true },
+      select: { id: true, status: true },
     });
     if (!isMember)
       return res.status(403).json({
@@ -20,7 +20,12 @@ export default async function assignBug(req: AuthRequest, res: Response) {
         message: "Access Denied",
         data: null,
       });
-
+    if (isMember.status === "CLOSED")
+      return res.status(400).json({
+        success: false,
+        message: "Closed bugs can't be assigned",
+        data: null,
+      });
     const assignedUser = await prisma.bugs.update({
       where: { id: bugId },
       data: {

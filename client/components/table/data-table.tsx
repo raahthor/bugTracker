@@ -54,7 +54,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import AssigneeSelector from "./assignee-selector";
-import DeleteBug from "./deleteBug";
+import CloseBug from "./closeBug";
 
 export function DataTableDemo({
   bugs,
@@ -83,18 +83,7 @@ export function DataTableDemo({
     },
     {
       accessorKey: "priority",
-      header: ({ column }) => {
-        return "Priority";
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Priority
-            <ArrowUpDown />
-          </Button>
-        );
-      },
+      header: "Priority",
       cell: ({ row }) => {
         const priority = row.getValue("priority");
         return (
@@ -196,7 +185,7 @@ export function DataTableDemo({
                 <AssigneeSelector bugId={bug.id} members={members} />
               </div>
               <div className="flex flex-row-reverse">
-                <DeleteBug bugId={bug.id} />
+                <CloseBug bugId={bug.id} />
               </div>
             </DialogContent>
           </Dialog>
