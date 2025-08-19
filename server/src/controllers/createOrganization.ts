@@ -16,7 +16,7 @@ export default async function createOrganization(
   const { id, email } = req.userData as JWTDecoded;
 
   try {
-    if (handle.length < 6)
+    if (handle.length < 4)
       return res.status(400).json({
         success: false,
         message: "handle is short",

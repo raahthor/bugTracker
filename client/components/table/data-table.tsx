@@ -53,11 +53,6 @@ import { Bug, Member } from "@/types/ProjectData";
 import { Badge } from "@/components/ui/badge";
 import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import APIResponse from "@/types/apiResponse";
-import axios from "axios";
-import { env } from "@/lib/env";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import AssigneeSelector from "./assignee-selector";
 import DeleteBug from "./deleteBug";
 

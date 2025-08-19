@@ -20,11 +20,12 @@ export default async function assignBug(req: AuthRequest, res: Response) {
         message: "Access Denied",
         data: null,
       });
-      
+
     const assignedUser = await prisma.bugs.update({
       where: { id: bugId },
       data: {
         assignedTo: userId,
+        status: "IN_PROGRESS",
       },
     });
     res.status(201).json({
