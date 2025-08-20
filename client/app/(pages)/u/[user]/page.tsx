@@ -1,10 +1,11 @@
-import { SectionCards } from "@/components/dashboard/section-cards";
 import { redirect } from "next/navigation";
 import Welcome from "@/components/pages/dashboard/welcome";
 import OrgButtons from "@/components/pages/dashboard/orgButtons";
 import RecentOrgs from "@/components/pages/dashboard/recentOrgs";
 import getData from "@/lib/getData";
 import UserData from "@/types/userData";
+import { DashboardData } from "@/types/DashboardData";
+import RecentBugs from "@/components/pages/dashboard/recentBugs";
 
 export default async function DashboardPage({
   params,
@@ -17,13 +18,14 @@ export default async function DashboardPage({
   if (user !== resultUser.data.data.userData.username)
     redirect("/login?message=Unauthorized!");
 
-  const resultDash = await getData<unknown>("/api/dashboard-data");
-  console.log(resultDash.data);
+  const resultDash = await getData<DashboardData>("/api/dashboard-data");
+  
   return (
     <>
       <Welcome name={resultUser.data.data.userData.name!} />
       <OrgButtons />
-      <RecentOrgs />
+      <RecentOrgs orgs={resultDash.data.data.recentOrgs} />
+      <RecentBugs bugs={resultDash.data.data.recentBugs} />
     </>
   );
 }
