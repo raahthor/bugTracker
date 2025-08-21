@@ -1,7 +1,12 @@
-import React from 'react'
+import BugArr from "@/components/bugArr";
+import getData from "@/lib/getData";
+import { BugExt } from "@/types/DashboardData";
 
-export default function MyIssuesPage() {
+export default async function MyIssuesPage() {
+  const result = await getData<{ bugs: BugExt[] }>("/api/get-myissues");
   return (
-    <div>MyIssuesPage</div>
-  )
+    <div>
+      <BugArr bugs={result.data.data.bugs} />
+    </div>
+  );
 }

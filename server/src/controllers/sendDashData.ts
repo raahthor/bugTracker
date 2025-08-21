@@ -24,6 +24,9 @@ export default async function sendDashData(req: AuthRequest, res: Response) {
               organization: { select: { handle: true } },
             },
           },
+          raisedByUser: {
+            select: { name: true, avatar: true, username: true },
+          },
         },
       }),
     ]);

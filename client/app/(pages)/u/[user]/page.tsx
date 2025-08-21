@@ -5,7 +5,7 @@ import RecentOrgs from "@/components/pages/dashboard/recentOrgs";
 import getData from "@/lib/getData";
 import UserData from "@/types/userData";
 import { DashboardData } from "@/types/DashboardData";
-import RecentBugs from "@/components/pages/dashboard/recentBugs";
+import RecentBugs from "@/components/bugArr";
 
 export default async function DashboardPage({
   params,

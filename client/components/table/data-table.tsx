@@ -49,7 +49,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Bug, Member } from "@/types/ProjectData";
+import { BugProj, Member } from "@/types/ProjectData";
 import { Badge } from "@/components/ui/badge";
 import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
@@ -60,10 +60,10 @@ export function DataTableDemo({
   bugs,
   members,
 }: {
-  bugs: Bug[];
+  bugs: BugProj[];
   members: Member[];
 }) {
-  const columns: ColumnDef<Bug>[] = [
+  const columns: ColumnDef<BugProj>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => {
@@ -123,7 +123,7 @@ export function DataTableDemo({
       accessorKey: "assignedUser",
       header: "Assigned",
       cell: ({ row }) => {
-        const bug = row.original as Bug;
+        const bug = row.original as BugProj;
         return bug.assignedUser ? (
           <div className="flex gap-1">
             <Avatar className="h-5 w-5">

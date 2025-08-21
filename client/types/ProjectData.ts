@@ -1,15 +1,9 @@
+import { Bug } from "./bug";
+
 export interface Member {
   user: { id: string; name: string; username: string; avatar: string };
 }
-export interface Bug {
-  id: string;
-  name: string;
-  description: string;
-  status: "OPEN" | "IN_PROGRESS" | "CLOSED";
-  priority: "LOW" | "MEDIUM" | "HIGH";
-  projectId: string;
-  createdAt: string;
-  updatedAt: string;
+export interface BugProj extends Bug {
   assignedUser: { name: string; avatar: string; username: string };
   raisedByUser: { name: string; avatar: string; username: string };
 }
@@ -25,6 +19,6 @@ interface Project {
 }
 export interface ProjectData {
   projectData: Project;
-  bugs: Bug[];
+  bugs: BugProj[];
   members: Member[];
 }
