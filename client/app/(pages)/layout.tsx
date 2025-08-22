@@ -12,7 +12,7 @@ export default async function PagesLayout({
 }>) {
   const result = await getData<UserData>("/api/user-data");
   if (!result.data.data.userData.username) redirect("/signup");
-  
+
   return (
     <>
       <SidebarProvider
@@ -26,12 +26,8 @@ export default async function PagesLayout({
         <AppSidebar userData={result.data.data.userData} variant="inset" />
         <SidebarInset>
           <SiteHeader />
-          <div className="flex flex-1 flex-col">
-            <div className="@container/main flex flex-1 flex-col gap-2">
-              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                {children}
-              </div>
-            </div>
+          <div className="@container/main flex flex-col flex-1 gap-4 py-4 md:gap-6 md:py-6">
+            {children}
           </div>
         </SidebarInset>
       </SidebarProvider>

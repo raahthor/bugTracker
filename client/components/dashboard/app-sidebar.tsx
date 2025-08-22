@@ -2,11 +2,10 @@
 
 import * as React from "react";
 import {
+  IconActivity,
   IconBug,
   IconBugFilled,
   IconDashboard,
-  IconFolder,
-  IconUsers,
   IconUsersGroup,
 } from "@tabler/icons-react";
 
@@ -49,14 +48,9 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
         icon: IconBug,
       },
       {
-        title: "Projects",
-        url: "#",
-        icon: IconFolder,
-      },
-      {
-        title: "Team",
-        url: "#",
-        icon: IconUsers,
+        title: "Activites",
+        url: "/activities",
+        icon: IconActivity,
       },
     ],
   };
@@ -82,6 +76,7 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
+        {/* <div className="text-center text-sm">Made by Prashant</div> */}
       </SidebarFooter>
     </Sidebar>
   );
