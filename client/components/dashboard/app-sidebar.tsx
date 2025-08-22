@@ -6,15 +6,11 @@ import {
   IconBugFilled,
   IconDashboard,
   IconFolder,
-  IconHelp,
-  IconSearch,
-  IconSettings,
   IconUsers,
   IconUsersGroup,
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/dashboard/nav-main";
-import { NavSecondary } from "@/components/dashboard/nav-secondary";
 import { NavUser } from "@/components/dashboard/nav-user";
 import {
   Sidebar,
@@ -34,6 +30,7 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
       name: userData.name,
       email: userData.email,
       avatar: userData.avatar,
+      username: userData.username,
     },
     navMain: [
       {
@@ -62,23 +59,6 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
         icon: IconUsers,
       },
     ],
-    navSecondary: [
-      {
-        title: "Settings",
-        url: "#",
-        icon: IconSettings,
-      },
-      {
-        title: "Get Help",
-        url: "#",
-        icon: IconHelp,
-      },
-      {
-        title: "Search",
-        url: "#",
-        icon: IconSearch,
-      },
-    ],
   };
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -99,7 +79,6 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

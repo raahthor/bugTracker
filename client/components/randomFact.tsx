@@ -9,7 +9,7 @@ export default function RandomFact() {
   }, []);
 
   return (
-    <div className="min-h-16 mb-1 px-2 py-1 rounded-md border">
+    <div className="min-h-14 mb-1 px-2 py-1 rounded-md border">
       <p className="font-semibold">Random Fact 🐞</p>
       <p>{fact || "Loading..."}</p>
     </div>
