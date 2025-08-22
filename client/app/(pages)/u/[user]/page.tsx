@@ -5,7 +5,7 @@ import RecentOrgs from "@/components/pages/dashboard/recentOrgs";
 import getData from "@/lib/getData";
 import UserData from "@/types/userData";
 import { DashboardData } from "@/types/DashboardData";
-import RecentBugs from "@/components/bugArr";
+import BugArr from "@/components/bugArr";
 
 export default async function DashboardPage({
   params,
@@ -19,13 +19,16 @@ export default async function DashboardPage({
     redirect("/login?message=Unauthorized!");
 
   const resultDash = await getData<DashboardData>("/api/dashboard-data");
-  
+
   return (
     <>
       <Welcome name={resultUser.data.data.userData.name!} />
       <OrgButtons />
       <RecentOrgs orgs={resultDash.data.data.recentOrgs} />
-      <RecentBugs bugs={resultDash.data.data.recentBugs} />
+      <div>
+        <p>Recent bug(s) assigned to you : </p>
+        <BugArr bugs={resultDash.data.data.recentBugs} />
+      </div>
     </>
   );
 }

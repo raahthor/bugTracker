@@ -5,18 +5,14 @@ import {
   IconBug,
   IconBugFilled,
   IconDashboard,
-  IconDatabase,
-  IconFileWord,
   IconFolder,
   IconHelp,
-  IconReport,
   IconSearch,
   IconSettings,
   IconUsers,
   IconUsersGroup,
 } from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/dashboard/nav-documents";
 import { NavMain } from "@/components/dashboard/nav-main";
 import { NavSecondary } from "@/components/dashboard/nav-secondary";
 import { NavUser } from "@/components/dashboard/nav-user";
@@ -83,23 +79,6 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
         icon: IconSearch,
       },
     ],
-    // documents: [
-    //   {
-    //     name: "Data Library",
-    //     url: "#",
-    //     icon: IconDatabase,
-    //   },
-    //   {
-    //     name: "Reports",
-    //     url: "#",
-    //     icon: IconReport,
-    //   },
-    //   {
-    //     name: "Word Assistant",
-    //     url: "#",
-    //     icon: IconFileWord,
-    //   },
-    // ],
   };
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -120,7 +99,6 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/* <NavDocuments items={data.documents} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
