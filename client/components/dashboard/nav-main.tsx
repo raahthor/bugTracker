@@ -9,6 +9,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
+import RandomFact from "../randomFact";
 
 export function NavMain({
   items,
@@ -23,7 +24,7 @@ export function NavMain({
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
-        <div>Hello this is random fact</div>
+        <RandomFact />
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>

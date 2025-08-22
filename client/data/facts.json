@@ -1,0 +1,22 @@
+[
+  "The first actual computer bug was a moth found inside the Harvard Mark II in 1947.",
+  "NASA's Apollo program code was printed on paper and bound in books as tall as a person.",
+  "The term 'debugging' came from literally removing bugs from hardware.",
+  "On average, fixing a bug after release costs 100x more than fixing it during development.",
+  "The Mars Climate Orbiter was lost in 1999 due to a unit conversion bug (imperial vs metric).",
+  "Grace Hopper is credited with popularizing the term 'bug' in computing.",
+  "A one-line bug in Ariane 5's software caused a $370 million rocket failure in 1996.",
+  "90% of software development time is spent reading existing code, not writing new code.",
+  "Microsoft Windows XP had over 45 million lines of code.",
+  "The Y2K bug was caused by developers using 2 digits for years to save memory.",
+  "Google once lost 40 minutes of traffic in 2012 due to a small misconfiguration bug.",
+  "The average developer spends about 50% of their time fixing bugs.",
+  "Git was created by Linus Torvalds in 2005 to manage Linux kernel development.",
+  "Some bugs can be features: the 'Ctrl+Alt+Del' shortcut was originally a debug tool.",
+  "A single missing semicolon once shut down the entire Canadian immigration system.",
+  "The first computer virus for MS-DOS was 'Brain', created in 1986.",
+  "In 2014, a single bug in OpenSSL caused the 'Heartbleed' vulnerability, affecting millions of servers.",
+  "Most critical bugs are found by users, not QA teams.",
+  "Firefox was originally named 'Phoenix' but had to change due to trademark issues.",
+  "Unix time will overflow in 2038 for 32-bit systems, similar to Y2K."
+]
