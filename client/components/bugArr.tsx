@@ -10,9 +10,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BugExt as RecentBug } from "@/types/DashboardData";
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar,AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
-import { AvatarImage } from "@radix-ui/react-avatar";
 
 export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
   const router = useRouter();

@@ -8,6 +8,7 @@ export default async function sendUserData(req: AuthRequest, res: Response) {
   try {
     const user = (await prisma.users.findUnique({
       where: { id },
+      select: { name: true, email: true, username: true, avatar: true },
     })) as User;
     res.status(200).json({
       success: true,

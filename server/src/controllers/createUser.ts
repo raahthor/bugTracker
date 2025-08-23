@@ -1,22 +1,12 @@
 import { Request, Response } from "express";
-import * as argon2 from "argon2";
 import prisma from "../utils/client";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
+import { hashPassword } from "../utils/hashPassword";
 interface UserInput {
   name: string;
   username: string;
   password: string;
 }
-
-const hashPassword = async (password: string): Promise<string> => {
-  const hash = await argon2.hash(password, {
-    type: argon2.argon2id,
-    memoryCost: 2 ** 13,
-    timeCost: 2,
-    parallelism: 1,
-  });
-  return hash;
-};
 
 export default async function createUser(req: AuthRequest, res: Response) {
   const { name, username, password } = req.body as UserInput;

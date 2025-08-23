@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import prisma from "../utils/client";
-import * as argon2 from "argon2";
 import sendCookie from "../utils/sendCookie";
 import { generateToken } from "../auth/jwt";
+import { verifyPassword } from "../utils/hashPassword";
 
 interface UserInput {
   username: string;
@@ -24,7 +24,7 @@ export default async function handleLogin(
         message: "Incorrect username",
         data: null,
       });
-    const isPassword = await argon2.verify(user.password!, password);
+    const isPassword = await verifyPassword(user.password!, password);
 
     if (!isPassword)
       return res.status(400).json({
