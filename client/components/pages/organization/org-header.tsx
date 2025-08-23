@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Member } from "@/types/organizationData";
-import { IconCopy } from "@tabler/icons-react";
+import { IconCopy, IconSettings } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -34,7 +34,16 @@ export default function OrgHeader({
   }
   return (
     <div>
-      <p>{name}</p>
+      <div className="flex justify-between px-2">
+        <p>{name}</p>
+        <Button
+          variant={"outline"}
+          onClick={() => router.push(`/org/${organization}/settings`)}
+        >
+          <IconSettings />
+        </Button>
+      </div>
+
       <div className="flex px-4 justify-end items-center">
         <p id="joinCode" className="border border-gray-400 px-2.5 rounded-l-md">
           {joinCode}

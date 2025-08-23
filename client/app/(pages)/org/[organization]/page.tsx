@@ -8,7 +8,6 @@ export default async function OrganizationPage({
 }: {
   params: { organization: string };
 }) {
-  // fetch data about one particular org.
   const { organization } = await params;
   const result = await getData<OrgnaizationData>(
     `/api/org-data/${organization}`,
