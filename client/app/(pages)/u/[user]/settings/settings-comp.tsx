@@ -80,7 +80,7 @@ export function UpdateUsername({ username }: { username: string | undefined }) {
     if (isLengthError("Username", inputUsername, 4)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/update-user`,
+        `${env.API_URL}/api/settings/update-user`,
         { username: inputUsername },
         { withCredentials: true }
       );
@@ -153,7 +153,7 @@ export function UpdatePassword() {
     }
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/change-password`,
+        `${env.API_URL}/api/settings/change-password`,
         { oldPass: inputPassword.oldPass, newPass: inputPassword.newPass },
         { withCredentials: true }
       );

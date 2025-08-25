@@ -11,7 +11,7 @@ export default async function ProjectPage({
 }) {
   const { organization, project } = await params;
   const result = await getData<ProjectData>(
-    `/api/${organization}/${project}`,
+    `/api/project/${organization}/${project}`,
     `/org/${organization}`
   );
   const projectData = result.data.data.projectData;

@@ -1,5 +1,5 @@
 "use client";
-import { Bug } from "@/types/ProjectData";
+import { Bug } from "@/types/bug";
 import { useRouter } from "next/navigation";
 
 export default function ProjHeader({

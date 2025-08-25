@@ -85,7 +85,7 @@ function BugDialogBox({
     try {
       setIsSubmitting(true);
       const result = await axios.post(
-        `${env.API_URL}/api/${organization}/${project}/create-bug`,
+        `${env.API_URL}/api/project/${organization}/${project}/create-bug`,
         {
           name: userInput.name.trim(),
           priority: priorityVal || "MEDIUM",

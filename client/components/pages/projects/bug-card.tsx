@@ -9,14 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Bug } from "@/types/ProjectData";
+import { Bug } from "@/types/bug";
 import { useRouter } from "next/navigation";
 
 export default function BugCard({
   id,
   name,
-  assignedTo,
-  raisedBy,
   projectId,
   priority,
   status,

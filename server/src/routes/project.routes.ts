@@ -8,10 +8,18 @@ import closeBug from "../controllers/closeBug";
 
 const projectRouter = Router();
 
-projectRouter.post("/api/:handle/create-project", verifyCookie, createProject);
-projectRouter.get("/api/:handle/:slug", verifyCookie, sendProjectData);
-projectRouter.post("/api/:handle/:slug/create-bug", verifyCookie, createBug);
-projectRouter.patch("/api/assign-bug", verifyCookie, assignBug);
-projectRouter.patch("/api/close-bug", verifyCookie, closeBug);
+projectRouter.post(
+  "/api/project/:handle/create-project",
+  verifyCookie,
+  createProject
+);
+projectRouter.get("/api/project/:handle/:slug", verifyCookie, sendProjectData);
+projectRouter.post(
+  "/api/project/:handle/:slug/create-bug",
+  verifyCookie,
+  createBug
+);
+projectRouter.patch("/api/project/assign-bug", verifyCookie, assignBug);
+projectRouter.patch("/api/project/close-bug", verifyCookie, closeBug);
 
 export default projectRouter;

@@ -20,7 +20,7 @@ export default function DeleteBug({ bugId }: { bugId: string }) {
   async function closeBug() {
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/close-bug`,
+        `${env.API_URL}/api/project/close-bug`,
         { bugId },
         {
           withCredentials: true,
