@@ -60,11 +60,7 @@ export default async function OrgSettingsPage({
           handle={orgData.org.handle}
           isOwner={orgData.isOwner}
         />
-        <DeleteOrg
-          id={orgData.org.id}
-          handle={orgData.org.handle}
-          isOwner={orgData.isOwner}
-        />
+        <DeleteOrg id={orgData.org.id} isOwner={orgData.isOwner} />
       </Card>
     </div>
   );

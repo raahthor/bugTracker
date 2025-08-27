@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -202,18 +203,49 @@ export function UpdateOrgHandle({
     </div>
   );
 }
-export function DeleteOrg({
-  id,
-  handle,
-  isOwner,
-}: {
-  id: string;
-  handle: string;
-  isOwner: boolean;
-}) {
+
+export function DeleteOrg({ id, isOwner }: { id: string; isOwner: boolean }) {
+  const router = useRouter();
+  async function deleteOrg() {
+    try {
+      const result = await axios.delete(
+        `${env.API_URL}/api/settings/delete-org/${id}`,
+        { withCredentials: true }
+      );
+      if (result.data.success) {
+        toast.success("Organization deleted successfully.");
+        router.push("/org");
+      }
+    } catch (err) {
+      toastError(err);
+    }
+  }
   return (
     <div>
-      <Button disabled={!isOwner}>Delete Organization</Button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="destructive" disabled={!isOwner}>
+            Delete Organization
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Are Sure?</DialogTitle>
+            <DialogDescription>
+              Deleted organizations can still be recovered from recovery tab
+              under 30 days after deletion.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant={"destructive"} onClick={deleteOrg}>
+              Delete
+            </Button>
+            <DialogClose asChild>
+              <Button variant={"outline"}>Cancel</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
