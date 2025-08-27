@@ -32,7 +32,7 @@ export default async function OrgSettingsPage({
   const result = await getData<OrgData>(
     `/api/settings/org-data/${organization}`
   );
-
+  const orgData = result.data.data;
   return (
     <div className="flex flex-1 justify-center items-center">
       <Card className="px-8 ">
@@ -40,30 +40,30 @@ export default async function OrgSettingsPage({
           Organization Settings
         </CardTitle>
         <UpdateOrgName
-          name={result.data.data.org.name}
+          name={orgData.org.name}
+          handle={orgData.org.handle}
           isOwner={result.data.data.isOwner}
         />
         <div className="flex gap-1 font-semibold">
           <p>Owner : </p>
           <Avatar className="w-6 h-6">
-            <AvatarImage
-              src={result.data.data.org.owner.avatar}
-              alt="User Image"
-            />
+            <AvatarImage src={orgData.org.owner.avatar} alt="User Image" />
           </Avatar>
-          <p>{result.data.data.org.owner.name}</p>
+          <p>{orgData.org.owner.name}</p>
         </div>
         <UpdateOrgHandle
-          handle={result.data.data.org.handle}
-          isOwner={result.data.data.isOwner}
+          handle={orgData.org.handle}
+          isOwner={orgData.isOwner}
         />
         <UpdateOrgDesc
-          description={result.data.data.org.description}
-          isOwner={result.data.data.isOwner}
+          description={orgData.org.description}
+          handle={orgData.org.handle}
+          isOwner={orgData.isOwner}
         />
         <DeleteOrg
-          id={result.data.data.org.id}
-          isOwner={result.data.data.isOwner}
+          id={orgData.org.id}
+          handle={orgData.org.handle}
+          isOwner={orgData.isOwner}
         />
       </Card>
     </div>

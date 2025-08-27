@@ -12,23 +12,50 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
+import toastError, { isLengthError } from "@/lib/toastError";
+import axios from "axios";
+import { env } from "@/lib/env";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function UpdateOrgName({
   name,
+  handle,
   isOwner,
 }: {
   name: string;
+  handle: string;
   isOwner: boolean;
 }) {
   const [inputName, setInputName] = useState("");
+  const router = useRouter();
   const [open, setOpen] = useState(false);
-  function updateOrgName() {}
+
+  async function updateOrgName() {
+    if (isLengthError("Name", inputName, 6)) return;
+    try {
+      const result = await axios.patch(
+        `${env.API_URL}/api/settings/update-org`,
+        { name: inputName.trim(), handle },
+        { withCredentials: true }
+      );
+      if (result.data.success) {
+        toast.success("Organization updated.");
+        router.refresh();
+      }
+      setOpen(false);
+    } catch (err) {
+      toastError(err);
+    }
+  }
   return (
     <div className="flex items-center">
       <p className="font-semibold">Name : {name}</p>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="link">Edit</Button>
+          <Button variant="link" disabled={!isOwner}>
+            Edit
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -55,20 +82,43 @@ export function UpdateOrgName({
 }
 export function UpdateOrgDesc({
   description,
+  handle,
   isOwner,
 }: {
   description: string;
+  handle: string;
   isOwner: boolean;
 }) {
   const [inputDescription, setInputDescription] = useState("");
-  function updateOrgDescription() {}
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  async function updateOrgDescription() {
+    if (isLengthError("Description", inputDescription, 10)) return;
+    try {
+      const result = await axios.patch(
+        `${env.API_URL}/api/settings/update-org`,
+        { description: inputDescription.trim(), handle },
+        { withCredentials: true }
+      );
+      if (result.data.success) {
+        toast.success("Organization updated.");
+        router.refresh();
+      }
+      setOpen(false);
+    } catch (err) {
+      toastError(err);
+    }
+  }
   return (
     <div className="flex font-semibold gap-1">
       <p className="min-w-fit">Description : </p>
       <p className=" max-w-[150px]">{description}</p>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="link">Edit</Button>
+          <Button variant="link" disabled={!isOwner}>
+            Edit
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -82,7 +132,7 @@ export function UpdateOrgDesc({
             <Input
               name="desription"
               value={inputDescription}
-              onChange={(e) => setInputDescription(e.target.value.trim())}
+              onChange={(e) => setInputDescription(e.target.value)}
             />
           </div>
           <DialogFooter>
@@ -101,13 +151,33 @@ export function UpdateOrgHandle({
   isOwner: boolean;
 }) {
   const [inputHandle, setInputHandle] = useState("");
-  function updateOrgHandle() {}
+  const router = useRouter();
+
+  async function updateOrgHandle() {
+    if (isLengthError("Handle", inputHandle, 6)) return;
+    try {
+      const result = await axios.patch(
+        `${env.API_URL}/api/settings/update-org`,
+        { newHandle: inputHandle.trim(), handle },
+        { withCredentials: true }
+      );
+      if (result.data.success) {
+        toast.success("Organization updated.");
+        router.push(`/org/${result.data.data}/settings`);
+      }
+    } catch (err) {
+      console.error(err);
+      toastError(err);
+    }
+  }
   return (
     <div className="flex items-center">
       <p className="font-semibold">Handle : {handle}</p>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="link">Edit</Button>
+          <Button variant="link" disabled={!isOwner}>
+            Edit
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -132,10 +202,18 @@ export function UpdateOrgHandle({
     </div>
   );
 }
-export function DeleteOrg({ id, isOwner }: { id: string; isOwner: boolean }) {
+export function DeleteOrg({
+  id,
+  handle,
+  isOwner,
+}: {
+  id: string;
+  handle: string;
+  isOwner: boolean;
+}) {
   return (
     <div>
-      <Button>Delete Organization</Button>
+      <Button disabled={!isOwner}>Delete Organization</Button>
     </div>
   );
 }
