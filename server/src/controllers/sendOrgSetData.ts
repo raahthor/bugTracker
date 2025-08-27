@@ -8,6 +8,9 @@ export default async function sendOrgSetData(req: AuthRequest, res: Response) {
   try {
     const org = await prisma.organizations.findUnique({
       where: { handle, members: { some: { userId: id } } },
+      include: {
+        owner: { select: { name: true, username: true, avatar: true } },
+      },
     });
     if (!org)
       return res.status(404).json({
