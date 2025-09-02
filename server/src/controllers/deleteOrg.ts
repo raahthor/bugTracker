@@ -13,7 +13,8 @@ export default async function deleteOrg(req: AuthRequest, res: Response) {
         ownerId: id,
       },
       data: {
-        // add a deleted at col in org table and handle fetched org accordingly
+        // add a deleted at col in org table and handle fetched org accordingly.
+        
       },
     });
     if (!deletedOrg)
