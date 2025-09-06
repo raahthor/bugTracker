@@ -10,6 +10,7 @@ export default async function sendProjectData(req: AuthRequest, res: Response) {
       where: {
         handle,
         members: { some: { userId: id } },
+        deletedAt: null,
       },
       include: {
         projects: {

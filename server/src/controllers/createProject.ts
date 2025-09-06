@@ -15,7 +15,9 @@ export default async function createProject(req: AuthRequest, res: Response) {
   const { handle } = req.params;
 
   try {
-    const isOrg = await prisma.organizations.findUnique({ where: { handle } });
+    const isOrg = await prisma.organizations.findUnique({
+      where: { handle, deletedAt: null },
+    });
     if (!isOrg)
       return res.status(400).json({
         success: false,

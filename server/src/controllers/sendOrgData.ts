@@ -7,7 +7,7 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
   const { id, email } = req.userData as JWTDecoded;
   try {
     const org = await prisma.organizations.findUnique({
-      where: { handle },
+      where: { handle, deletedAt: null },
       include: {
         projects: true,
         members: {

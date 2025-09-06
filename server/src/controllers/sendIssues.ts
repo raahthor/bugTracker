@@ -7,6 +7,7 @@ export default async function sendIssues(req: AuthRequest, res: Response) {
   try {
     const bugs = await prisma.bugs.findMany({
       where: {
+        deletedAt: null,
         OR: [{ assignedTo: id, status: { not: "CLOSED" } }, { raisedBy: id }],
       },
       orderBy: { updatedAt: "desc" },
@@ -26,7 +27,7 @@ export default async function sendIssues(req: AuthRequest, res: Response) {
     const assignedBugs = bugs.filter(
       (bug) => bug.assignedTo === id && bug.status !== "CLOSED"
     );
-    
+
     res.status(200).json({
       success: true,
       message: "Bug data sent",

@@ -16,6 +16,7 @@ export default async function (req: AuthRequest, res: Response) {
           { name: { startsWith: title, mode: "insensitive" } },
           { handle: { startsWith: title, mode: "insensitive" } },
         ],
+        deletedAt: null,
       },
       select: {
         id: true,

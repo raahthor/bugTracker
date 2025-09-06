@@ -6,10 +6,10 @@ export default async function createBug(req: AuthRequest, res: Response) {
   const { handle, slug } = req.params;
   const { id, email } = req.userData as JWTDecoded;
   const { name, description, priority } = req.body;
-  
+
   try {
     const isOrg = await prisma.organizations.findUnique({
-      where: { handle },
+      where: { handle, deletedAt: null },
       include: {
         members: { where: { userId: id }, select: { role: true, id: true } },
         projects: { where: { slug } },
