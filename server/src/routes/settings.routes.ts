@@ -5,6 +5,7 @@ import changePassword from "../controllers/changePassword";
 import sendOrgSetData from "../controllers/sendOrgSetData";
 import updateOrg from "../controllers/updateOrg";
 import deleteOrg from "../controllers/deleteOrg";
+import sendSoftDeletedOrgs from "../controllers/sendSoftDeletedOrgs";
 
 const settingsRouter = Router();
 
@@ -20,6 +21,15 @@ settingsRouter.get(
   sendOrgSetData
 );
 settingsRouter.patch("/api/settings/update-org", verifyCookie, updateOrg);
-settingsRouter.delete("/api/settings/delete-org/:orgId", verifyCookie, deleteOrg);
+settingsRouter.delete(
+  "/api/settings/delete-org/:orgId",
+  verifyCookie,
+  deleteOrg
+);
+settingsRouter.get(
+  "/api/settings/soft-deleted-orgs",
+  verifyCookie,
+  sendSoftDeletedOrgs
+);
 
 export default settingsRouter;
