@@ -45,14 +45,15 @@ model Users {
 }
 
 model Organizations {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   description String
-  handle      String   @unique
-  joinCode    String   @unique
+  handle      String    @unique
+  joinCode    String    @unique
   ownerId     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   owner    Users               @relation("OrgOwner", fields: [ownerId], references: [id])
   members  OrganizationUsers[]
@@ -74,13 +75,14 @@ model OrganizationUsers {
 }
 
 model Projects {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   orgId       String
   description String
   slug        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   organization Organizations @relation(fields: [orgId], references: [id])
   bugs         Bugs[]
@@ -97,6 +99,7 @@ model Bugs {
   projectId   String
   assignedTo  String?
   raisedBy    String
+  deletedAt   DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
