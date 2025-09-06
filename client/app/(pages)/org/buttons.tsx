@@ -12,7 +12,7 @@ export default function Buttons() {
       <Button onClick={() => router.push("/join-org")}>
         Join Organization
       </Button>
-      <Button variant="outline" onClick={() => router.push("/deleted-orgs")}>
+      <Button variant="outline" onClick={() => router.push("/recover-orgs")}>
         Recover organizations
       </Button>
     </div>
