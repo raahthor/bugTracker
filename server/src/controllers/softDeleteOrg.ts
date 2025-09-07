@@ -34,7 +34,7 @@ async function softDelete(orgId: string, ownerId: string) {
   });
 }
 
-export default async function deleteOrg(req: AuthRequest, res: Response) {
+export default async function softDeleteOrg(req: AuthRequest, res: Response) {
   const { id } = req.userData as JWTDecoded;
   const { orgId } = req.params;
 

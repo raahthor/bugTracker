@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { env } from "@/lib/env";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -61,8 +62,8 @@ function RecoverButton({ id }: { id: string }) {
   async function recoverOrg() {
     try {
       const result = await axios.patch(
-        "/api/settings/recover-org",
-        { id },
+        `${env.API_URL}/api/settings/recover-org`,
+        { orgId: id },
         { withCredentials: true }
       );
       if (result.data.success)
