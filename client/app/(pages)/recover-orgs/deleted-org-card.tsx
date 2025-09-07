@@ -17,6 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { env } from "@/lib/env";
+import toastError from "@/lib/toastError";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -59,6 +60,7 @@ export default function DeletedOrgCard({
 
 function RecoverButton({ id }: { id: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   async function recoverOrg() {
     try {
       const result = await axios.patch(
@@ -66,10 +68,16 @@ function RecoverButton({ id }: { id: string }) {
         { orgId: id },
         { withCredentials: true }
       );
-      if (result.data.success)
+      if (result.data.success) {
         toast.success("Organization recoverd successfully");
+        router.refresh();
+      }
       setIsOpen(false);
-    } catch (err) {}
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401)
+        router.push("/login?message=Unauthorized");
+      else toastError(error);
+    }
   }
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

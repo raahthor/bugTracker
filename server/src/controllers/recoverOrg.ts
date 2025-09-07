@@ -4,19 +4,26 @@ import prisma from "../utils/client";
 
 async function updateDeletedAt(orgId: string, ownerId: string) {
   return prisma.$transaction(async (tx) => {
-    const org = await tx.organizations.update({
-      where: { ownerId, id: orgId },
-      data: { deletedAt: null },
+    const org = await tx.organizations.findUnique({
+      where: { id: orgId, ownerId },
     });
     if (!org) throw new Error("NOTFOUND");
+
+    await tx.organizations.update({
+      where: { id: orgId },
+      data: { deletedAt: null },
+    });
+
     const projects = await tx.projects.updateMany({
-      where: { orgId: org.id },
+      where: { orgId: org.id, deletedAt: { not: null } },
       data: { deletedAt: null },
     });
+
     const bugs = await tx.bugs.updateMany({
-      where: { project: { orgId: org.id } },
+      where: { project: { orgId: org.id }, deletedAt: { not: null } },
       data: { deletedAt: null },
     });
+
     return {
       message: "Organization recoverd",
       projectsCount: projects.count,
@@ -37,11 +44,18 @@ export default async function recoverOrg(req: AuthRequest, res: Response) {
       message: "Organization recovered successfully",
       data: { projRec: result.projectsCount, bugRec: result.bugsCount },
     });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      data: null,
-    });
+  } catch (err: any) {
+    if (err.message === "NOTFOUND")
+      res.status(403).json({
+        success: false,
+        message: "Organization not found or Unauthorized",
+        data: null,
+      });
+    else
+      res.status(500).json({
+        success: false,
+        message: "Something went wrong",
+        data: null,
+      });
   }
 }
