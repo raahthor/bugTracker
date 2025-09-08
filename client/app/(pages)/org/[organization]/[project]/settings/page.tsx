@@ -1,11 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import getData from "@/lib/getData";
-import {
-  DeleteOrg,
-  UpdateOrgDesc,
-  UpdateOrgName,
-} from "./proj-settings";
+import { DeleteProj, UpdateProjDesc, UpdateProjName } from "./proj-settings";
 interface ProjData {
   projData: {
     id: string;
@@ -34,9 +30,7 @@ export default async function ProjSettingsPage({
   return (
     <div className="flex flex-1 justify-center items-center">
       <Card className="px-8 ">
-        <CardTitle className="self-center text-lg">
-          Project Settings
-        </CardTitle>
+        <CardTitle className="self-center text-lg">Project Settings</CardTitle>
         <div className="flex gap-1 font-semibold text-muted-foreground">
           <p>Org owner : </p>
           <Avatar className="w-6 h-6">
@@ -44,17 +38,21 @@ export default async function ProjSettingsPage({
           </Avatar>
           <p>{proj.owner.name}</p>
         </div>
-        <UpdateOrgName
+        <UpdateProjName
           name={proj.projData.name}
-          slug={proj.projData.slug}
+          id={proj.projData.id}
           isOwner={result.data.data.isOwner}
         />
-        <UpdateOrgDesc
+        <UpdateProjDesc
           description={proj.projData.description}
-          slug={proj.projData.slug}
+          id={proj.projData.id}
           isOwner={proj.isOwner}
         />
-        <DeleteOrg id={proj.projData.id} isOwner={proj.isOwner} />
+        <DeleteProj
+          id={proj.projData.id}
+          isOwner={proj.isOwner}
+          organization={organization}
+        />
       </Card>
     </div>
   );

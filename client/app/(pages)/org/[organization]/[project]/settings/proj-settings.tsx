@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -19,29 +18,29 @@ import { env } from "@/lib/env";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export function UpdateOrgName({
+export function UpdateProjName({
   name,
-  slug,
+  id,
   isOwner,
 }: {
   name: string;
-  slug: string;
+  id: string;
   isOwner: boolean;
 }) {
   const [inputName, setInputName] = useState("");
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  async function updateOrgName() {
+  async function updateProjName() {
     if (isLengthError("Name", inputName, 6)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-org`,
-        { name: inputName.trim(), slug },
+        `${env.API_URL}/api/settings/update-proj`,
+        { name: inputName.trim(), id },
         { withCredentials: true }
       );
       if (result.data.success) {
-        toast.success("Organization updated.");
+        toast.success("Project updated");
         router.refresh();
       }
       setOpen(false);
@@ -74,36 +73,36 @@ export function UpdateOrgName({
             />
           </div>
           <DialogFooter>
-            <Button onClick={updateOrgName}>Save</Button>
+            <Button onClick={updateProjName}>Save</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   );
 }
-export function UpdateOrgDesc({
+export function UpdateProjDesc({
   description,
-  slug,
+  id,
   isOwner,
 }: {
   description: string;
-  slug: string;
+  id: string;
   isOwner: boolean;
 }) {
   const [inputDescription, setInputDescription] = useState("");
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  async function updateOrgDescription() {
+  async function updateProjDescription() {
     if (isLengthError("Description", inputDescription, 10)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-org`,
-        { description: inputDescription.trim(), slug },
+        `${env.API_URL}/api/settings/update-proj`,
+        { description: inputDescription.trim(), id },
         { withCredentials: true }
       );
       if (result.data.success) {
-        toast.success("Organization updated.");
+        toast.success("Project updated");
         router.refresh();
       }
       setOpen(false);
@@ -137,7 +136,7 @@ export function UpdateOrgDesc({
             />
           </div>
           <DialogFooter>
-            <Button onClick={updateOrgDescription}>Save</Button>
+            <Button onClick={updateProjDescription}>Save</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -145,18 +144,30 @@ export function UpdateOrgDesc({
   );
 }
 
-
-export function DeleteOrg({ id, isOwner }: { id: string; isOwner: boolean }) {
+export function DeleteProj({
+  id,
+  isOwner,
+  organization,
+}: {
+  id: string;
+  isOwner: boolean;
+  organization: string;
+}) {
+  const [isUnmatched, setIsUnmatched] = useState(true);
   const router = useRouter();
-  async function deleteOrg() {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value === "delete project") setIsUnmatched(false);
+    else setIsUnmatched(true);
+  }
+  async function deleteProj() {
     try {
       const result = await axios.delete(
-        `${env.API_URL}/api/settings/delete-org/${id}`,
+        `${env.API_URL}/api/settings/delete-proj/${id}`,
         { withCredentials: true }
       );
       if (result.data.success) {
-        toast.success("Organization deleted successfully.");
-        router.push("/org");
+        toast.success("Project deleted successfully");
+        router.push(`/org/${organization}`);
       }
     } catch (err) {
       toastError(err);
@@ -167,24 +178,33 @@ export function DeleteOrg({ id, isOwner }: { id: string; isOwner: boolean }) {
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="destructive" disabled={!isOwner}>
-            Delete Organization
+            Delete Project
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Are Sure?</DialogTitle>
             <DialogDescription>
-              Deleted organizations can still be recovered from recovery tab
-              under 30 days after deletion.
+              This operation is irreversible and alongwith the project all of
+              it's bugs will also be deleted.
             </DialogDescription>
           </DialogHeader>
+          <div className="flex flex-col gap-3">
+            <Label>
+              Type{" "}
+              <span className="text-red-500 font-bold">"delete project"</span>{" "}
+              below to confirm
+            </Label>
+            <Input onChange={handleChange} />
+          </div>
           <DialogFooter>
-            <Button variant={"destructive"} onClick={deleteOrg}>
+            <Button
+              variant={"destructive"}
+              onClick={deleteProj}
+              disabled={isUnmatched}
+            >
               Delete
             </Button>
-            <DialogClose asChild>
-              <Button variant={"outline"}>Cancel</Button>
-            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
