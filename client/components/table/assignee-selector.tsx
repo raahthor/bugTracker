@@ -33,6 +33,12 @@ export default function AssigneeSelector({
 }) {
   const router = useRouter();
   const [user, setUsername] = React.useState<Member["user"] | null>();
+  const [query, setQuery] = React.useState("");
+
+  const filteredMembers = members.filter((m) =>
+    m.user.name.toLowerCase().includes(query.toLowerCase())
+  );
+
   async function assignBug() {
     try {
       const result = await axios.patch(
@@ -67,34 +73,40 @@ export default function AssigneeSelector({
           </DialogHeader>
           <div className="grid gap-3">
             <Label htmlFor="search">Member Name</Label>
-            <Input id="name" name="name" />
+            <Input value={query} onChange={(e) => setQuery(e.target.value)} />
           </div>
           <div className="grid gap-4">
-            {members.map((mem, idx) => (
-              <DialogClose key={idx} asChild>
-                <Button
-                  variant="outline"
-                  className="h-15 flex gap-2 justify-start"
-                  onClick={() => setUsername(mem.user)}
-                >
-                  <Avatar>
-                    <AvatarImage src={mem.user.avatar} alt="user avatar" />
-                  </Avatar>
-                  <div className="text-start">
-                    <p>{mem.user.name}</p>
-                    <DialogDescription>@ {mem.user.username}</DialogDescription>
-                  </div>
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      user?.username === mem.user.username
-                        ? "opacity-100"
-                        : "opacity-0"
-                    )}
-                  />
-                </Button>
-              </DialogClose>
-            ))}
+            {filteredMembers.length > 0 ? (
+              filteredMembers.map((mem, idx) => (
+                <DialogClose key={idx} asChild>
+                  <Button
+                    variant="outline"
+                    className="h-15 flex gap-2 justify-start"
+                    onClick={() => setUsername(mem.user)}
+                  >
+                    <Avatar>
+                      <AvatarImage src={mem.user.avatar} alt="user avatar" />
+                    </Avatar>
+                    <div className="text-start">
+                      <p>{mem.user.name}</p>
+                      <DialogDescription>
+                        @ {mem.user.username}
+                      </DialogDescription>
+                    </div>
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        user?.username === mem.user.username
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                  </Button>
+                </DialogClose>
+              ))
+            ) : (
+              <p>No results found</p>
+            )}
           </div>
         </DialogContent>
       </Dialog>
