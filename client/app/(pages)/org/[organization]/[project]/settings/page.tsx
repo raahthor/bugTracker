@@ -1,6 +1,61 @@
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import getData from "@/lib/getData";
+import {
+  DeleteOrg,
+  UpdateOrgDesc,
+  UpdateOrgName,
+} from "./proj-settings";
+interface ProjData {
+  projData: {
+    id: string;
+    name: string;
+    description: string;
+    orgId: string;
+    slug: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  owner: { id: string; name: string; username: string; avatar: string };
+  isOwner: boolean;
+}
 
-export default function ProjSettingsPage() {
+export default async function ProjSettingsPage({
+  params,
+}: {
+  params: { organization: string; project: string };
+}) {
+  const { organization, project } = await params;
+  const result = await getData<ProjData>(
+    `/api/settings/proj-data/${organization}/${project}`
+  );
+  const proj = result.data.data;
+
   return (
-    <div>ProjSettingsPage</div>
-  )
+    <div className="flex flex-1 justify-center items-center">
+      <Card className="px-8 ">
+        <CardTitle className="self-center text-lg">
+          Project Settings
+        </CardTitle>
+        <div className="flex gap-1 font-semibold text-muted-foreground">
+          <p>Org owner : </p>
+          <Avatar className="w-6 h-6">
+            <AvatarImage src={proj.owner.avatar} alt="User Image" />
+          </Avatar>
+          <p>{proj.owner.name}</p>
+        </div>
+        <UpdateOrgName
+          name={proj.projData.name}
+          slug={proj.projData.slug}
+          isOwner={result.data.data.isOwner}
+        />
+        <UpdateOrgDesc
+          description={proj.projData.description}
+          slug={proj.projData.slug}
+          isOwner={proj.isOwner}
+        />
+        <DeleteOrg id={proj.projData.id} isOwner={proj.isOwner} />
+      </Card>
+    </div>
+  );
 }

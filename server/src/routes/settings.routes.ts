@@ -7,6 +7,7 @@ import updateOrg from "../controllers/updateOrg";
 import softDeleteOrg from "../controllers/softDeleteOrg";
 import sendSoftDeletedOrgs from "../controllers/sendSoftDeletedOrgs";
 import recoverOrg from "../controllers/recoverOrg";
+import sendProjSetData from "../controllers/sendProjSetData";
 
 const settingsRouter = Router();
 
@@ -34,4 +35,9 @@ settingsRouter.get(
 );
 settingsRouter.patch("/api/settings/recover-org", verifyCookie, recoverOrg);
 
+settingsRouter.get(
+  "/api/settings/proj-data/:handle/:slug",
+  verifyCookie,
+  sendProjSetData
+);
 export default settingsRouter;

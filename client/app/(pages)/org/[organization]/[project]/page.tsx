@@ -23,6 +23,8 @@ export default async function ProjectPage({
         name={projectData.name}
         description={projectData.description}
         createdAt={projectData.createdAt}
+        organization={organization}
+        project={project}
       />
       <CreateBug organization={organization} project={project} />
       <DataTableDemo bugs={bugs} members={members} />
