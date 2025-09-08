@@ -23,13 +23,17 @@ export default function ProjHeader({
   });
   return (
     <header>
-      <p>{name}</p>
-      <Button
-        variant={"outline"}
-        onClick={() => router.push(`/org/${organization}/${project}/settings`)}
-      >
-        <IconSettings />
-      </Button>
+      <div className="flex justify-between px-2">
+        <p>{name}</p>
+        <Button
+          variant={"outline"}
+          onClick={() =>
+            router.push(`/org/${organization}/${project}/settings`)
+          }
+        >
+          <IconSettings />
+        </Button>
+      </div>
       <p>{description}</p>
       <p>Created : {date}</p>
     </header>
