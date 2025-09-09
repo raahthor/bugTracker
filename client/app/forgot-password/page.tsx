@@ -1,4 +1,3 @@
-import React from "react";
 import ForgotPageForm from "./forgot-page-form";
 
 export default function ForgotPage() {

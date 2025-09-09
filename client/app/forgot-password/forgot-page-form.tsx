@@ -27,15 +27,10 @@ export default function ForgotPageForm({
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const result = await axios.post(
-        `${env.API_URL}/api/forgot-password`,
-        {
-          username: input.trim(),
-        },
-        { withCredentials: false }
-      );
-      if (result.data.success)
-        toast.success("A reset link has been sent to your registered email.");
+      const result = await axios.post(`${env.API_URL}/api/forgot-password`, {
+        username: input.trim(),
+      });
+      if (result.data.success) toast.success(result.data.message);
     } catch (err) {
       toastError(err);
     } finally {
