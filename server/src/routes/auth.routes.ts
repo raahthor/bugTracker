@@ -6,6 +6,8 @@ import createUser from "../controllers/createUser";
 import handleGoogleCallback from "../controllers/handleGoogleCallback";
 import handleLogout from "../controllers/handleLogout";
 import { verifyCookie } from "../middlewares/verifyCookie";
+import forgotPassword from "../controllers/forgotPassword";
+import resetPassword from "../controllers/resetPassword";
 
 const authRouter = Router();
 
@@ -26,4 +28,6 @@ authRouter.post("/api/complete-profile", verifyCookie, createUser);
 authRouter.post("/api/login", handleLogin);
 authRouter.get("/api/logout", handleLogout);
 
+authRouter.post("/api/forgot-password", forgotPassword);
+authRouter.patch("/api/reset-password", resetPassword);
 export default authRouter;
