@@ -15,6 +15,7 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
       include: {
         projects: true,
         members: {
+          where: { isActive: true },
           select: {
             user: {
               select: { id: true, name: true, email: true, avatar: true },

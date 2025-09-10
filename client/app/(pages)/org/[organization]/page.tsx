@@ -30,7 +30,11 @@ export default async function OrganizationPage({
         organization={organization}
       />
       <div>
-        <Members members={members} isOrgOwner={result.data.data.isOwner} />
+        <Members
+          members={members}
+          isOrgOwner={result.data.data.isOwner}
+          orgId={orgData.id}
+        />
         <CreateProjButton organization={organization} />
       </div>
 
