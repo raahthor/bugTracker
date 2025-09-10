@@ -13,8 +13,15 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Member } from "@/types/organizationData";
 import { useState } from "react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 
-export default function Members({ members }: { members: Member[] }) {
+export default function Members({
+  members,
+  isOrgOwner,
+}: {
+  members: Member[];
+  isOrgOwner: boolean;
+}) {
   const [query, setQuery] = useState("");
 
   const filteredMem = members.filter((mem) =>
@@ -71,7 +78,11 @@ export default function Members({ members }: { members: Member[] }) {
                   <p>{mem.name}</p>
                   <DialogDescription>{mem.email}</DialogDescription>
                 </div>
-                <RemoveMemBtn isOwner={mem.role === "OWNER"} userId={mem.id} />
+                <RemoveMemBtn
+                  isOwner={mem.role === "OWNER"}
+                  userId={mem.id}
+                  isOrgOwner={isOrgOwner}
+                />
               </div>
             ))
           ) : (
@@ -85,10 +96,13 @@ export default function Members({ members }: { members: Member[] }) {
 function RemoveMemBtn({
   isOwner,
   userId,
+  isOrgOwner,
 }: {
   isOwner: boolean;
   userId: string;
+  isOrgOwner: boolean;
 }) {
+  const router = useRouter();
   async function removeUser() {
     alert("to be added");
   }
@@ -98,7 +112,7 @@ function RemoveMemBtn({
         <Button
           variant="ghost"
           className={`ml-auto ${isOwner && "hidden"}`}
-          disabled={isOwner} //make it reverse
+          disabled={!isOrgOwner}
         >
           Remove
         </Button>

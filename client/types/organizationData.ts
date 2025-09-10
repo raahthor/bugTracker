@@ -26,6 +26,7 @@ export interface Member {
   avatar: string;
 }
 export interface OrgnaizationData {
+  isOwner: boolean;
   orgData: Organization;
   members: Member[];
 }

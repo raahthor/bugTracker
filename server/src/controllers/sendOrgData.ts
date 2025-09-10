@@ -54,6 +54,7 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
       success: true,
       message: "OK",
       data: {
+        isOwner: id === org.ownerId,
         orgData,
         members,
       },
