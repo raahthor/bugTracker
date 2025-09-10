@@ -8,7 +8,7 @@ export default async function joinOrganization(
 ) {
   const { orgId, joinCode } = req.body;
   const { id } = req.userData as JWTDecoded;
-// handle rejoining or removed member and also manage how data sent for rmoved users 
+
   try {
     const org = await prisma.organizations.findUnique({
       where: { id: orgId },
@@ -21,13 +21,17 @@ export default async function joinOrganization(
         data: null,
       });
 
-    const addMember = await prisma.organizationUsers.create({
-      data: {
+    await prisma.organizationUsers.upsert({
+      where: { userId_orgId: { userId: id, orgId } },
+      update: { isActive: true },
+      create: {
         role: "MEMBER",
-        organization: { connect: { id: orgId } },
+        isActive: true,
         user: { connect: { id } },
+        organization: { connect: { id: orgId } },
       },
     });
+
     res.status(201).json({
       success: true,
       message: "Organization Joined successfully",
