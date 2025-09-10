@@ -8,7 +8,7 @@ export default async function joinOrganization(
 ) {
   const { orgId, joinCode } = req.body;
   const { id } = req.userData as JWTDecoded;
-
+// handle rejoining or removed member and also manage how data sent for rmoved users 
   try {
     const org = await prisma.organizations.findUnique({
       where: { id: orgId },

@@ -5,6 +5,7 @@ import prisma from "../utils/client";
 export default async function removeUser(req: AuthRequest, res: Response) {
   const { id } = req.userData as JWTDecoded;
   const { removeUserId, orgId } = req.body;
+
   try {
     const org = await prisma.organizations.findUnique({
       where: { id: orgId, ownerId: id },
@@ -15,16 +16,28 @@ export default async function removeUser(req: AuthRequest, res: Response) {
         message: "Org not found",
         data: null,
       });
+      
     if (org.ownerId === removeUserId)
       return res.status(403).json({
         success: false,
         message: "Can't remove owner",
         data: null,
       });
-    await prisma.organizationUsers.update({
-      where: { userId_orgId: { userId: removeUserId, orgId } },
-      data: { isActive: false },
+
+    await prisma.$transaction(async (tx) => {
+      await tx.organizationUsers.update({
+        where: { userId_orgId: { userId: removeUserId, orgId } },
+        data: { isActive: false },
+      });
+      await tx.bugs.updateMany({
+        where: {
+          assignedTo: removeUserId,
+          project: { orgId },
+        },
+        data: { assignedTo: null },
+      });
     });
+    
     res.status(200).json({
       success: true,
       message: "User removed",

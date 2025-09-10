@@ -7,7 +7,10 @@ export default async function sendDashData(req: AuthRequest, res: Response) {
   try {
     const [recentOrgs, recentBugs] = await Promise.all([
       prisma.organizations.findMany({
-        where: { members: { some: { userId: id } }, deletedAt: null },
+        where: {
+          members: { some: { userId: id, isActive: true } },
+          deletedAt: null,
+        },
         orderBy: { updatedAt: "desc" },
         take: 3,
         select: { id: true, description: true, name: true, handle: true },

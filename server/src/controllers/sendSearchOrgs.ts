@@ -8,7 +8,7 @@ export default async function (req: AuthRequest, res: Response) {
   try {
     const userInOrgs = await prisma.organizationUsers.findMany({
       where: { userId: id },
-      select: { orgId: true },
+      select: { orgId: true, isActive: true },
     });
     const orgList = await prisma.organizations.findMany({
       where: {
@@ -30,7 +30,7 @@ export default async function (req: AuthRequest, res: Response) {
       name: org.name,
       handle: org.handle,
       owner: org.owner.name,
-      isMember: userInOrgs.some((u) => u.orgId === org.id),
+      isMember: userInOrgs.some((u) => u.orgId === org.id && u.isActive),
     }));
     res.status(200).json({
       success: true,

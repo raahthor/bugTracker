@@ -9,7 +9,7 @@ export default async function sendProjectData(req: AuthRequest, res: Response) {
     const isOrg = await prisma.organizations.findFirst({
       where: {
         handle,
-        members: { some: { userId: id } },
+        members: { some: { userId: id, isActive: true } },
         deletedAt: null,
       },
       include: {

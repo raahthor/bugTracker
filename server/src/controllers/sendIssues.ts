@@ -8,6 +8,11 @@ export default async function sendIssues(req: AuthRequest, res: Response) {
     const bugs = await prisma.bugs.findMany({
       where: {
         deletedAt: null,
+        project: {
+          organization: {
+            members: { some: { userId: id, isActive: true } },
+          },
+        },
         OR: [{ assignedTo: id, status: { not: "CLOSED" } }, { raisedBy: id }],
       },
       orderBy: { updatedAt: "desc" },

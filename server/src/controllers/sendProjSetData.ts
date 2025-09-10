@@ -9,7 +9,7 @@ export default async function sendProjSetData(req: AuthRequest, res: Response) {
     const projData = await prisma.organizations.findFirst({
       where: {
         handle,
-        members: { some: { userId: id } },
+        members: { some: { userId: id, isActive: true } },
         deletedAt: null,
       },
       select: {

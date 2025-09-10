@@ -6,7 +6,7 @@ export default async function sendOrgsList(req: AuthRequest, res: Response) {
   const { id, email } = req.userData as JWTDecoded;
   try {
     const orgList = await prisma.organizationUsers.findMany({
-      where: { userId: id, organization: { deletedAt: null } },
+      where: { userId: id, isActive: true, organization: { deletedAt: null } },
       orderBy: { createdAt: "desc" },
       include: {
         organization: {
