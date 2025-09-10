@@ -9,14 +9,6 @@ interface Organization {
   updatedAt: string;
   projects: Projects[];
 }
-interface Membership {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  orgId: string;
-  role: "OWNER" | "MEMBER";
-}
 interface Projects {
   id: string;
   name: string;
@@ -30,11 +22,10 @@ export interface Member {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: "OWNER" | "MEMBER";
   avatar: string;
 }
 export interface OrgnaizationData {
   orgData: Organization;
-  membership: Membership;
   members: Member[];
 }

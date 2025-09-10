@@ -6,8 +6,12 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
   const { handle } = req.params;
   const { id, email } = req.userData as JWTDecoded;
   try {
-    const org = await prisma.organizations.findUnique({
-      where: { handle, deletedAt: null },
+    const org = await prisma.organizations.findFirst({
+      where: {
+        handle,
+        members: { some: { userId: id, isActive: true } },
+        deletedAt: null,
+      },
       include: {
         projects: true,
         members: {
@@ -23,25 +27,10 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
     if (!org)
       return res.status(400).json({
         success: false,
-        message: "Organization not found",
+        message: "You're not a member or Org not found!",
         data: null,
       });
 
-    // remove this query and check existance of user through .find funciton as we already got all members in org query
-    const isMember = await prisma.organizationUsers.findUnique({
-      where: {
-        userId_orgId: {
-          userId: id,
-          orgId: org.id,
-        },
-      },
-    });
-    if (!isMember)
-      return res.status(400).json({
-        success: false,
-        message: "You're not a member",
-        data: null,
-      });
     // destructure more efficiently or just direcly send it
     const orgData = {
       id: org.id,
@@ -65,7 +54,6 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
       success: true,
       message: "OK",
       data: {
-        membership: isMember,
         orgData,
         members,
       },

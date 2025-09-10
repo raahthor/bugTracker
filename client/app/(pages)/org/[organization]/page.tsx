@@ -1,3 +1,5 @@
+import CreateProjButton from "@/components/pages/organization/create-proj-button";
+import Members from "@/components/pages/organization/members";
 import OrgHeader from "@/components/pages/organization/org-header";
 import ProjectsCards from "@/components/pages/organization/projects-cards";
 import getData from "@/lib/getData";
@@ -16,7 +18,6 @@ export default async function OrganizationPage({
   );
 
   const orgData = result.data.data.orgData;
-  const membership = result.data.data.membership;
   const members = result.data.data.members;
   const projects = result.data.data.orgData.projects;
   return (
@@ -27,8 +28,12 @@ export default async function OrganizationPage({
         description={orgData.description}
         createdAt={orgData.createdAt}
         organization={organization}
-        members={members}
       />
+      <div>
+        <Members members={members} />
+        <CreateProjButton organization={organization} />
+      </div>
+
       <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 ">
         {projects.map((project, idx) => (
           <ProjectsCards
