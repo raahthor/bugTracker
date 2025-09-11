@@ -1,8 +1,8 @@
-import OrgCards from "@/components/pages/organization/org-cards";
+import OrgCards from "./_components/org-cards";
 import getData from "@/lib/getData";
 import ToastSCError from "@/lib/toastSCError";
 import { OrgUsersList } from "@/types/orgUsers";
-import Buttons from "./buttons";
+import Buttons from "./_components/buttons";
 
 export default async function OrganizationsPage({
   searchParams,

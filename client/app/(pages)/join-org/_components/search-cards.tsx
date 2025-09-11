@@ -8,7 +8,6 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { SearchList } from "@/types/searchList";
-import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";

@@ -1,6 +1,6 @@
 import { DataTableDemo } from "@/components/table/data-table";
-import CreateBug from "@/components/pages/projects/create-bug";
-import ProjHeader from "@/components/pages/projects/proj-header";
+import CreateBug from "../../_components/create-bug";
+import ProjHeader from "../../_components/proj-header";
 import getData from "@/lib/getData";
 import { ProjectData } from "@/types/ProjectData";
 

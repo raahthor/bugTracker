@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { BugExt } from "@/types/DashboardData";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";

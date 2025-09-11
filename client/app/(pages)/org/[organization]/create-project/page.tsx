@@ -1,4 +1,4 @@
-import CreateProjForm from "./create-proj-form";
+import CreateProjForm from "../../_components/create-proj-form";
 
 export default async function CreateProjectPage({
   params,

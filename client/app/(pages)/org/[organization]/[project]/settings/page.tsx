@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import getData from "@/lib/getData";
-import { DeleteProj, UpdateProjDesc, UpdateProjName } from "./proj-settings";
+import { DeleteProj, UpdateProjDesc, UpdateProjName } from "../../../_components/proj-settings";
 interface ProjData {
   projData: {
     id: string;

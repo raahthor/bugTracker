@@ -2,7 +2,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import getData from "@/lib/getData";
 import UserData from "@/types/userData";
 import { redirect } from "next/navigation";
-import { UpdateName, UpdatePassword, UpdateUsername } from "./settings-comp";
+import { UpdateName, UpdatePassword, UpdateUsername } from "../_components/settings-comp";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export default async function UserSettingsPage({

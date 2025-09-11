@@ -1,7 +1,7 @@
-import CreateProjButton from "@/components/pages/organization/create-proj-button";
-import Members from "@/components/pages/organization/members";
-import OrgHeader from "@/components/pages/organization/org-header";
-import ProjectsCards from "@/components/pages/organization/projects-cards";
+import CreateProjButton from "../_components/create-proj-button";
+import Members from "../_components/members";
+import OrgHeader from "../_components/org-header";
+import ProjectsCards from "../_components/projects-cards";
 import getData from "@/lib/getData";
 import { OrgnaizationData } from "@/types/organizationData";
 

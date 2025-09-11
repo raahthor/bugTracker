@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import Welcome from "@/components/pages/dashboard/welcome";
-import OrgButtons from "@/components/pages/dashboard/orgButtons";
-import RecentOrgs from "@/components/pages/dashboard/recentOrgs";
+import Welcome from "./_components/welcome";
+import OrgButtons from "./_components/orgButtons";
+import RecentOrgs from "./_components/recentOrgs";
 import getData from "@/lib/getData";
 import UserData from "@/types/userData";
 import { DashboardData } from "@/types/DashboardData";

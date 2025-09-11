@@ -1,12 +1,12 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import getData from "@/lib/getData";
 import {
   DeleteOrg,
   UpdateOrgDesc,
   UpdateOrgHandle,
   UpdateOrgName,
-} from "./org-settings";
+} from "../../_components/org-settings";
 
 interface OrgData {
   org: {

@@ -1,5 +1,5 @@
 import BugArr from "@/components/bugArr";
-import RaisedBugs from "@/components/pages/myIssues/raisedBugs";
+import RaisedBugs from "./raisedBugs";
 import getData from "@/lib/getData";
 import { BugExt } from "@/types/DashboardData";
 
