@@ -25,7 +25,8 @@ export default function OrgHeader({
     try {
       navigator.clipboard.writeText(joinCode);
       toast.success("Copied");
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
       toast.error("An error occured while copying!");
     }
   }

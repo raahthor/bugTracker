@@ -36,7 +36,6 @@ export default function DeletedOrgCard({
   handle: string;
   description: string;
 }) {
-  const router = useRouter();
   const daysLeft = 30 - (new Date().getDate() - new Date(deletedAt).getDate());
   return (
     <Card className="@container/card bg-red-100">

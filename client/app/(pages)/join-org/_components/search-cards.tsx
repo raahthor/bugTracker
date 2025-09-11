@@ -62,7 +62,7 @@ export default function SearchCards({ org }: { org: SearchList }) {
       </CardHeader>
       <CardContent>
         {org.isMember ? (
-          <div className="font-semibold">You're already a Member</div>
+          <div className="font-semibold">You&apos;re already a Member</div>
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="flex items-start gap-2 text-xs">

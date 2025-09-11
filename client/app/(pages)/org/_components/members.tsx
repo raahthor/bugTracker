@@ -142,7 +142,7 @@ function RemoveMemBtn({
         <DialogHeader>
           <DialogTitle>Remove this member?</DialogTitle>
           <DialogDescription>
-            This user won't be able to access this organization but bugs raised
+            This user won&apos;t be able to access this organization but bugs raised
             by them will stay there.
           </DialogDescription>
         </DialogHeader>

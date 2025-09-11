@@ -4,21 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import toastError, { toastErrorUseEffect } from "@/lib/toastError";
+import toastError, { useToastError } from "@/lib/toastError";
 import { env } from "@/lib/env";
 import APIResponse from "@/types/apiResponse";
 import UserData from "@/types/userData";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
-  toastErrorUseEffect(useSearchParams().get("message"));
+  useToastError(useSearchParams().get("message"));
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -135,7 +136,7 @@ export function LoginForm({
             </div>
           </form>
           <div className="bg-muted relative hidden md:block">
-            <img
+            <Image
               src="/placeholder.svg"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"

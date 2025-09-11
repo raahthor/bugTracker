@@ -186,13 +186,15 @@ export function DeleteProj({
             <DialogTitle>Are Sure?</DialogTitle>
             <DialogDescription>
               This operation is irreversible and alongwith the project all of
-              it's bugs will also be deleted.
+              it&apos;s bugs will also be deleted.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-3">
             <Label>
               Type{" "}
-              <span className="text-red-500 font-bold">"delete project"</span>{" "}
+              <span className="text-red-500 font-bold">
+                &quot;delete project&quot;
+              </span>{" "}
               below to confirm
             </Label>
             <Input onChange={handleChange} />

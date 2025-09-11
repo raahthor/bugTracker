@@ -1,8 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -10,19 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Bug } from "@/types/bug";
-import { useRouter } from "next/navigation";
 
 export default function BugCard({
-  id,
   name,
-  projectId,
-  priority,
-  status,
   description,
-  createdAt,
   updatedAt,
 }: Bug) {
-  const router = useRouter();
   const date = new Date(updatedAt).toLocaleDateString("en-IN", {
     dateStyle: "medium",
   });

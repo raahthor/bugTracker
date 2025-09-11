@@ -8,29 +8,35 @@ import APIResponse from "@/types/apiResponse";
 import { SearchList } from "@/types/searchList";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import SearchCards from "./search-cards";
 
 export default function JoinOrg() {
   const router = useRouter();
   const [searchList, setSearchList] = useState<SearchList[] | undefined>();
 
-  async function getSearchList(title: string) {
-    if (!title.trim()) return;
-    try {
-      const result: APIResponse<{ searchList: SearchList[] }> = await axios.get(
-        `${env.API_URL}/api/search-org/${title}`,
-        { withCredentials: true }
-      );
-      setSearchList(result.data.data.searchList);
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 401)
-        router.push("/login?message=Unauthorized");
-      else toastError(error);
-    }
-  }
+  const getSearchList = useCallback(
+    async (title: string) => {
+      if (!title.trim()) return;
+      try {
+        const result: APIResponse<{ searchList: SearchList[] }> =
+          await axios.get(`${env.API_URL}/api/search-org/${title}`, {
+            withCredentials: true,
+          });
+        setSearchList(result.data.data.searchList);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 401)
+          router.push("/login?message=Unauthorized");
+        else toastError(error);
+      }
+    },
+    [router]
+  );
 
-  const debounceSearch = useMemo(() => debounce(getSearchList), []);
+  const debounceSearch = useMemo(
+    () => debounce(getSearchList),
+    [getSearchList]
+  );
 
   return (
     <div className="flex flex-col gap-4">
