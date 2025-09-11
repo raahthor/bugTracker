@@ -11,16 +11,13 @@ import { env } from "@/lib/env";
 import APIResponse from "@/types/apiResponse";
 import UserData from "@/types/userData";
 import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const router = useRouter();
-  useToastError(useSearchParams().get("message"));
+export function LoginForm({ message }: { message?: string }) {
+  useToastError(message);
 
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const [userInput, setUserInput] = useState<{
@@ -61,7 +58,7 @@ export function LoginForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6")}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8" onSubmit={handleSubmit}>

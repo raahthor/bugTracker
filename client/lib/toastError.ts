@@ -15,7 +15,7 @@ export default function toastError(
   }
 }
 
-export function useToastError(err: string | null) {
+export function useToastError(err?: string | null) {
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
