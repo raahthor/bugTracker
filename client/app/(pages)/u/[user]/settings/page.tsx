@@ -8,7 +8,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 export default async function UserSettingsPage({
   params,
 }: {
-  params: { user: string };
+  params: Promise<{ user: string }>;
 }) {
   const { user } = await params;
   const resultUser = await getData<UserData>("/api/user-data");

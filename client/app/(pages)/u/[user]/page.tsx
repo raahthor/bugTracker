@@ -10,7 +10,7 @@ import BugArr from "@/components/bugArr";
 export default async function DashboardPage({
   params,
 }: {
-  params: { user: string };
+  params: Promise<{ user: string }>;
 }) {
   const { user } = await params;
   const resultUser = await getData<UserData>("/api/user-data");

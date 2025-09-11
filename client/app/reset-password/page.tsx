@@ -3,7 +3,7 @@ import ResetPageForm from "./reset-page-form";
 export default async function ResetPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const { token } = await searchParams;
   return (

@@ -26,7 +26,7 @@ interface OrgData {
 export default async function OrgSettingsPage({
   params,
 }: {
-  params: { organization: string };
+  params: Promise<{ organization: string }>;
 }) {
   const { organization } = await params;
   const result = await getData<OrgData>(

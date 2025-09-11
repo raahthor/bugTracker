@@ -8,7 +8,7 @@ import { OrgnaizationData } from "@/types/organizationData";
 export default async function OrganizationPage({
   params,
 }: {
-  params: { organization: string };
+  params: Promise<{ organization: string }>;
 }) {
   const { organization } = await params;
   const result = await getData<OrgnaizationData>(

@@ -7,7 +7,7 @@ import Buttons from "./_components/buttons";
 export default async function OrganizationsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const { message } = await searchParams;
   const response = await getData<OrgUsersList>("/api/orgs-list", "/org");

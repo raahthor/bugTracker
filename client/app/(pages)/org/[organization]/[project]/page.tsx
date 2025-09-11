@@ -7,7 +7,7 @@ import { ProjectData } from "@/types/ProjectData";
 export default async function ProjectPage({
   params,
 }: {
-  params: { organization: string; project: string };
+  params: Promise<{ organization: string; project: string }>;
 }) {
   const { organization, project } = await params;
   const result = await getData<ProjectData>(

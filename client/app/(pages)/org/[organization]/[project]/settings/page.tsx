@@ -19,7 +19,7 @@ interface ProjData {
 export default async function ProjSettingsPage({
   params,
 }: {
-  params: { organization: string; project: string };
+  params: Promise<{ organization: string; project: string }>;
 }) {
   const { organization, project } = await params;
   const result = await getData<ProjData>(

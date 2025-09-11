@@ -3,7 +3,7 @@ import CreateProjForm from "../../_components/create-proj-form";
 export default async function CreateProjectPage({
   params,
 }: {
-  params: { organization: string };
+  params: Promise<{ organization: string }>;
 }) {
   const { organization } = await params;
   return (
