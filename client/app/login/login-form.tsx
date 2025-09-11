@@ -8,7 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import toastError, { useToastError } from "@/lib/toastError";
 import { env } from "@/lib/env";
-import APIResponse from "@/types/apiResponse";
+import { APIResponse } from "@/types/apiResponse";
 import UserData from "@/types/userData";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";

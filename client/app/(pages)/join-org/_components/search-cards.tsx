@@ -14,7 +14,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { env } from "@/lib/env";
-import APIResponse from "@/types/apiResponse";
+import { APIResponse } from "@/types/apiResponse";
 import toastError from "@/lib/toastError";
 
 export default function SearchCards({ org }: { org: SearchList }) {

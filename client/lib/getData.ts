@@ -1,4 +1,4 @@
-import APIResponse from "@/types/apiResponse";
+import {APIResponse} from "@/types/apiResponse";
 import axios from "axios";
 import { cookies } from "next/headers";
 import { env } from "./env";

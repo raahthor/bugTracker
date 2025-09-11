@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { env } from "@/lib/env";
 import { useState } from "react";
 import toastError, { isLengthError } from "@/lib/toastError";
-import APIResponse from "@/types/apiResponse";
+import { APIResponse } from "@/types/apiResponse";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";

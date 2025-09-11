@@ -16,7 +16,7 @@ import axios from "axios";
 import toastError, { isLengthError } from "@/lib/toastError";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
-import APIResponse from "@/types/apiResponse";
+import { APIResponse } from "@/types/apiResponse";
 
 type FormData = {
   fullName: string;

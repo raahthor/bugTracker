@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import debounce from "@/lib/debounce";
 import { env } from "@/lib/env";
 import toastError from "@/lib/toastError";
-import APIResponse from "@/types/apiResponse";
+import { APIResponse } from "@/types/apiResponse";
 import { SearchList } from "@/types/searchList";
 import axios from "axios";
 import { useRouter } from "next/navigation";
