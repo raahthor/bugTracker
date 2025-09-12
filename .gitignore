@@ -45,3 +45,5 @@ next-env.d.ts
 server/src/generated/prisma
 
 server/src/test.ts
+
+client/test.ts
