@@ -8,7 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import toastError, { useToastError } from "@/lib/toastError";
 import { env } from "@/lib/env";
-import { APIResponse } from "@/types/apiResponse";
+import { ResponseExt } from "@/types/responseExt";
 import UserData from "@/types/userData";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ export function LoginForm({ message }: { message?: string }) {
 
     try {
       setIsSubmitting(true);
-      const response: APIResponse<UserData> = await axios.post(
+      const response: ResponseExt<UserData> = await axios.post(
         `${env.API_URL}/api/login`,
         {
           username: userInput.username,

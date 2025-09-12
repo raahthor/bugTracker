@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { env } from "@/lib/env";
 import { useState } from "react";
 import toastError, { isLengthError } from "@/lib/toastError";
-import { APIResponse } from "@/types/apiResponse";
+import { ResponseExt } from "@/types/responseExt";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -54,7 +54,7 @@ export default function CreateProjForm({
 
     try {
       setIsSubmitting(true);
-      const response: APIResponse<{ slug: string }> = await axios.post(
+      const response: ResponseExt<{ slug: string }> = await axios.post(
         `${env.API_URL}/api/project/${organization}/create-project`,
         {
           name: userInput.name.trim(),

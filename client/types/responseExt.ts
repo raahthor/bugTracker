@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-export interface APIResponse<T = null> extends AxiosResponse {
+export interface ResponseExt<T = null> extends AxiosResponse {
   data: { success: boolean; message: string; data: T };
 }
 

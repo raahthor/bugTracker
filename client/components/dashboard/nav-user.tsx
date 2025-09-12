@@ -26,7 +26,7 @@ import { env } from "@/lib/env";
 import axios from "axios";
 import toastError from "@/lib/toastError";
 import { useRouter } from "next/navigation";
-import {APIResponse} from "@/types/apiResponse";
+import { ResponseExt } from "@/types/responseExt";
 import { toast } from "sonner";
 
 export function NavUser({
@@ -43,7 +43,7 @@ export function NavUser({
   const router = useRouter();
   const handleLogout = async () => {
     try {
-      const response: APIResponse = await axios.get(
+      const response: ResponseExt = await axios.get(
         `${env.API_URL}/api/logout`,
         {
           withCredentials: true,

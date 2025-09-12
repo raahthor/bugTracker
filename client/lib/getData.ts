@@ -1,4 +1,4 @@
-import {APIResponse} from "@/types/apiResponse";
+import { ResponseExt } from "@/types/responseExt";
 import axios from "axios";
 import { cookies } from "next/headers";
 import { env } from "./env";
@@ -8,11 +8,11 @@ export default async function getData<T>(
   endpoint: string,
   red = "/login",
   message = "Something went wrong"
-): Promise<APIResponse<T>> {
+): Promise<ResponseExt<T>> {
   try {
     const cookieHeader = (await cookies()).get("token")?.value;
 
-    const response: APIResponse<T> = await axios.get(
+    const response: ResponseExt<T> = await axios.get(
       `${env.API_URL}${endpoint}`,
       {
         headers: { Cookie: `token=${cookieHeader}` },

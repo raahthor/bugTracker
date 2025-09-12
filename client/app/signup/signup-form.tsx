@@ -16,7 +16,7 @@ import axios from "axios";
 import toastError, { isLengthError } from "@/lib/toastError";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
-import { APIResponse } from "@/types/apiResponse";
+import { ResponseExt } from "@/types/responseExt";
 
 type FormData = {
   fullName: string;
@@ -54,7 +54,7 @@ export function SignupForm({
       return;
     try {
       setIsSubmitting(true);
-      const response: APIResponse<{ username: string }> = await axios.post(
+      const response: ResponseExt<{ username: string }> = await axios.post(
         `${env.API_URL}/api/complete-profile`,
         {
           name: userInput.fullName.trim(),

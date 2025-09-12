@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import debounce from "@/lib/debounce";
 import { env } from "@/lib/env";
 import toastError from "@/lib/toastError";
-import { APIResponse } from "@/types/apiResponse";
+import { ResponseExt } from "@/types/responseExt";
 import { SearchList } from "@/types/searchList";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export default function JoinOrg() {
     async (title: string) => {
       if (!title.trim()) return;
       try {
-        const result: APIResponse<{ searchList: SearchList[] }> =
+        const result: ResponseExt<{ searchList: SearchList[] }> =
           await axios.get(`${env.API_URL}/api/search-org/${title}`, {
             withCredentials: true,
           });
