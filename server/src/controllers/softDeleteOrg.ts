@@ -1,11 +1,11 @@
 import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
-import prisma from "../utils/client";
+import prisma, { TransactionClient } from "../utils/client";
 
 async function softDelete(orgId: string, ownerId: string) {
   const now = new Date();
 
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: TransactionClient) => {
     const isOrg = await tx.organizations.findUnique({
       where: { id: orgId },
       select: { ownerId: true },

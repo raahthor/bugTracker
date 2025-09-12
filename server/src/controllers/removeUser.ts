@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
-import prisma from "../utils/client";
+import prisma, { TransactionClient } from "../utils/client";
 
 export default async function removeUser(
   req: AuthRequest<{ removeUserId: string; orgId: string }>,
@@ -27,7 +27,7 @@ export default async function removeUser(
         data: null,
       });
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: TransactionClient) => {
       await tx.organizationUsers.update({
         where: { userId_orgId: { userId: removeUserId, orgId } },
         data: { isActive: false },

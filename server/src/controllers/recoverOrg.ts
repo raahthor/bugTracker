@@ -1,9 +1,9 @@
 import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
-import prisma from "../utils/client";
+import prisma, { TransactionClient } from "../utils/client";
 
 async function updateDeletedAt(orgId: string, ownerId: string) {
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: TransactionClient) => {
     const org = await tx.organizations.findUnique({
       where: { id: orgId, ownerId },
     });

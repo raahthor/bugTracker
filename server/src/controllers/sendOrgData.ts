@@ -2,6 +2,16 @@ import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
+type Mem = {
+  user: {
+    id: string;
+    name: string | null;
+    avatar: string | null;
+    email: string;
+  };
+  role: "OWNER" | "MEMBER";
+};
+
 export default async function sendOrgData(req: AuthRequest, res: Response) {
   const { handle } = req.params;
   const { id, email } = req.userData as JWTDecoded;
@@ -44,7 +54,7 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
       updatedAt: org.updatedAt,
       projects: org.projects,
     };
-    const members = org.members.map((mem) => ({
+    const members = org.members.map((mem: Mem) => ({
       role: mem.role,
       id: mem.user.id,
       avatar: mem.user.avatar,

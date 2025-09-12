@@ -2,6 +2,17 @@ import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
+type Org = {
+  id: string;
+  name: string;
+  handle: string;
+  owner: { name: string | null };
+};
+type U = {
+  orgId: string;
+  isActive: boolean;
+};
+
 export default async function (req: AuthRequest, res: Response) {
   const { title } = req.params;
   const { id } = req.userData as JWTDecoded;
@@ -25,12 +36,12 @@ export default async function (req: AuthRequest, res: Response) {
         owner: { select: { name: true } },
       },
     });
-    const searchList = orgList.map((org) => ({
+    const searchList = orgList.map((org: Org) => ({
       id: org.id,
       name: org.name,
       handle: org.handle,
       owner: org.owner.name,
-      isMember: userInOrgs.some((u) => u.orgId === org.id && u.isActive),
+      isMember: userInOrgs.some((u: U) => u.orgId === org.id && u.isActive),
     }));
     res.status(200).json({
       success: true,
