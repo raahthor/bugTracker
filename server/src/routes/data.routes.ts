@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router } from "express";
 import sendUserData from "../controllers/sendUserData";
 import { verifyCookie } from "../middlewares/verifyCookie";
 import sendDashData from "../controllers/sendDashData";

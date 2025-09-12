@@ -4,8 +4,9 @@ import "../auth/passport";
 import { User } from "../types/user";
 import { generateToken } from "../auth/jwt";
 import sendCookie from "../utils/sendCookie";
+import { env } from "../utils/env";
 
-const clientUrl = process.env.FRONTEND_URL;
+const clientUrl = env.CLIENT_URL;
 
 export default function handleGoogleCallback(
   req: Request,

@@ -136,6 +136,8 @@ export function LoginForm({ message }: { message?: string }) {
             <Image
               src="/placeholder.svg"
               alt="Image"
+              width={5}
+              height={5}
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
           </div>

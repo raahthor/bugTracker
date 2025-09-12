@@ -1,12 +1,12 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy, Profile } from "passport-google-oauth20";
 import prisma from "../utils/client";
-import { User } from "../types/user";
+import { env } from "../utils/env";
 
 if (
-  !process.env.GOOGLE_CLIENT_ID ||
-  !process.env.GOOGLE_CLIENT_SECRET ||
-  !process.env.GOOGLE_CALLBACK_URL
+  !env.GOOGLE_CLIENT_ID ||
+  !env.GOOGLE_CLIENT_SECRET ||
+  !env.GOOGLE_CALLBACK_URL
 ) {
   throw new Error("google's id or client not loaded");
 }
@@ -14,9 +14,9 @@ if (
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      clientID: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      callbackURL:env.GOOGLE_CALLBACK_URL,
     },
     async (
       accessToken: string,

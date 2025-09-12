@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { hashPassword } from "../utils/hashPassword";
 import prisma from "../utils/client";
+import { env } from "../utils/env";
 
 function verifyToken(token: string) {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_BREVO_SECRET!) as {
+    const decoded = jwt.verify(token, env.JWT_BREVO_SECRET!) as {
       id: string;
     };
     return { isValid: true, userId: decoded.id };
