@@ -32,7 +32,10 @@ async function updateDeletedAt(orgId: string, ownerId: string) {
   });
 }
 
-export default async function recoverOrg(req: AuthRequest, res: Response) {
+export default async function recoverOrg(
+  req: AuthRequest<{ orgId: string }>,
+  res: Response
+) {
   const { id } = req.userData as JWTDecoded;
   const { orgId } = req.body;
   console.log(orgId);

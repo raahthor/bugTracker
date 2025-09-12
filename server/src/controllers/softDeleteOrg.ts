@@ -39,7 +39,7 @@ export default async function softDeleteOrg(req: AuthRequest, res: Response) {
   const { orgId } = req.params;
 
   try {
-    const result = await softDelete(orgId, id);
+    const result = await softDelete(orgId!, id);
     res.status(200).json({
       success: true,
       message: result.message,

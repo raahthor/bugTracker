@@ -9,7 +9,7 @@ function createJoinCode() {
 }
 
 export default async function createOrganization(
-  req: AuthRequest,
+  req: AuthRequest<{ name: string; handle: string; description: string }>,
   res: Response
 ) {
   const { name, handle, description } = req.body;

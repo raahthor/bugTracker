@@ -2,7 +2,10 @@ import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
-export default async function updateProj(req: AuthRequest, res: Response) {
+export default async function updateProj(
+  req: AuthRequest<{ name: string; description: string; id: string }>,
+  res: Response
+) {
   const { id } = req.userData as JWTDecoded;
   const { name, description, id: projId } = req.body;
 

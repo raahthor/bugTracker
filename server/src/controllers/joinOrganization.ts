@@ -3,7 +3,7 @@ import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
 export default async function joinOrganization(
-  req: AuthRequest,
+  req: AuthRequest<{ orgId: string; joinCode: string }>,
   res: Response
 ) {
   const { orgId, joinCode } = req.body;

@@ -2,7 +2,10 @@ import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
-export default async function closeBug(req: AuthRequest, res: Response) {
+export default async function closeBug(
+  req: AuthRequest<{ bugId: string }>,
+  res: Response
+) {
   const { id } = req.userData as JWTDecoded;
   const { bugId } = req.body;
   try {
@@ -33,7 +36,7 @@ export default async function closeBug(req: AuthRequest, res: Response) {
         message: "Only 'Assignee' or 'Owner' can close it!",
         data: null,
       });
-      
+
     await prisma.bugs.update({
       where: { id: bugId },
       data: { status: "CLOSED" },

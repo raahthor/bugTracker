@@ -3,7 +3,10 @@ import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 import { hashPassword, verifyPassword } from "../utils/hashPassword";
 
-export default async function changePassword(req: AuthRequest, res: Response) {
+export default async function changePassword(
+  req: AuthRequest<{ oldPass: string; newPass: string }>,
+  res: Response
+) {
   const { id } = req.userData as JWTDecoded;
   const { oldPass, newPass } = req.body;
   try {

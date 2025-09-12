@@ -9,7 +9,10 @@ function generateSlug() {
   return slug;
 }
 
-export default async function createProject(req: AuthRequest, res: Response) {
+export default async function createProject(
+  req: AuthRequest<{ name: string; description: string }>,
+  res: Response
+) {
   const { id, email } = req.userData as JWTDecoded;
   const { name, description } = req.body;
   const { handle } = req.params;

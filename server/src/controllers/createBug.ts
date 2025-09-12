@@ -2,7 +2,14 @@ import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
-export default async function createBug(req: AuthRequest, res: Response) {
+export default async function createBug(
+  req: AuthRequest<{
+    name: string;
+    description: string;
+    priority: "LOW" | "MEDIUM" | "HIGH";
+  }>,
+  res: Response
+) {
   const { handle, slug } = req.params;
   const { id, email } = req.userData as JWTDecoded;
   const { name, description, priority } = req.body;

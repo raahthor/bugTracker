@@ -2,7 +2,10 @@ import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
-export default async function removeUser(req: AuthRequest, res: Response) {
+export default async function removeUser(
+  req: AuthRequest<{ removeUserId: string; orgId: string }>,
+  res: Response
+) {
   const { id } = req.userData as JWTDecoded;
   const { removeUserId, orgId } = req.body;
 
@@ -16,7 +19,7 @@ export default async function removeUser(req: AuthRequest, res: Response) {
         message: "Org not found",
         data: null,
       });
-      
+
     if (org.ownerId === removeUserId)
       return res.status(403).json({
         success: false,
@@ -37,7 +40,7 @@ export default async function removeUser(req: AuthRequest, res: Response) {
         data: { assignedTo: null },
       });
     });
-    
+
     res.status(200).json({
       success: true,
       message: "User removed",

@@ -2,7 +2,15 @@ import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 
-export default async function updateOrg(req: AuthRequest, res: Response) {
+export default async function updateOrg(
+  req: AuthRequest<{
+    name: string;
+    description: string;
+    handle: string;
+    newHandle: string;
+  }>,
+  res: Response
+) {
   const { id } = req.userData as JWTDecoded;
   const { name, newHandle, description, handle } = req.body;
 
