@@ -9,8 +9,9 @@
     /* Type Checking */
     "strict": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["src"],
+  "include": ["src", "src/types/**/*"],
   "exclude": ["node_modules"]
 }

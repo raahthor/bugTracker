@@ -17,11 +17,11 @@ export default function handleGoogleCallback(
     "google",
     { session: false },
 
-    (err, userPayload, info) => {
+    (err: Error | null, userPayload: unknown, info?: unknown) => {
       if (err || !userPayload)
         return res.status(400).json({
           success: false,
-          message: "Authorization failed :" + err.message,
+          message: "Authorization failed :" + err?.message,
           data: null,
         });
 
@@ -29,6 +29,7 @@ export default function handleGoogleCallback(
       const token = generateToken(user.id, user.email);
 
       sendCookie(res, token);
+      
       if (user.username !== null)
         res.redirect(`${clientUrl}/u/${user.username}`);
       else res.redirect(`${clientUrl}/u/new`);

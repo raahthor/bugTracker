@@ -1,5 +1,9 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy, Profile } from "passport-google-oauth20";
+import {
+  Strategy as GoogleStrategy,
+  Profile,
+  VerifyCallback,
+} from "passport-google-oauth20";
 import prisma from "../utils/client";
 import { env } from "../utils/env";
 
@@ -16,13 +20,13 @@ passport.use(
     {
       clientID: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
-      callbackURL:env.GOOGLE_CALLBACK_URL,
+      callbackURL: env.GOOGLE_CALLBACK_URL,
     },
     async (
       accessToken: string,
       refreshToken: string,
       profile: Profile,
-      done
+      done: VerifyCallback
     ) => {
       try {
         const userEmail = profile.emails?.[0]?.value as string;
@@ -42,7 +46,7 @@ passport.use(
 
         done(null, user);
       } catch (error) {
-        done(error);
+        done(error as Error);
       }
     }
   )
