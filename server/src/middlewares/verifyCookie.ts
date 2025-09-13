@@ -9,6 +9,8 @@ export const verifyCookie = async (
   next: NextFunction
 ) => {
   const token = req.cookies.token as string;
+  console.log(req.cookies);
+  console.log(req.originalUrl);
   if (!token)
     return res.status(401).json({
       success: false,
