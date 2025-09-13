@@ -9,8 +9,10 @@ export const verifyCookie = async (
   next: NextFunction
 ) => {
   const token = req.cookies.token as string;
-  console.log(req.cookies);
-  console.log(req.originalUrl);
+  // Add this to your auth middleware
+  console.log("Cookie received:", req.headers.cookie);
+  console.log("Environment:", process.env.NODE_ENV);
+  console.log("Request origin:", req.headers.origin);
   if (!token)
     return res.status(401).json({
       success: false,
