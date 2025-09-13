@@ -10,6 +10,7 @@ export default async function getData<T>(
   message = "Something went wrong"
 ): Promise<ResponseExt<T>> {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const hdrs = (await headers()) as any;
     const cookieHeader = hdrs?.get
       ? hdrs.get("cookie") ?? ""
