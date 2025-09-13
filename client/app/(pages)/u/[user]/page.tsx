@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { redirect } from "next/navigation";
 import Welcome from "./_components/welcome";
 import OrgButtons from "./_components/orgButtons";
