@@ -1,6 +1,3 @@
-export const dynamic = "force-dynamic";
-export const runtime = 'nodejs';
-
 import { redirect } from "next/navigation";
 import Welcome from "./_components/welcome";
 import OrgButtons from "./_components/orgButtons";
