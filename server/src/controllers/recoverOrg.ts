@@ -38,7 +38,7 @@ export default async function recoverOrg(
 ) {
   const { id } = req.userData as JWTDecoded;
   const { orgId } = req.body;
-  console.log(orgId);
+  // console.log(orgId);
   try {
     const result = await updateDeletedAt(orgId, id);
 

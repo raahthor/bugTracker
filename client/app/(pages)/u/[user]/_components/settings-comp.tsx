@@ -32,7 +32,7 @@ export function UpdateName({ name }: { name: string | undefined }) {
         { name: inputName },
         { withCredentials: true }
       );
-      console.log(result.data);
+      // console.log(result.data);
       if (result.data.success) {
         toast.success("Name changed successfully");
         setOpen(false);
@@ -84,7 +84,7 @@ export function UpdateUsername({ username }: { username: string | undefined }) {
         { username: inputUsername },
         { withCredentials: true }
       );
-      console.log(result.data);
+      // console.log(result.data);
       if (result.data.success) {
         toast.success("Username changed successfully");
         router.push(`/u/${result.data.data.username}/settings`);

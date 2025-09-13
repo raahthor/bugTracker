@@ -1,6 +1,6 @@
 import { ResponseExt } from "@/types/responseExt";
 import axios from "axios";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import { env } from "./env";
 import { redirect } from "next/navigation";
 
@@ -10,13 +10,12 @@ export default async function getData<T>(
   message = "Something went wrong"
 ): Promise<ResponseExt<T>> {
   try {
-    const cookieHeader = (await cookies()).get("token")?.value;
+    const cookieHeader = (await headers()).get("cookie") ?? "";
 
     const response: ResponseExt<T> = await axios.get(
       `${env.API_URL}${endpoint}`,
       {
-        headers: { Cookie: `token=${cookieHeader}` },
-        withCredentials: true,
+        headers: { Cookie: cookieHeader },
       }
     );
     return response;

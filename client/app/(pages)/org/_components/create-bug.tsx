@@ -95,7 +95,7 @@ function BugDialogBox({
           withCredentials: true,
         }
       );
-      console.log(result.data);
+      // console.log(result.data);
       if (result.data.success) {
         toast.success(result.data.message);
         router.push(`/org/${organization}/${project}`);
