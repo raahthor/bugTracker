@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.redirect(redirectUrl, { headers: responseHeaders });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     return NextResponse.redirect("/login?message=callback failed");
   }
