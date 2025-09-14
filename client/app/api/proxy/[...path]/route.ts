@@ -54,7 +54,7 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
       }
     });
 
-    // Remove any existing accept-encoding header to prevent compression issues
+    // Explicitly disable compression to avoid mismatches
     headers.delete("accept-encoding");
 
     // Get body if needed
@@ -79,9 +79,11 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
     // Handle response
     const responseHeaders = new Headers(res.headers);
 
-    // Remove content-encoding header to prevent decoding issues
+    // Remove content-encoding and content-length headers to prevent issues
     responseHeaders.delete("content-encoding");
+    responseHeaders.delete("content-length");
     responseHeaders.delete("Content-Encoding");
+    responseHeaders.delete("Content-Length");
 
     // Handle redirects
     if (
@@ -99,7 +101,7 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
       }
     }
 
-    // Get the response body as text to avoid encoding issues
+    // Get the response body as text
     const responseText = await res.text();
 
     // Create response
@@ -108,13 +110,18 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
       statusText: res.statusText,
       headers: responseHeaders,
     });
-    // Add this to your handleProxy function before returning the response
-    console.log(
-      "Response headers:",
-      Object.fromEntries(responseHeaders.entries())
+    // Debug: Check if content-length matches actual body length
+    const actualLength = new TextEncoder().encode(responseText).length;
+    const declaredLength = parseInt(
+      responseHeaders.get("content-length") || "0"
     );
-    console.log("Response status:", res.status);
-    console.log("Response text length:", responseText.length);
+
+    if (actualLength !== declaredLength && declaredLength > 0) {
+      console.warn(
+        `Content-Length mismatch: declared ${declaredLength}, actual ${actualLength}`
+      );
+      responseHeaders.delete("content-length");
+    }
     return response;
   } catch (error) {
     console.error("Proxy error:", error);
