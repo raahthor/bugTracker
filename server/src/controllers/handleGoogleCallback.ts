@@ -19,17 +19,17 @@ export default function handleGoogleCallback(
 
     (err: Error | null, userPayload: unknown, info?: unknown) => {
       if (err || !userPayload)
-        return res.status(400).json({
-          success: false,
-          message: "Authorization failed :" + err?.message,
-          data: null,
-        });
+        return res.redirect(
+          `${clientUrl}/login?message=${encodeURIComponent(
+            err?.message || "Authorization failed"
+          )}`
+        );
 
       const user = userPayload as User;
       const token = generateToken(user.id, user.email);
 
       sendCookie(res, token);
-      
+
       if (user.username !== null)
         res.redirect(`${clientUrl}/u/${user.username}`);
       else res.redirect(`${clientUrl}/u/new`);

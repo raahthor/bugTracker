@@ -18,9 +18,10 @@ export async function GET(req: NextRequest) {
     if (res.status >= 300 && res.status < 400 && res.headers.get("location")) {
       const location = res.headers.get("location")!;
       const pathname = new URL(location, env.API_URL).pathname;
-      redirectUrl = pathname.startsWith("/u/")
-        ? pathname
-        : "/login?message=fail 2";
+      redirectUrl = location.replace(env.API_URL!, "") || location;
+      //   redirectUrl = pathname.startsWith("/u/")
+      //     ? pathname
+      //     : (redirectUrl = location.replace(env.API_URL!, ""));
     }
 
     return NextResponse.redirect(redirectUrl, { headers: responseHeaders });
