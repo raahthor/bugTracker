@@ -6,6 +6,7 @@ export default function toastError(
   err: unknown,
   defMsg = "Something went wrong!"
 ) {
+  console.log(err);
   if (axios.isAxiosError(err)) {
     const msg = err.response?.data?.message || defMsg;
     toast.error(msg);
