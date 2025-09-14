@@ -102,6 +102,7 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
     });
 
     return response;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return new NextResponse("Backend connection failed", { status: 502 });
   }
