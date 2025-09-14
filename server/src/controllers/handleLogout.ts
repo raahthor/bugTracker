@@ -5,7 +5,7 @@ export default async function handleLogin(req: Request, res: Response) {
   res.clearCookie("token", {
     httpOnly: true,
     secure: env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: env.NODE_ENV === "production" ? "none" : "lax",
     path: "/",
   });
   res.status(200).json({
