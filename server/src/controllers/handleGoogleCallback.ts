@@ -28,8 +28,16 @@ export default function handleGoogleCallback(
       const user = userPayload as User;
       const token = generateToken(user.id, user.email);
 
-      sendCookie(res, token);
-      
+      const clientDomain = env.CLIENT_URL;
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: env.NODE_ENV === "production" ? "none" : "lax",
+        secure: env.NODE_ENV === "production",
+        domain: clientDomain,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        path: "/",
+      });
+
       if (user.username !== null)
         res.redirect(`${clientUrl}/u/${user.username}`);
       else res.redirect(`${clientUrl}/u/new`);
