@@ -40,9 +40,13 @@ export async function GET(req: NextRequest) {
     //     : (redirectUrl = location.replace(env.API_URL!, ""));
     // }
 
-    return NextResponse.redirect(redirectUrl, { headers: responseHeaders });
+    return NextResponse.redirect(new URL(redirectUrl, req.url), {
+      headers: responseHeaders,
+    });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
-    return NextResponse.redirect("/login?message=callback failed");
+    return NextResponse.redirect(
+      new URL("/login?message=callback failed", req.url)
+    );
   }
 }
