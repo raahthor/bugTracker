@@ -28,17 +28,8 @@ export default function handleGoogleCallback(
       const user = userPayload as User;
       const token = generateToken(user.id, user.email);
 
-      const cookieDomain = "devbugs.vercel.app";
-
-      res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: env.NODE_ENV === "production" ? "none" : "lax",
-        secure: env.NODE_ENV === "production",
-        domain: cookieDomain,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        path: "/",
-      });
-
+      sendCookie(res, token);
+      
       if (user.username !== null)
         res.redirect(`${clientUrl}/u/${user.username}`);
       else res.redirect(`${clientUrl}/u/new`);

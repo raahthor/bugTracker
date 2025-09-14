@@ -74,17 +74,6 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
       redirect: "manual",
     });
 
-    // handle redirects
-    if (res.status >= 300 && res.status < 400 && res.headers.get("location")) {
-      const location = res.headers.get("location")!;
-
-      const isGoogleAuth = location.includes("accounts.google.com");
-
-      if (isGoogleAuth) return NextResponse.redirect(location);
-
-      return NextResponse.redirect(location);
-    }
-
     const responseHeaders = new Headers(res.headers);
 
     // remove content-encoding and content-length headers to prevent issues
