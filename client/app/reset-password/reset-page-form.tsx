@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { env } from "@/lib/env";
 import toastError, { isLengthError } from "@/lib/toastError";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -41,7 +40,7 @@ export default function ResetPageForm({
         toast.error("Password didn't match");
         return;
       }
-      const result = await axios.patch(`${env.API_URL}/api/reset-password`, {
+      const result = await axios.patch(`/api/proxy/api/reset-password`, {
         newPass: input.pass,
         token,
       });

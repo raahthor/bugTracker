@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { env } from "@/lib/env";
 import toastError from "@/lib/toastError";
 import { cn } from "@/lib/utils";
 import axios from "axios";
@@ -26,7 +25,7 @@ export default function ForgotPageForm({
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const result = await axios.post(`${env.API_URL}/api/forgot-password`, {
+      const result = await axios.post(`/api/proxy/api/forgot-password`, {
         username: input.trim(),
       });
       if (result.data.success) toast.success(result.data.message);

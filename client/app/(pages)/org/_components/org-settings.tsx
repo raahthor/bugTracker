@@ -15,7 +15,6 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import toastError, { isLengthError } from "@/lib/toastError";
 import axios from "axios";
-import { env } from "@/lib/env";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -36,7 +35,7 @@ export function UpdateOrgName({
     if (isLengthError("Name", inputName, 6)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-org`,
+        `/api/proxy/api/settings/update-org`,
         { name: inputName.trim(), handle },
         { withCredentials: true }
       );
@@ -98,7 +97,7 @@ export function UpdateOrgDesc({
     if (isLengthError("Description", inputDescription, 10)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-org`,
+        `/api/proxy/api/settings/update-org`,
         { description: inputDescription.trim(), handle },
         { withCredentials: true }
       );
@@ -158,7 +157,7 @@ export function UpdateOrgHandle({
     if (isLengthError("Handle", inputHandle, 6)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-org`,
+        `/api/proxy/api/settings/update-org`,
         { newHandle: inputHandle.trim(), handle },
         { withCredentials: true }
       );
@@ -209,7 +208,7 @@ export function DeleteOrg({ id, isOwner }: { id: string; isOwner: boolean }) {
   async function deleteOrg() {
     try {
       const result = await axios.delete(
-        `${env.API_URL}/api/settings/delete-org/${id}`,
+        `/api/proxy/api/settings/delete-org/${id}`,
         { withCredentials: true }
       );
       if (result.data.success) {

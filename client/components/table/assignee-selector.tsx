@@ -19,7 +19,6 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import axios from "axios";
-import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import toastError from "@/lib/toastError";
 import { toast } from "sonner";
@@ -42,7 +41,7 @@ export default function AssigneeSelector({
   async function assignBug() {
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/project/assign-bug`,
+        `/api/proxy/api/project/assign-bug`,
         {
           bugId,
           userId: user?.id,

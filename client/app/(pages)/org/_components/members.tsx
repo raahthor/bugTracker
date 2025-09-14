@@ -15,7 +15,6 @@ import { useState } from "react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { env } from "@/lib/env";
 import toastError from "@/lib/toastError";
 import { toast } from "sonner";
 
@@ -115,7 +114,7 @@ function RemoveMemBtn({
   async function removeUser() {
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/remove-user`,
+        `/api/proxy/api/remove-user`,
         { removeUserId: userId, orgId },
         { withCredentials: true }
       );

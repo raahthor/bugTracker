@@ -22,7 +22,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { env } from "@/lib/env";
 import axios from "axios";
 import toastError from "@/lib/toastError";
 import { useRouter } from "next/navigation";
@@ -44,7 +43,7 @@ export function NavUser({
   const handleLogout = async () => {
     try {
       const response: ResponseExt = await axios.get(
-        `${env.API_URL}/api/logout`,
+        `/api/proxy/api/logout`,
         {
           withCredentials: true,
         }

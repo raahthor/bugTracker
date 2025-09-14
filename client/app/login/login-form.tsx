@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios";
 import toastError, { useToastError } from "@/lib/toastError";
-import { env } from "@/lib/env";
 import { ResponseExt } from "@/types/responseExt";
 import UserData from "@/types/userData";
 import { toast } from "sonner";
@@ -36,7 +35,7 @@ export function LoginForm({ message }: { message?: string }) {
     try {
       setIsSubmitting(true);
       const response: ResponseExt<UserData> = await axios.post(
-        `${env.API_URL}/api/login`,
+        `/api/proxy/api/login`,
         {
           username: userInput.username,
           password: userInput.password,
@@ -54,7 +53,7 @@ export function LoginForm({ message }: { message?: string }) {
     }
   };
   const handleGoogleLogin = () => {
-    window.location.href = `${env.API_URL}/auth/google`;
+    window.location.href = `/api/proxy/auth/google`;
   };
 
   return (
@@ -124,7 +123,7 @@ export function LoginForm({ message }: { message?: string }) {
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <a
-                  href={`${env.API_URL}/auth/google`}
+                  href={`/api/proxy/auth/google`}
                   className="underline underline-offset-4"
                 >
                   Sign up

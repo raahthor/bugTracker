@@ -14,7 +14,6 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import toastError, { isLengthError } from "@/lib/toastError";
 import axios from "axios";
-import { env } from "@/lib/env";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -35,7 +34,7 @@ export function UpdateProjName({
     if (isLengthError("Name", inputName, 6)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-proj`,
+        `/api/proxy/api/settings/update-proj`,
         { name: inputName.trim(), id },
         { withCredentials: true }
       );
@@ -97,7 +96,7 @@ export function UpdateProjDesc({
     if (isLengthError("Description", inputDescription, 10)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-proj`,
+        `/api/proxy/api/settings/update-proj`,
         { description: inputDescription.trim(), id },
         { withCredentials: true }
       );
@@ -162,7 +161,7 @@ export function DeleteProj({
   async function deleteProj() {
     try {
       const result = await axios.delete(
-        `${env.API_URL}/api/settings/delete-proj/${id}`,
+        `/api/proxy/api/settings/delete-proj/${id}`,
         { withCredentials: true }
       );
       if (result.data.success) {

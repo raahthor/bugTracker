@@ -2,7 +2,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import debounce from "@/lib/debounce";
-import { env } from "@/lib/env";
 import toastError from "@/lib/toastError";
 import { ResponseExt } from "@/types/responseExt";
 import { SearchList } from "@/types/searchList";
@@ -20,7 +19,7 @@ export default function JoinOrg() {
       if (!title.trim()) return;
       try {
         const result: ResponseExt<{ searchList: SearchList[] }> =
-          await axios.get(`${env.API_URL}/api/search-org/${title}`, {
+          await axios.get(`/api/proxy/api/search-org/${title}`, {
             withCredentials: true,
           });
         setSearchList(result.data.data.searchList);

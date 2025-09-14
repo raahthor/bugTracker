@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { env } from "@/lib/env";
 import toastError from "@/lib/toastError";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -20,7 +19,7 @@ export default function DeleteBug({ bugId }: { bugId: string }) {
   async function closeBug() {
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/project/close-bug`,
+        `/api/proxy/api/project/close-bug`,
         { bugId },
         {
           withCredentials: true,

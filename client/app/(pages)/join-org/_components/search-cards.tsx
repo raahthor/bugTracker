@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
-import { env } from "@/lib/env";
 import { ResponseExt } from "@/types/responseExt";
 import toastError from "@/lib/toastError";
 
@@ -32,7 +31,7 @@ export default function SearchCards({ org }: { org: SearchList }) {
     try {
       setIsSubmitting(true);
       const result: ResponseExt<{ handle: string }> = await axios.post(
-        `${env.API_URL}/api/join-org`,
+        `/api/proxy/api/join-org`,
         {
           orgId: org.id,
           joinCode,

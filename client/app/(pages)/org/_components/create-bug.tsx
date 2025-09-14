@@ -19,7 +19,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { env } from "@/lib/env";
 import toastError, { isLengthError } from "@/lib/toastError";
 import { cn } from "@/lib/utils";
 import { IconX } from "@tabler/icons-react";
@@ -85,7 +84,7 @@ function BugDialogBox({
     try {
       setIsSubmitting(true);
       const result = await axios.post(
-        `${env.API_URL}/api/project/${organization}/${project}/create-bug`,
+        `/api/proxy/api/project/${organization}/${project}/create-bug`,
         {
           name: userInput.name.trim(),
           priority: priorityVal || "MEDIUM",

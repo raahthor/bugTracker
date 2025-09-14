@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { env } from "@/lib/env";
 import toastError, { isLengthError } from "@/lib/toastError";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -28,7 +27,7 @@ export function UpdateName({ name }: { name: string | undefined }) {
     if (isLengthError("Name", inputName, 6)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/update-user`,
+        `/api/proxy/api/update-user`,
         { name: inputName },
         { withCredentials: true }
       );
@@ -80,7 +79,7 @@ export function UpdateUsername({ username }: { username: string | undefined }) {
     if (isLengthError("Username", inputUsername, 4)) return;
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/update-user`,
+        `/api/proxy/api/settings/update-user`,
         { username: inputUsername },
         { withCredentials: true }
       );
@@ -153,7 +152,7 @@ export function UpdatePassword() {
     }
     try {
       const result = await axios.patch(
-        `${env.API_URL}/api/settings/change-password`,
+        `/api/proxy/api/settings/change-password`,
         { oldPass: inputPassword.oldPass, newPass: inputPassword.newPass },
         { withCredentials: true }
       );

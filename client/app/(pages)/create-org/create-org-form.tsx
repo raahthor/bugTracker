@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { env } from "@/lib/env";
 import { useState } from "react";
 import toastError, { isLengthError } from "@/lib/toastError";
 import { ResponseExt } from "@/types/responseExt";
@@ -55,7 +54,7 @@ export default function CreateOrgForm() {
     try {
       setIsSubmitting(true);
       const response: ResponseExt<{ handle: string }> = await axios.post(
-        `${env.API_URL}/api/create-org`,
+        `/api/proxy/api/create-org`,
         {
           name: userInput.name.trim(),
           handle: userInput.handle,
