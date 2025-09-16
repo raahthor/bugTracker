@@ -8,6 +8,9 @@ import {
   Key,
   Mail,
   Linkedin,
+  Sparkles,
+  Code,
+  Database,
 } from "lucide-react";
 import {
   DemoLoginButton,
@@ -17,13 +20,101 @@ import {
   ViewCodeButtonLG,
 } from "./home-page-btns";
 
+const staticData = {
+  features: [
+    {
+      header: "Soft Delete with Recovery",
+      description:
+        "Safe data operations with recovery options for organizations and bugs",
+      icon: RotateCcw,
+    },
+    {
+      header: "Role-Based Access Control",
+      description:
+        "Secure permissions and data isolation for different user roles",
+      icon: Shield,
+    },
+    {
+      header: "Google OAuth Integration",
+      description: "Third-party authentication with secure token handling",
+      icon: ExternalLink,
+    },
+    {
+      header: "Secure Join Codes for Organizations",
+      description: "Multi-tenant invite system with secure organization access",
+      icon: Key,
+    },
+    {
+      header: "Bug Lifecycle Management",
+      description:
+        "Complete workflow with status changes, assignments, and timestamps",
+      icon: CheckCircle,
+    },
+    {
+      header: "Password Reset Using Brevo",
+      description: "Email-based password recovery with secure token validation",
+      icon: Mail,
+    },
+  ],
+  techStack: [
+    {
+      header: "Next.js",
+      description: "React framework with SSR and routing",
+      icon: Code,
+    },
+    {
+      header: "TailwindCSS + ShadcnUI",
+      description: "Utility-first styling + headless components",
+      icon: Sparkles,
+    },
+    {
+      header: "Node.js / Express",
+      description: "REST API backend",
+      icon: ExternalLink,
+    },
+    {
+      header: "Prisma + PostgreSQL",
+      description: "Modern ORM with relational DB",
+      icon: Database,
+    },
+    {
+      header: "Authentication",
+      description: "Google OAuth + JWT",
+      icon: Shield,
+    },
+    {
+      header: "Deployment",
+      description: "Vercel (frontend) + Render (backend)",
+      icon: ExternalLink,
+    },
+  ],
+  handles: [
+    {
+      name: "Portfolio",
+      link: "https://raahthor.vercel.app",
+      icon: ExternalLink,
+    },
+    {
+      name: "GitHub",
+      link: "https://github.com/raahthor",
+      icon: Github,
+    },
+    {
+      name: "LinkedIn",
+      link: "https://linkedin.com/in/raahthor",
+      icon: Linkedin,
+    },
+  ],
+};
+
 export default function LandingPage() {
+  const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="border-b border-border">
+      <header className="border-b">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                 <CheckCircle className="h-5 w-5 text-primary-foreground" />
               </div>
@@ -31,10 +122,10 @@ export default function LandingPage() {
                 Bug Tracker
               </span>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center gap-3">
               <LoginButton />
               <SignupButton />
-              <div className="hidden sm:flex items-center space-x-3 ml-4 pl-4 border-l">
+              <div className="hidden sm:flex items-center gap-3 ml-4 pl-4 border-l">
                 <ViewCodeButton />
               </div>
             </div>
@@ -44,10 +135,18 @@ export default function LandingPage() {
 
       <main className="flex-1 px-6 py-8">
         <div className="max-w-4xl mx-auto text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Bug Tracker SaaS for Teams
+          <div className="inline-flex items-center gap-2 bg-accent/30 border border-primary/20 rounded-full px-4 py-2 mb-6">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium text-primary">
+              Portfolio Project
+            </span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold  mb-6 leading-tight">
+            Simple Bug Tracker
+            <br />
+            <span className="text-primary">SaaS for Teams</span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
             A full-stack web application showcasing role-based access control
             and soft-delete features for efficient bug management.
           </p>
@@ -61,135 +160,62 @@ export default function LandingPage() {
           <h2 className="text-2xl font-bold text-foreground text-center mb-6">
             Key Features
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="p-2 text-center">
-                <RotateCcw className="h-12 w-12 text-primary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-2 text-sm">
-                  Soft Delete with Recovery
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Safe data operations with recovery options for organizations
-                  and bugs
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-2 text-center">
-                <Shield className="h-12 w-12 text-primary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-2 text-sm">
-                  Role-Based Access Control
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Secure permissions and data isolation for different user roles
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-2 text-center">
-                <ExternalLink className="h-12 w-12 text-primary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-2 text-sm">
-                  Google OAuth Integration
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Third-party authentication with secure token handling
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-2 text-center">
-                <Key className="h-12 w-12 text-primary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-2 text-sm">
-                  Secure Join Codes for Organizations
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Multi-tenant invite system with secure organization access
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-2 text-center">
-                <CheckCircle className="h-12 w-12 text-primary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-2 text-sm">
-                  Bug Lifecycle Management
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Complete workflow with status changes, assignments, and
-                  timestamps
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-2 text-center">
-                <Mail className="h-12 w-12 text-primary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-2 text-sm">
-                  Password Reset Using Brevo
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Email-based password recovery with secure token validation
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {staticData.features.map((feat, idx) => (
+              <Card
+                key={idx}
+                className=" bg-card/50 hover:bg-card/80 transition-all duration-300 hover:scale-105"
+              >
+                <CardContent className="py-2 px-4 text-center">
+                  <feat.icon className="h-12 w-12 text-primary mx-auto mb-3" />
+                  <h3 className="font-semibold text-foreground mb-2 text-sm">
+                    {feat.header}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    {feat.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-          <p className="text-center text-xs text-muted-foreground mt-4">
-            Plus dynamic URLs for usernames and organizations, showcasing
-            SEO-friendly routing
-          </p>
+          <div className="text-center mt-8">
+            <div className="inline-flex items-center gap-2 bg-accent/30 border  rounded-full px-4 py-2">
+              <Code className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">
+                Plus dynamic URLs for usernames and organizations
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div className="max-w-4xl mx-auto mb-10">
-          <h2 className="text-2xl font-bold text-foreground text-center mb-6">
-            Tech Stack
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="bg-card border border-border rounded-lg p-4">
-              <div className="text-sm font-semibold text-foreground mb-1">
-                Next.js
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Tech Stack
+            </h2>
+            <p className="text-muted-foreground">
+              Modern technologies and best practices
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {staticData.techStack.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-card/50 border rounded-xl p-6 transition-all duration-300 hover:scale-105"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center transition-all duration-300">
+                    <item.icon className="h-4 w-4 text-primary" />
+                  </div>
+                  <div className="font-semibold text-foreground">
+                    {item.header}
+                  </div>
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {item.description}
+                </div>
               </div>
-              <div className="text-xs text-muted-foreground">
-                React framework with SSR/ISR and routing
-              </div>
-            </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <div className="text-sm font-semibold text-foreground mb-1">
-                Tailwind CSS + Shadcn UI
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Utility-first styling + headless components
-              </div>
-            </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <div className="text-sm font-semibold text-foreground mb-1">
-                Node.js / Express
-              </div>
-              <div className="text-xs text-muted-foreground">
-                REST API backend
-              </div>
-            </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <div className="text-sm font-semibold text-foreground mb-1">
-                Prisma + PostgreSQL
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Modern ORM with relational DB
-              </div>
-            </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <div className="text-sm font-semibold text-foreground mb-1">
-                Authentication
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Google OAuth + JWT
-              </div>
-            </div>
-            <div className="bg-card border border-border rounded-lg p-4">
-              <div className="text-sm font-semibold text-foreground mb-1">
-                Deployment
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Vercel (frontend) + Render (backend)
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -204,68 +230,40 @@ export default function LandingPage() {
             applications.
           </p>
           <div className="flex justify-center space-x-6">
-            <a
-              href="https://yourportfolio.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ExternalLink className="h-5 w-5" />
-              <span>Portfolio</span>
-            </a>
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Github className="h-5 w-5" />
-              <span>GitHub</span>
-            </a>
-            <a
-              href="https://linkedin.com/in/yourprofile"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Linkedin className="h-5 w-5" />
-              <span>LinkedIn</span>
-            </a>
+            {staticData.handles.map((handle, idx) => (
+              <a
+                key={idx}
+                href={handle.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <handle.icon className="h-5 w-5" />
+                <span>{handle.name}</span>
+              </a>
+            ))}
           </div>
         </div>
       </main>
 
-      <footer className="border-t border-border">
+      <footer className="border-t ">
         <div className="container mx-auto px-6 py-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
             <div className="text-sm text-muted-foreground">
-              © 2024 Prashant. Built as a portfolio project.
+              © {year} - Prashant. Built as a portfolio project.
             </div>
-            <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-              <a
-                href="https://yourportfolio.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                Portfolio
-              </a>
-              <a
-                href="https://github.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://linkedin.com/in/yourprofile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                LinkedIn
-              </a>
+            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              {staticData.handles.map((handle, idx) => (
+                <a
+                  key={idx}
+                  href={handle.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  {handle.name}
+                </a>
+              ))}
             </div>
           </div>
         </div>
