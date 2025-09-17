@@ -79,7 +79,7 @@ export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
               No bugs assigned to you
             </CardTitle>
             <CardDescription className="text-base mt-2">
-              You're all caught up! Check back later for new assignments.
+              You&apos;re all caught up! Check back later for new assignments.
             </CardDescription>
           </CardHeader>
         </Card>

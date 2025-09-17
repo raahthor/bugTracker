@@ -37,7 +37,7 @@ export default async function DashboardPage({
               </h1>
             </div>
             <p className="text-muted-foreground text-lg">
-              Let's get started by creating or joining an Organization
+              Let&apos;s get started by creating or joining an Organization
             </p>
           </div>
 

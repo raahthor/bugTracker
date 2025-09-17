@@ -21,7 +21,6 @@ export function CreateProjButton({ organization }: { organization: string }) {
 }
 
 export function JoinCode({ joinCode }: { joinCode: string }) {
-  const router = useRouter();
   function copyToClip() {
     try {
       navigator.clipboard.writeText(joinCode);
