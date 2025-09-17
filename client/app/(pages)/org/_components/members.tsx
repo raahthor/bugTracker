@@ -36,10 +36,10 @@ export default function Members({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="h-12 px-5 rounded-2xl">
+        <Button variant="outline" className="h-8 px-5 rounded-2xl">
           <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
             {/* make this dynamic upto 3 users only */}
-            <Avatar>
+            <Avatar >
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             </Avatar>
             <Avatar>

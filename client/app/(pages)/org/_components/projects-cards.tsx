@@ -1,13 +1,13 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
-  CardAction,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ArrowRight, Folder } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function ProjectsCards({
@@ -28,27 +28,34 @@ export default function ProjectsCards({
     dateStyle: "medium",
   });
   return (
-    <Card className="@container/card">
+    <Card
+      onClick={() => router.push(`/org/${organization}/${slug}`)}
+      className="@container/card bg-card/50 backdrop-blur-sm  hover:border-primary/50 transition-all duration-300 group cursor-pointer"
+    >
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-          {name}
-        </CardTitle>
-        <CardDescription>{description}</CardDescription>
-        <CardAction>{/* <Badge variant="outline">{role}</Badge> */}</CardAction>
+        <div className="flex justify-between items-start">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center">
+                <Folder size="20" />
+              </div>
+              <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                {name}
+              </CardTitle>
+            </div>
+            <CardDescription className="text-base">
+              {description}
+            </CardDescription>
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <Badge variant="outline" className="text-xs">
+              @{organization}
+            </Badge>
+            <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+          </div>
+        </div>
       </CardHeader>
-      {/* <CardContent>
-        <p>{description}</p>
-      </CardContent> */}
-      <CardFooter className="flex-col items-start gap-2 text-xs">
-        <div className="text-muted-foreground">Updated : {date}</div>
-        {/* <div className="line-clamp-1 flex gap-2 font-medium"></div> */}
-        <Button
-          className=" w-20"
-          onClick={() => router.push(`/org/${organization}/${slug}`)}
-        >
-          Open
-        </Button>
-      </CardFooter>
+      <CardFooter className="text-sm">Updated : {date}</CardFooter>
     </Card>
   );
 }
