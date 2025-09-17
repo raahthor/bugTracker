@@ -179,12 +179,9 @@ export default function LandingPage() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <div className="inline-flex items-center gap-2 bg-accent/30 border  rounded-full px-4 py-2">
-              <Code className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
-                Plus dynamic URLs for usernames and organizations
-              </span>
-            </div>
+            <p className="inline text-sm text-muted-foreground  bg-accent/30 border  rounded-full px-4 py-2">
+              Plus dynamic URLs for usernames and organizations
+            </p>
           </div>
         </div>
 
