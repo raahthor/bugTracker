@@ -25,6 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Plus } from "lucide-react";
 
 export default function CreateBug({
   organization,
@@ -96,7 +97,10 @@ function BugDialogBox({
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button>Create Bug</Button>
+        <Button>
+          <Plus />
+          Create Bug
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -2,8 +2,9 @@ import { DataTableDemo } from "@/components/table/data-table";
 import CreateBug from "../../_components/create-bug";
 import getData from "@/lib/getData";
 import { ProjectData } from "@/types/ProjectData";
-import { Calendar, FolderOpen } from "lucide-react";
+import { Bug, Calendar, FolderOpen } from "lucide-react";
 import { ProjSettingsBtn } from "../../_components/project-comps";
+import { Badge } from "@/components/ui/badge";
 
 export default async function ProjectPage({
   params,
@@ -21,7 +22,7 @@ export default async function ProjectPage({
   const createdAt = new Date(projectData.createdAt).toLocaleString();
   return (
     <div>
-      <header className="border-b">
+      <header className="border-b mb-5">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="space-y-2">
@@ -44,14 +45,42 @@ export default async function ProjectPage({
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-5">
+            <div>
               <ProjSettingsBtn project={project} organization={organization} />
             </div>
           </div>
         </div>
       </header>
-      <CreateBug organization={organization} project={project} />
-      <DataTableDemo bugs={bugs} members={members} />
+      <div className="space-y-5 px-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Bug className="w-5 h-5 text-primary" />
+            <h2 className="text-xl font-semibold">Bugs</h2>
+            <Badge
+              variant="secondary"
+              className="bg-purple-500/20 text-purple-300 border-purple-500/30"
+            >
+              {bugs.length}
+            </Badge>
+          </div>
+
+          <CreateBug organization={organization} project={project} />
+        </div>
+
+        <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-12 ">
+          {/* {projects.map((project, idx) => (
+              <ProjectsCards
+                key={idx}
+                name={project.name}
+                slug={project.slug}
+                description={project.description}
+                updatedAt={project.updatedAt}
+                organization={organization}
+              />
+            ))} */}
+          <DataTableDemo bugs={bugs} members={members} />
+        </div>
+      </div>
     </div>
   );
 }
