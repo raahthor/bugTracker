@@ -55,7 +55,7 @@ export default function ProjectsCards({
           </div>
         </div>
       </CardHeader>
-      <CardFooter className="text-sm">Updated : {date}</CardFooter>
+      <CardFooter className="text-sm text-muted-foreground">Updated : {date}</CardFooter>
     </Card>
   );
 }
