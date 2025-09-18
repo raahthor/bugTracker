@@ -28,7 +28,7 @@ export default async function OrganizationPage({
   const createdAt = new Date(orgData.createdAt).toDateString();
   return (
     <>
-      <div className="border-b">
+      <header className="border-b">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="space-y-2">
@@ -55,7 +55,7 @@ export default async function OrganizationPage({
             </div>
           </div>
         </div>
-      </div>
+      </header>
       {/* memebnr */}
       <div>
         <div className="px-6 mb-5 flex gap-4">
