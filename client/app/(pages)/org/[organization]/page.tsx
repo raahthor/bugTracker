@@ -71,7 +71,7 @@ export default async function OrganizationPage({
           />
         </div>
         {/* Project SEction */}
-        <div className="space-y-4 px-6">
+        <div className="space-y-5 px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FolderOpen className="w-5 h-5 text-purple-400" />
