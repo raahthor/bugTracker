@@ -32,15 +32,11 @@ export default async function OrganizationPage({
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center font-bold text-lg">
-                  {orgData.name.charAt(0)}
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold ">{orgData.name}</h1>
-                  <p className="text-gray-400 text-sm">{orgData.description}</p>
-                </div>
+              <div>
+                <h1 className="text-3xl font-bold mb-2">{orgData.name}</h1>
+                <p className="text-gray-400 text-sm">{orgData.description}</p>
               </div>
+
               <div className="flex items-center gap-4 text-sm text-gray-400">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />

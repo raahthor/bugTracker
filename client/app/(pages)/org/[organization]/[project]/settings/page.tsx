@@ -32,7 +32,7 @@ export default async function ProjSettingsPage({
       <Card className="px-8 ">
         <CardTitle className="self-center text-lg">Project Settings</CardTitle>
         <div className="flex gap-1 font-semibold text-muted-foreground">
-          <p>Org owner : </p>
+          <p>Org owner &ensp;: </p>
           <Avatar className="w-6 h-6">
             <AvatarImage src={proj.owner.avatar} alt="User Image" />
           </Avatar>

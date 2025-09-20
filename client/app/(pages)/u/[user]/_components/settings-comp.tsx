@@ -42,8 +42,8 @@ export function UpdateName({ name }: { name: string | undefined }) {
     }
   }
   return (
-    <div className="flex items-center">
-      <p className="font-semibold">Name : {name}</p>
+    <div className="flex items-center justify-between">
+      <p className="font-semibold">Name &emsp; &ensp;: {name}</p>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="link">Edit</Button>
@@ -93,7 +93,7 @@ export function UpdateUsername({ username }: { username: string | undefined }) {
     }
   }
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-between">
       <p className="font-semibold">Username : {username}</p>
       <Dialog>
         <DialogTrigger asChild>
@@ -166,8 +166,8 @@ export function UpdatePassword() {
   }
 
   return (
-    <div className="flex items-center gap-1">
-      <p className="font-semibold">Password : </p>
+    <div className="flex items-center justify-between">
+      <p className="font-semibold">Password&ensp;: </p>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="link">Change Password</Button>

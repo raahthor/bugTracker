@@ -48,8 +48,8 @@ export function UpdateProjName({
     }
   }
   return (
-    <div className="flex items-center">
-      <p className="font-semibold">Name : {name}</p>
+    <div className="flex items-center justify-between">
+      <p className="font-semibold">Name &emsp; &emsp; : {name}</p>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="link" disabled={!isOwner}>
@@ -110,9 +110,11 @@ export function UpdateProjDesc({
     }
   }
   return (
-    <div className="flex font-semibold gap-1">
-      <p className="min-w-fit">Description : </p>
-      <p className=" max-w-[150px]">{description}</p>
+    <div className="flex font-semibold  justify-between">
+      <div className="flex gap-1">
+        <span className="min-w-fit">Description : </span>
+        <span className=" max-w-[150px]">{description}</span>
+      </div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="link" disabled={!isOwner}>

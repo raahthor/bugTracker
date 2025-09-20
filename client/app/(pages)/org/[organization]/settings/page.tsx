@@ -45,7 +45,7 @@ export default async function OrgSettingsPage({
           isOwner={result.data.data.isOwner}
         />
         <div className="flex gap-1 font-semibold">
-          <p>Owner : </p>
+          <p>Owner &emsp;&emsp; : </p>
           <Avatar className="w-6 h-6">
             <AvatarImage src={orgData.org.owner.avatar} alt="User Image" />
           </Avatar>
