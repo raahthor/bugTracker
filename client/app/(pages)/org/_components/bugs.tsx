@@ -9,25 +9,37 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { BugExt as RecentBug } from "@/types/DashboardData";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { useRouter } from "next/navigation";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Bug, Calendar, Clock, ExternalLink, User } from "lucide-react";
+// import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Bug, Calendar, Clock, User } from "lucide-react";
+import { BugProj, Member } from "@/types/ProjectData";
+import AssigneeSelector from "@/components/assignee-selector";
 import { useState } from "react";
 
-export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
-  const router = useRouter();
+export default function Bugs({
+  bugs,
+  members,
+}: {
+  bugs: BugProj[];
+  members: Member[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className=" grid grid-cols-1 gap-4 px-4 lg:px-12 ">
+    <div className=" grid grid-cols-1 gap-4  ">
       {bugs.length !== 0 ? (
         bugs.map((bug, idx) => (
           <Dialog key={idx} open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
               <Button
                 className="h-fit flex flex-col items-start"
-                variant="outline"
+                variant={"outline"}
               >
                 <BugCard bug={bug} />
               </Button>
@@ -86,17 +98,14 @@ export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
               </div>
 
               <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                <Button
-                  variant="outline"
-                  onClick={() =>
-                    router.push(
-                      `/org/${bug.project.organization.handle}/${bug.project.slug}`
-                    )
-                  }
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Open Project
-                </Button>
+                <div className="flex gap-3">
+                  <AssigneeSelector
+                    bugId={bug.id}
+                    members={members}
+                    setIsOpen={setIsOpen}
+                  />
+                </div>
+
                 <CloseBug bugId={bug.id} setIsOpen={setIsOpen} />
               </div>
             </DialogContent>
@@ -121,19 +130,24 @@ export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
   );
 }
 
-function BugCard({ bug }: { bug: RecentBug }) {
+function BugCard({ bug }: { bug: BugProj }) {
   return (
     <>
       <div className="flex items-center gap-2 text-xs text-gray-400">
         <Bug className="h-3 w-3" />
-        <span>
-          Belongs to {bug.project.name} in {bug.project.organization.handle}
-        </span>
+        <h3 className="text-lg font-semibold text-white">{bug.name}</h3>
       </div>
-      <h3 className="text-lg font-semibold">{bug.name}</h3>
-      <div className="w-full flex items-center justify-between">
-        <div className="flex  flex-col items-start md:flex-row gap-2">
-          <Badge variant="outline" className="bg-yellow-500/30 text-yellow-100">
+
+      <div className="w-full flex items-end justify-between">
+        <div className="flex flex-col items-start md:flex-row gap-2">
+          <Badge
+            variant="outline"
+            className={`${
+              bug.status === "OPEN"
+                ? "bg-green-500"
+                : bug.status === "IN_PROGRESS" && "bg-yellow-300"
+            }`}
+          >
             {bug.status}
           </Badge>
           <Badge
@@ -149,10 +163,24 @@ function BugCard({ bug }: { bug: RecentBug }) {
             {bug.priority}
           </Badge>
         </div>
-        <div className="flex items-center gap-1 text-sm text-gray-300">
-          <span>Raised :</span>
-          <User className="h-3 w-3" />
-          <span>{bug.raisedByUser.name}</span>
+        <div>
+          <div className="flex items-center gap-1 text-sm text-gray-300">
+            <span>Raised :</span>
+            <User className="h-3 w-3" />
+            <span>{bug.raisedByUser.name}</span>
+          </div>
+          <div className="flex items-center gap-1 text-sm text-gray-300">
+            <span>Assigned :</span>
+
+            {bug.assignedUser ? (
+              <>
+                <User className="h-3 w-3" />
+                <span> {bug.assignedUser.name}</span>
+              </>
+            ) : (
+              <span>Not Assigned</span>
+            )}
+          </div>
         </div>
       </div>
     </>

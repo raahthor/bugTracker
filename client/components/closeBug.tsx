@@ -14,7 +14,13 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export default function DeleteBug({ bugId }: { bugId: string }) {
+export default function DeleteBug({
+  bugId,
+  setIsOpen,
+}: {
+  bugId: string;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const router = useRouter();
   async function closeBug() {
     try {
@@ -28,6 +34,7 @@ export default function DeleteBug({ bugId }: { bugId: string }) {
 
       if (result.data.success) {
         toast.success("Bug closed");
+        setIsOpen(false);
         router.refresh();
       }
     } catch (err) {

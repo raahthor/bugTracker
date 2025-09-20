@@ -26,9 +26,12 @@ import { toast } from "sonner";
 export default function AssigneeSelector({
   members,
   bugId,
+  setIsOpen,
 }: {
   members: Member[];
   bugId: string;
+
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const router = useRouter();
   const [user, setUsername] = React.useState<Member["user"] | null>();
@@ -50,6 +53,7 @@ export default function AssigneeSelector({
       );
       if (result.data.success) {
         toast.success(result.data.message);
+        setIsOpen(false);
         router.refresh();
       }
     } catch (err) {

@@ -1,10 +1,10 @@
-import { DataTableDemo } from "@/components/table/data-table";
 import CreateBug from "../../_components/create-bug";
 import getData from "@/lib/getData";
 import { ProjectData } from "@/types/ProjectData";
 import { Bug, Calendar, FolderOpen } from "lucide-react";
 import { ProjSettingsBtn } from "../../_components/project-comps";
 import { Badge } from "@/components/ui/badge";
+import Bugs from "../../_components/bugs";
 
 export default async function ProjectPage({
   params,
@@ -51,7 +51,7 @@ export default async function ProjectPage({
           </div>
         </div>
       </header>
-      <div className="space-y-5 px-6">
+      <div className="space-y-6 px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bug className="w-5 h-5 text-primary" />
@@ -68,17 +68,7 @@ export default async function ProjectPage({
         </div>
 
         <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-12 ">
-          {/* {projects.map((project, idx) => (
-              <ProjectsCards
-                key={idx}
-                name={project.name}
-                slug={project.slug}
-                description={project.description}
-                updatedAt={project.updatedAt}
-                organization={organization}
-              />
-            ))} */}
-          <DataTableDemo bugs={bugs} members={members} />
+          <Bugs bugs={bugs} members={members} />
         </div>
       </div>
     </div>
