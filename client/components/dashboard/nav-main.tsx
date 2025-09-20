@@ -30,7 +30,7 @@ export function NavMain({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 tooltip={item.title}
-                className="border-1 py-5 mt-1"
+                className="border-1 py-5 mt-1 hover:border-primary"
                 onClick={() => {
                   router.push(item.url);
                 }}

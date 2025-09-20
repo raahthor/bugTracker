@@ -64,7 +64,9 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href={`/u/${userData.username}`}>
-                <IconBugFilled className="!size-6" />
+                <span className="bg-primary rounded-md p-1">
+                  <IconBugFilled className="!size-6" />
+                </span>
                 <span className="text-xl font-semibold">Bug Tracker</span>
               </a>
             </SidebarMenuButton>

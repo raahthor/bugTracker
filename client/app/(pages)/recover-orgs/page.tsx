@@ -12,7 +12,7 @@ export default async function DeletedOrg() {
   return (
     <div className="min-h-screen text-foreground container mx-auto px-4 max-w-6xl">
       <header className="text-3xl font-bold flex items-center gap-4 mb-8">
-        <Building2 className="text-primary" />{" "}
+        <Building2 className="text-primary" />
         <span>Recover Organizations</span>
       </header>
       <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 ">
