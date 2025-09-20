@@ -36,21 +36,22 @@ export default function Members({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="h-8 px-5 rounded-2xl">
-          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+        <Button variant="outline" className="h-fit">
+          <div className="*:data-[slot=avatar]:ring-background flex -space-x-1 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
             {/* make this dynamic upto 3 users only */}
-            <Avatar >
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={members[0].avatar} alt="User Avatar" />
             </Avatar>
-            <Avatar>
-              <AvatarImage src="https://github.com/leerob.png" alt="@leerob" />
-            </Avatar>
-            <Avatar>
-              <AvatarImage
-                src="https://github.com/evilrabbit.png"
-                alt="@evilrabbit"
-              />
-            </Avatar>
+            {members.length > 1 && (
+              <Avatar className="h-6 w-6">
+                <AvatarImage src={members[1].avatar} alt="User Avatar" />
+              </Avatar>
+            )}
+            {members.length > 2 && (
+              <Avatar className="h-6 w-6">
+                <AvatarImage src={members[2].avatar} alt="User Avatar" />
+              </Avatar>
+            )}
           </div>
         </Button>
       </DialogTrigger>
@@ -141,8 +142,8 @@ function RemoveMemBtn({
         <DialogHeader>
           <DialogTitle>Remove this member?</DialogTitle>
           <DialogDescription>
-            This user won&apos;t be able to access this organization but bugs raised
-            by them will stay there.
+            This user won&apos;t be able to access this organization but bugs
+            raised by them will stay there.
           </DialogDescription>
         </DialogHeader>
         <DialogClose asChild>
