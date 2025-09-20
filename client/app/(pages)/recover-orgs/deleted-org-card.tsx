@@ -1,4 +1,5 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,14 +38,30 @@ export default function DeletedOrgCard({
 }) {
   const daysLeft = 30 - (new Date().getDate() - new Date(deletedAt).getDate());
   return (
-    <Card className="@container/card bg-red-100">
+    <Card className="@container/card bg-card/50 backdrop-blur-sm  hover:border-primary/50 transition-all duration-300 group cursor-pointer">
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-          {name}
-        </CardTitle>
-        <CardDescription>
-          <p className="font-semibold mb-2">@ {handle}</p> <p>{description}</p>
-        </CardDescription>
+        <div className="flex justify-between items-start">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">
+                  {name.charAt(0)}
+                </span>
+              </div>
+              <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                {name}
+              </CardTitle>
+            </div>
+            <CardDescription className="text-base">
+              {description}
+            </CardDescription>
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <Badge variant="outline" className="text-xs">
+              @{handle}
+            </Badge>
+          </div>
+        </div>
       </CardHeader>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="font-semibold text-red-600">
