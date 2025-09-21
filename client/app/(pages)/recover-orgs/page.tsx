@@ -10,7 +10,7 @@ export default async function DeletedOrg() {
   );
   const deletedOrgList = result.data.data.deletedOrgs;
   return (
-    <div className="container mx-auto px-6 py-6 max-w-7xl">
+    <div className="container mx-auto px-4 md:px-8 max-w-7xl">
       <header className="text-3xl font-bold flex items-center gap-4 mb-8">
         <Building2 className="text-primary" />
         <span>Recover Organizations</span>
