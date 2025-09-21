@@ -133,13 +133,16 @@ export function JoinCode({ joinCode }: { joinCode: string }) {
   }
   return (
     <div className="flex px-4 justify-end items-center">
-      <p id="joinCode" className="border border-gray-400 px-2.5 rounded-l-md">
+      <p
+        id="joinCode"
+        className="border border-gray-400/60 px-3 py-1 rounded-l-md"
+      >
         {joinCode}
       </p>
       <Button
         onClick={copyToClip}
         variant="outline"
-        className="h-6.25 w-6.25 border-gray-400 rounded-l-none "
+        className="h-fit w-fit border border-gray-400/60 rounded-l-none "
       >
         <IconCopy />
       </Button>
@@ -152,10 +155,9 @@ export function SettingsButton({ organization }: { organization: string }) {
     <Button
       variant="ghost"
       size="lg"
-      className="hover:bg-gray-800"
       onClick={() => router.push(`/org/${organization}/settings`)}
     >
-      <Settings className="w-5 h-5" />
+      <Settings />
     </Button>
   );
 }

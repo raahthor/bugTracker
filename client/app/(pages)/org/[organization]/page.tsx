@@ -27,34 +27,30 @@ export default async function OrganizationPage({
   const projects = result.data.data.orgData.projects;
   const createdAt = new Date(orgData.createdAt).toDateString();
   return (
-    <>
-      <header className="border-b">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div className="space-y-2">
-              <div>
-                <h1 className="text-3xl font-bold mb-2">{orgData.name}</h1>
-                <p className="text-gray-400 text-sm">{orgData.description}</p>
-              </div>
+    <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+      <header className="border-b flex items-center justify-between pb-4 mb-4">
+        <div className="space-y-2">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">{orgData.name}</h1>
+            <p className="text-gray-400 text-sm">{orgData.description}</p>
+          </div>
 
-              <div className="flex items-center gap-4 text-sm text-gray-400">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  {createdAt}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center gap-5">
-              <SettingsButton organization={organization} />
-              <JoinCode joinCode={orgData.joinCode} />
+          <div className="flex items-center gap-4 text-sm text-gray-400">
+            <div className="flex items-center gap-1">
+              <Calendar className="w-4 h-4" />
+              {createdAt}
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-col items-center gap-5">
+          <SettingsButton organization={organization} />
+          <JoinCode joinCode={orgData.joinCode} />
         </div>
       </header>
       {/* memebnr */}
       <div>
-        <div className="px-6 mb-5 flex gap-4">
+        <div className="mb-5 flex gap-4">
           <div className="flex items-center gap-2">
             <Users className="w-5 h-5 text-purple-400" />
             <h2 className="text-xl font-semibold">Team Members :</h2>
@@ -67,7 +63,7 @@ export default async function OrganizationPage({
           />
         </div>
         {/* Project SEction */}
-        <div className="space-y-5 px-6">
+        <div className="space-y-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FolderOpen className="w-5 h-5 text-purple-400" />
@@ -96,6 +92,6 @@ export default async function OrganizationPage({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

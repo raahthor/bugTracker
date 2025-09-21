@@ -21,37 +21,35 @@ export default async function ProjectPage({
   const members = result.data.data.members;
   const createdAt = new Date(projectData.createdAt).toLocaleString();
   return (
-    <div>
-      <header className="border-b mb-5">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center font-bold text-lg">
-                  <FolderOpen />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold ">{projectData.name}</h1>
-                  <p className="text-gray-400 text-sm">
-                    {projectData.description}
-                  </p>
-                </div>
+    <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+      <header className="border-b mb-5 pb-6">
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center font-bold text-lg">
+                <FolderOpen />
               </div>
-              <div className="flex items-center gap-4 text-sm text-gray-400">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  {createdAt}
-                </div>
+              <div>
+                <h1 className="text-3xl font-bold ">{projectData.name}</h1>
+                <p className="text-gray-400 text-sm">
+                  {projectData.description}
+                </p>
               </div>
             </div>
+            <div className="flex items-center gap-4 text-sm text-gray-400">
+              <div className="flex items-center gap-1">
+                <Calendar className="w-4 h-4" />
+                {createdAt}
+              </div>
+            </div>
+          </div>
 
-            <div>
-              <ProjSettingsBtn project={project} organization={organization} />
-            </div>
+          <div>
+            <ProjSettingsBtn project={project} organization={organization} />
           </div>
         </div>
       </header>
-      <div className="space-y-6 px-6">
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bug className="w-5 h-5 text-primary" />

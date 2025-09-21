@@ -118,7 +118,7 @@ export default function Bugs({
               <Bug className="w-8 h-8 text-muted-foreground" />
             </div>
             <CardTitle className="text-muted-foreground text-lg font-medium">
-              No bugs assigned to you
+              No bugs
             </CardTitle>
             <CardDescription className="text-base mt-2">
               You&apos;re all caught up! Check back later for new assignments.

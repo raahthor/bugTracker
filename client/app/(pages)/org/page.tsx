@@ -17,7 +17,7 @@ export default async function OrganizationsPage({
   return (
     <>
       <ToastSCError error={message} />
-      <div className="min-h-screen text-foreground container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4 md:px-8 max-w-7xl">
         <header>
           <div className="text-3xl font-bold flex items-center gap-4 mb-3">
             <Building2 className="text-primary" /> <span> Organizations</span>
@@ -25,7 +25,7 @@ export default async function OrganizationsPage({
           <p className="text-muted-foreground text-lg">
             Use the buttons below to create, join, or recover organizations
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 mb-6 mt-3">
+          <div className="flex flex-col lg:flex-row gap-4 mb-6 mt-3">
             <OrgButtons />
           </div>
         </header>

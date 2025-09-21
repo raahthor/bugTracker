@@ -17,7 +17,7 @@ export default async function MyIssuesPage() {
   const raisedBugs = result.data.data.raisedBugs;
 
   return (
-    <div className="min-h-screen text-foreground container mx-auto px-4 max-w-6xl space-y-5">
+    <div className="container mx-auto px-4 md:px-8 max-w-7xl space-y-5">
       <div>
         <div className="flex items-center gap-2 mb-3">
           <Bug className="w-5 h-5 text-primary" />
