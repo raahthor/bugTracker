@@ -10,6 +10,7 @@ import recoverOrg from "../controllers/recoverOrg";
 import sendProjSetData from "../controllers/sendProjSetData";
 import updateProj from "../controllers/updateProj";
 import deleteProject from "../controllers/deleteProject";
+import cleanArchivedOrgs from "../controllers/cleanArchivedOrgs";
 
 const settingsRouter = Router();
 
@@ -37,7 +38,6 @@ settingsRouter.get(
 );
 settingsRouter.patch("/api/settings/recover-org", verifyCookie, recoverOrg);
 
-
 settingsRouter.get(
   "/api/settings/proj-data/:handle/:slug",
   verifyCookie,
@@ -48,5 +48,9 @@ settingsRouter.delete(
   "/api/settings/delete-proj/:projId",
   verifyCookie,
   deleteProject
+);
+settingsRouter.delete(
+  "/api/settings/clean-orgs/:code",
+  cleanArchivedOrgs
 );
 export default settingsRouter;
