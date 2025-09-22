@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { Member } from "@/types/ProjectData";
+import { BugProj, Member } from "@/types/ProjectData";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,7 @@ export default function AssigneeSelector({
   members: Member[];
   bugId: string;
 
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<BugProj | null>>;
 }) {
   const router = useRouter();
   const [user, setUsername] = React.useState<Member["user"] | null>();
@@ -53,7 +53,7 @@ export default function AssigneeSelector({
       );
       if (result.data.success) {
         toast.success(result.data.message);
-        setIsOpen(false);
+        setIsOpen(null);
         router.refresh();
       }
     } catch (err) {

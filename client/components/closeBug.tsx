@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import toastError from "@/lib/toastError";
+import { BugExt as RecentBug } from "@/types/DashboardData";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -19,7 +20,7 @@ export default function DeleteBug({
   setIsOpen,
 }: {
   bugId: string;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<RecentBug | null>>;
 }) {
   const router = useRouter();
   async function closeBug() {
@@ -34,7 +35,7 @@ export default function DeleteBug({
 
       if (result.data.success) {
         toast.success("Bug closed");
-        setIsOpen(false);
+        setIsOpen(null);
         router.refresh();
       }
     } catch (err) {

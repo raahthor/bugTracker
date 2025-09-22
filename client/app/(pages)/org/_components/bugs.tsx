@@ -1,16 +1,17 @@
 "use client";
-import CloseBug from "@/components/closeBug";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-// import { useRouter } from "next/navigation";
 import {
   Card,
   CardDescription,
@@ -21,6 +22,10 @@ import { Bug, Calendar, Clock, User } from "lucide-react";
 import { BugProj, Member } from "@/types/ProjectData";
 import AssigneeSelector from "@/components/assignee-selector";
 import { useState } from "react";
+import toastError from "@/lib/toastError";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Bugs({
   bugs,
@@ -29,88 +34,112 @@ export default function Bugs({
   bugs: BugProj[];
   members: Member[];
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedBug, setSelectedBug] = useState<BugProj | null>(null);
 
   return (
     <div className=" grid grid-cols-1 gap-4  ">
       {bugs.length !== 0 ? (
-        bugs.map((bug, idx) => (
-          <Dialog key={idx} open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-              <Button
-                className="h-fit flex flex-col items-start"
-                variant={"outline"}
-              >
-                <BugCard bug={bug} />
-              </Button>
-            </DialogTrigger>
+        <>
+          {/* List of bug cards */}
+          {bugs.map((bug) => (
+            <Button
+              key={bug.id}
+              className="h-fit flex flex-col items-start"
+              variant={"outline"}
+              onClick={() => setSelectedBug(bug)}
+            >
+              <BugCard bug={bug} />
+            </Button>
+          ))}
+
+          {/* Single dialog rendered ONCE */}
+          <Dialog
+            open={!!selectedBug}
+            onOpenChange={(open) => {
+              if (!open) setSelectedBug(null);
+            }}
+          >
             <DialogContent>
-              <div className="mb-2">
-                <DialogTitle className="text-2xl font-bold">
-                  {bug.name}
-                </DialogTitle>
-                <DialogDescription className="text-gray-300 leading-relaxed mt-2 text-base">
-                  {bug.description}
-                </DialogDescription>
-              </div>
+              {selectedBug && (
+                <>
+                  <div className="mb-2">
+                    <DialogTitle className="text-2xl font-bold">
+                      {selectedBug.name}
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-300 leading-relaxed mt-2 text-base">
+                      {selectedBug.description}
+                    </DialogDescription>
+                  </div>
 
-              <div className="space-y-2">
-                <div className="p-2 rounded-md flex items-center gap-3 border border-green-500/20 bg-green-600/10">
-                  <div className="p-2 rounded-full bg-green-500/20">
-                    <Calendar className="h-4 w-4 text-green-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-400 font-medium">Created</p>
-                    <p className="text-sm text-gray-200 font-semibold">
-                      {new Date(bug.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
+                  <div className="space-y-2">
+                    <div className="p-2 rounded-md flex items-center gap-3 border border-green-500/20 bg-green-600/10">
+                      <div className="p-2 rounded-full bg-green-500/20">
+                        <Calendar className="h-4 w-4 text-green-400" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400 font-medium">
+                          Created
+                        </p>
+                        <p className="text-sm text-gray-200 font-semibold">
+                          {new Date(selectedBug.createdAt).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="p-2 rounded-md flex items-center gap-3 border border-blue-500/20 bg-blue-600/10">
-                  <div className="p-2 rounded-full bg-blue-500/20">
-                    <Clock className="h-4 w-4 text-blue-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-400 font-medium">Updated</p>
-                    <p className="text-sm text-gray-200 font-semibold">
-                      {new Date(bug.updatedAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
+                    <div className="p-2 rounded-md flex items-center gap-3 border border-blue-500/20 bg-blue-600/10">
+                      <div className="p-2 rounded-full bg-blue-500/20">
+                        <Clock className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400 font-medium">
+                          Updated
+                        </p>
+                        <p className="text-sm text-gray-200 font-semibold">
+                          {new Date(selectedBug.updatedAt).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="p-2 rounded-md flex items-center gap-3  border border-purple-500/20 bg-purple-600/10">
-                  <div className="p-2 rounded-full bg-purple-500/20">
-                    <User className="h-4 w-4 text-purple-400" />
+                    <div className="p-2 rounded-md flex items-center gap-3  border border-purple-500/20 bg-purple-600/10">
+                      <div className="p-2 rounded-full bg-purple-500/20">
+                        <User className="h-4 w-4 text-purple-400" />
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-400 font-medium">
+                          Raised by:
+                        </span>
+                        <Avatar className="h-8 w-8 ">
+                          <AvatarImage
+                            src={selectedBug.raisedByUser.avatar}
+                            alt="avatar"
+                          />
+                        </Avatar>
+                        <span className="text-sm text-gray-200 font-semibold">
+                          {selectedBug.raisedByUser.name}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-gray-400 font-medium">
-                      Raised by:
-                    </span>
-                    <Avatar className="h-8 w-8 ">
-                      <AvatarImage src={bug.raisedByUser.avatar} alt="avatar" />
-                    </Avatar>
-                    <span className="text-sm text-gray-200 font-semibold">
-                      {bug.raisedByUser.name}
-                    </span>
+
+                  <div className="flex justify-between items-center pt-4 border-t border-white/10">
+                    <div className="flex gap-3">
+                      <AssigneeSelector
+                        bugId={selectedBug.id}
+                        members={members}
+                        setIsOpen={setSelectedBug}
+                      />
+                    </div>
+
+                    <CloseBug
+                      bugId={selectedBug.id}
+                      setIsOpen={setSelectedBug}
+                    />
                   </div>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                <div className="flex gap-3">
-                  <AssigneeSelector
-                    bugId={bug.id}
-                    members={members}
-                    setIsOpen={setIsOpen}
-                  />
-                </div>
-
-                <CloseBug bugId={bug.id} setIsOpen={setIsOpen} />
-              </div>
+                </>
+              )}
             </DialogContent>
           </Dialog>
-        ))
+        </>
       ) : (
         <Card className="bg-card/30 border-dashed border-2 ">
           <CardHeader className="text-center py-12">
@@ -145,7 +174,8 @@ function BugCard({ bug }: { bug: BugProj }) {
             className={`${
               bug.status === "OPEN"
                 ? "bg-green-500"
-                : bug.status === "IN_PROGRESS" && "bg-yellow-300"
+                : bug.status === "IN_PROGRESS" &&
+                  "bg-yellow-500/30 text-yellow-100"
             }`}
           >
             {bug.status}
@@ -154,9 +184,9 @@ function BugCard({ bug }: { bug: BugProj }) {
             variant="outline"
             className={`${
               bug.priority === "HIGH"
-                ? "bg-red-500/20  text-red-200"
+                ? "bg-red-500/70  text-red-200"
                 : bug.priority === "MEDIUM"
-                ? "bg-orange-600/50  text-orange-200 "
+                ? "bg-orange-500/70  text-orange-200 "
                 : "bg-green-500/20 text-green-200"
             }`}
           >
@@ -184,5 +214,57 @@ function BugCard({ bug }: { bug: BugProj }) {
         </div>
       </div>
     </>
+  );
+}
+
+export function CloseBug({
+  bugId,
+  setIsOpen,
+}: {
+  bugId: string;
+  setIsOpen: React.Dispatch<React.SetStateAction<BugProj | null>>;
+}) {
+  const router = useRouter();
+  async function closeBug() {
+    try {
+      const result = await axios.patch(
+        `/api/proxy/api/project/close-bug`,
+        { bugId },
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (result.data.success) {
+        toast.success("Bug closed");
+        setIsOpen(null);
+        router.refresh();
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.status === 401)
+        router.push("/login?message=Unauthorized");
+      else toastError(err);
+    }
+  }
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="secondary">Close Bug</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Close Bug</DialogTitle>
+          <DialogDescription>Are you sure?</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="secondary" onClick={closeBug}>
+            Close Bug
+          </Button>
+          <DialogClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

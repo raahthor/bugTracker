@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { BugExt as RecentBug } from "@/types/DashboardData";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -18,90 +17,115 @@ import { useState } from "react";
 
 export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedBug, setSelectedBug] = useState<RecentBug | null>(null);
+
   return (
     <div className=" grid grid-cols-1 gap-4 px-4 lg:px-12 ">
       {bugs.length !== 0 ? (
-        bugs.map((bug, idx) => (
-          <Dialog key={idx} open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-              <Button
-                className="h-fit flex flex-col items-start"
-                variant="outline"
-              >
-                <BugCard bug={bug} />
-              </Button>
-            </DialogTrigger>
+        <>
+          {/* List of bug cards */}
+          {bugs.map((bug) => (
+            <Button
+              key={bug.id}
+              className="h-fit flex flex-col items-start"
+              variant={"outline"}
+              onClick={() => setSelectedBug(bug)}
+            >
+              <BugCard bug={bug} />
+            </Button>
+          ))}
+
+          {/* Single dialog rendered ONCE */}
+          <Dialog
+            open={!!selectedBug}
+            onOpenChange={(open) => {
+              if (!open) setSelectedBug(null);
+            }}
+          >
             <DialogContent>
-              <div className="mb-2">
-                <DialogTitle className="text-2xl font-bold">
-                  {bug.name}
-                </DialogTitle>
-                <DialogDescription className="text-gray-300 leading-relaxed mt-2 text-base">
-                  {bug.description}
-                </DialogDescription>
-              </div>
+              {selectedBug && (
+                <>
+                  <div className="mb-2">
+                    <DialogTitle className="text-2xl font-bold">
+                      {selectedBug.name}
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-300 leading-relaxed mt-2 text-base">
+                      {selectedBug.description}
+                    </DialogDescription>
+                  </div>
 
-              <div className="space-y-2">
-                <div className="p-2 rounded-md flex items-center gap-3 border border-green-500/20 bg-green-600/10">
-                  <div className="p-2 rounded-full bg-green-500/20">
-                    <Calendar className="h-4 w-4 text-green-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-400 font-medium">Created</p>
-                    <p className="text-sm text-gray-200 font-semibold">
-                      {new Date(bug.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
+                  <div className="space-y-2">
+                    <div className="p-2 rounded-md flex items-center gap-3 border border-green-500/20 bg-green-600/10">
+                      <div className="p-2 rounded-full bg-green-500/20">
+                        <Calendar className="h-4 w-4 text-green-400" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400 font-medium">
+                          Created
+                        </p>
+                        <p className="text-sm text-gray-200 font-semibold">
+                          {new Date(selectedBug.createdAt).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="p-2 rounded-md flex items-center gap-3 border border-blue-500/20 bg-blue-600/10">
-                  <div className="p-2 rounded-full bg-blue-500/20">
-                    <Clock className="h-4 w-4 text-blue-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-400 font-medium">Updated</p>
-                    <p className="text-sm text-gray-200 font-semibold">
-                      {new Date(bug.updatedAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
+                    <div className="p-2 rounded-md flex items-center gap-3 border border-blue-500/20 bg-blue-600/10">
+                      <div className="p-2 rounded-full bg-blue-500/20">
+                        <Clock className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400 font-medium">
+                          Updated
+                        </p>
+                        <p className="text-sm text-gray-200 font-semibold">
+                          {new Date(selectedBug.updatedAt).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="p-2 rounded-md flex items-center gap-3  border border-purple-500/20 bg-purple-600/10">
-                  <div className="p-2 rounded-full bg-purple-500/20">
-                    <User className="h-4 w-4 text-purple-400" />
+                    <div className="p-2 rounded-md flex items-center gap-3  border border-purple-500/20 bg-purple-600/10">
+                      <div className="p-2 rounded-full bg-purple-500/20">
+                        <User className="h-4 w-4 text-purple-400" />
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-400 font-medium">
+                          Raised by:
+                        </span>
+                        <Avatar className="h-8 w-8 ">
+                          <AvatarImage
+                            src={selectedBug.raisedByUser.avatar}
+                            alt="avatar"
+                          />
+                        </Avatar>
+                        <span className="text-sm text-gray-200 font-semibold">
+                          {selectedBug.raisedByUser.name}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-gray-400 font-medium">
-                      Raised by:
-                    </span>
-                    <Avatar className="h-8 w-8 ">
-                      <AvatarImage src={bug.raisedByUser.avatar} alt="avatar" />
-                    </Avatar>
-                    <span className="text-sm text-gray-200 font-semibold">
-                      {bug.raisedByUser.name}
-                    </span>
-                  </div>
-                </div>
-              </div>
 
-              <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                <Button
-                  variant="outline"
-                  onClick={() =>
-                    router.push(
-                      `/org/${bug.project.organization.handle}/${bug.project.slug}`
-                    )
-                  }
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Open Project
-                </Button>
-                <CloseBug bugId={bug.id} setIsOpen={setIsOpen} />
-              </div>
+                  <div className="flex justify-between items-center pt-4 border-t border-white/10">
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        router.push(
+                          `/org/${selectedBug.project.organization.handle}/${selectedBug.project.slug}`
+                        )
+                      }
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Open Project
+                    </Button>
+                    <CloseBug
+                      bugId={selectedBug.id}
+                      setIsOpen={setSelectedBug}
+                    />
+                  </div>
+                </>
+              )}
             </DialogContent>
           </Dialog>
-        ))
+        </>
       ) : (
         <Card className="bg-card/30 border-dashed border-2 ">
           <CardHeader className="text-center py-12">
@@ -140,9 +164,9 @@ function BugCard({ bug }: { bug: RecentBug }) {
             variant="outline"
             className={`${
               bug.priority === "HIGH"
-                ? "bg-red-500/20  text-red-200"
+                ? "bg-red-500/70  text-red-200"
                 : bug.priority === "MEDIUM"
-                ? "bg-orange-600/50  text-orange-200 "
+                ? "bg-orange-500/70  text-orange-200 "
                 : "bg-green-500/20 text-green-200"
             }`}
           >
