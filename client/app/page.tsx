@@ -147,8 +147,10 @@ export default function LandingPage() {
             <span className="text-primary">SaaS for Teams</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            A full-stack web application showcasing role-based access control
-            and soft-delete features for efficient bug management.
+            A web application that helps teams organize projects and track bugs
+            effortlessly. Create organizations, assign issues, and manage
+            workflows - all from a clean, intuitive dashboard built for small to
+            medium teams.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <DemoLoginButton />

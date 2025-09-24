@@ -133,11 +133,11 @@ export function LoginForm({ message }: { message?: string }) {
           </form>
           <div className="bg-muted relative hidden md:block">
             <Image
-              src="/placeholder.svg"
+              src="/images/laptop.jpg"
               alt="Image"
-              width={5}
-              height={5}
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              width={3072}
+              height={4096}
+              className="absolute inset-0 h-full w-full object-cover "
             />
           </div>
         </CardContent>
