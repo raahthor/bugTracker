@@ -16,10 +16,10 @@ export default async function createOrganization(
   const { id, email } = req.userData as JWTDecoded;
 
   try {
-    if (handle.length < 4)
+    if (handle.length < 4 || handle.includes(" "))
       return res.status(400).json({
         success: false,
-        message: "handle is short",
+        message: "Short/Invalid handle",
       });
     const joinCode = createJoinCode();
     const existedHandle = await prisma.organizations.findUnique({

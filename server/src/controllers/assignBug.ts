@@ -15,7 +15,11 @@ export default async function assignBug(
         id: bugId,
         project: { organization: { members: { some: { userId: id } } } },
       },
-      select: { id: true, status: true },
+      select: {
+        id: true,
+        status: true,
+        project: { select: { organization: { select: { ownerId: true } } } },
+      },
     });
     if (!isMember)
       return res.status(403).json({
@@ -27,6 +31,15 @@ export default async function assignBug(
       return res.status(400).json({
         success: false,
         message: "Closed bugs can't be assigned",
+        data: null,
+      });
+    if (
+      isMember.status === "IN_PROGRESS" &&
+      isMember.project.organization.ownerId !== id
+    )
+      return res.status(403).json({
+        success: false,
+        message: "Only owner can re-assign a bug",
         data: null,
       });
     const assignedUser = await prisma.bugs.update({

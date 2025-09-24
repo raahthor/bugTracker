@@ -27,7 +27,7 @@ export function UpdateName({ name }: { name: string | undefined }) {
     if (isLengthError("Name", inputName, 6)) return;
     try {
       const result = await axios.patch(
-        `/api/proxy/api/update-user`,
+        `/api/proxy/api/settings/update-user`,
         { name: inputName },
         { withCredentials: true }
       );

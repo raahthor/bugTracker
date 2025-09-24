@@ -12,10 +12,10 @@ export default async function createUser(req: AuthRequest, res: Response) {
   const { name, username, password } = req.body as UserInput;
   const { id, email } = req.userData as JWTDecoded;
   try {
-    if (username.length < 4)
+    if (username.length < 4 || username.includes(" "))
       return res.status(400).json({
         success: false,
-        message: "Username must be atleast 4 characters!",
+        message: "Short/Invalid username",
         data: null,
       });
 
