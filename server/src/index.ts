@@ -24,6 +24,6 @@ app.use("/", orgRouter);
 app.use("/", projectRouter);
 app.use("/", settingsRouter);
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   env.NODE_ENV !== "production" && console.log("Server running on port:", port);
 });
