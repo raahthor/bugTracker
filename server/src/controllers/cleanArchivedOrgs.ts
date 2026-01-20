@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import prisma from "../utils/client";
+import { Prisma } from "@prisma/client";
 
 async function runCleanUp() {
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - 30);
 
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const bugsDeleted = await tx.bugs.deleteMany({
       where: { deletedAt: { not: null, lt: cutoff } },
     });
