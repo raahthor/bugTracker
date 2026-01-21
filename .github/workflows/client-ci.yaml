@@ -25,8 +25,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      # - name: Lint         disabled till next's new version isn't working fine with rest environment
+      #   run: npm run lint
 
       - name: Typecheck
         run: npm run typecheck
