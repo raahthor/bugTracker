@@ -7,7 +7,7 @@ on:
 
 jobs:
   server:
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
 
     defaults:
       run:
@@ -23,6 +23,7 @@ jobs:
           node-version: 20
           cache: "npm"
           cache-dependency-path: server/package-lock.json
+
       - name: Install dependencies
         run: npm ci
 
