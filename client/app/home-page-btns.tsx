@@ -46,7 +46,7 @@ export function DemoLoginButton() {
   async function handleDemoLogin() {
     try {
       setIsSubmitting(true);
-      const response: ResponseExt<UserData> = await axios.post(
+      const response: ResponseExt = await axios.post(
         "/api/proxy/api/login",
         {
           username: "demouser",

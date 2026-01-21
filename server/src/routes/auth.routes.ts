@@ -11,7 +11,10 @@ import resetPassword from "../controllers/resetPassword";
 
 const authRouter = Router();
 
-authRouter.get("/api", (req, res: Response) => {
+function triggerError():number{
+  return "1"
+}
+authRouter.get("/api", (req: Request, res: Response) => {
   res.send(
     "<h1>Hello, just hit the correct end point you're almost there!</h1>"
   );
