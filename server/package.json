@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "vitest run",
     "db:dev": "npx prisma migrate dev",
     "db:deploy": "npx prisma generate && npx prisma migrate deploy",
     "db:generate": "npx prisma generate",
@@ -11,8 +12,8 @@
     "build": "tsc",
     "render:build": "npm install --include=dev && npm run deploy",
     "prestart": "npm run db:deploy",
-    "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "deploy": "npm run db:deploy && npm run build && npm prune --production"
   },
   "keywords": [],
@@ -40,7 +41,10 @@
     "@types/node": "^24.3.1",
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.2.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^4.0.17"
   }
 }
