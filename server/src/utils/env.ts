@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const getEnv = (key: string): string => {
+const isTest = process.env.NODE_ENV === "test";
+
+const getEnv = (key: string): string | undefined => {
   const value = process.env[key];
-  if (!value) {
+  if (!value && !isTest) {
     throw new Error(`missing required env variable: ${key}`);
   }
   return value;
