@@ -1,6 +1,6 @@
 import request from "supertest";
 import { describe, it, expect } from "vitest";
-import { app } from "../src/index";
+import { app } from "../src/app";
 
 describe("Test protected route", () => {
   it("rejects unauthenticated requests", async () => {
