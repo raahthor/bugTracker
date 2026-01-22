@@ -2,8 +2,6 @@ name: Client CI
 
 on:
   pull_request:
-    paths:
-      - "client/**"
 
 jobs:
   client:
