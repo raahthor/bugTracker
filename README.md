@@ -34,7 +34,7 @@
 **Frontend:** React, Next.js, Tailwind CSS, ShadecnUI  
 **Backend:** Node.js, Express, Prisma ORM, PostgreSQL  
 **Authentication:** Google OAuth2, JWT, http-cookies, Brevo Email Service  
-**DevOps:** Docker, GitHub Actions CI/CD, Vercel, Render
+**DevOps:** Docker, GitHub Actions CI/CD, Vercel, Railway
 
 ---
 
@@ -43,7 +43,7 @@
 - **Docker containerization** - Consistent environments across development and production
 - **GitHub Actions CI/CD** - Automated linting, type checks, tests, and builds
 - **Prisma ORM** - Type-safe database queries and schema migrations
-- **Deployed on Render + Vercel** - Backend on Render, Frontend on Vercel
+- **Deployed on Railway + Vercel** - Backend on Railway, Frontend on Vercel
 - **Google OAuth2 integration** - Secure authentication with Brevo email service
 - **Security-first design** - Role enforcement at API level, not just UI
 
@@ -80,7 +80,7 @@ npm run dev
 
 ## 🔗 Links
 
-**Live Demo:** [https://devbugs.vercel.app]  
-**Repository:** [https://github.com/raahthor/bugTracker]
+**Live Demo:** [https://dev-team-tasks.vercel.app]  
+**Repository:** [https://github.com/raahthor/teamTaskManager]
 
 ---
