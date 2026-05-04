@@ -10,7 +10,7 @@
 
 **A production-ready, multi-tenant task tracking platform with modern DevOps practices**
 
-![App Preview](./client/public/images/image.png)
+<!-- ![App Preview](./client/public/images/image.png) -->
 
 </div>
 
