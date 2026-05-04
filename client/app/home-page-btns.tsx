@@ -32,7 +32,7 @@ export function ViewCodeButton() {
     <Button
       variant="outline"
       size="sm"
-      onClick={() => router.push("https://github.com/raahthor/bugTracker")}
+      onClick={() => router.push("https://github.com/raahthor/teamTaskManager")}
     >
       <Github className="h-4 w-4 mr-2" />
       View Source
@@ -81,7 +81,7 @@ export function ViewCodeButtonLG() {
     <Button
       size="lg"
       variant="outline"
-      onClick={() => router.push("https://github.com/raahthor/bugTracker")}
+      onClick={() => router.push("https://github.com/raahthor/teamTaskManager")}
     >
       <Github className="mr-2 h-5 w-5" />
       View Source on GitHub
