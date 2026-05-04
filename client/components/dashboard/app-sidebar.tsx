@@ -43,8 +43,8 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
         icon: IconUsersGroup,
       },
       {
-        title: "My Issues",
-        url: "/my-issues",
+        title: "My Tasks",
+        url: "/my-tasks",
         icon: IconBug,
       },
       {
@@ -67,7 +67,7 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
                 <span className="bg-primary rounded-md p-1">
                   <IconBugFilled className="!size-6" />
                 </span>
-                <span className="text-xl font-semibold">Bug Tracker</span>
+                <span className="text-xl font-semibold">Team Task Manager</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

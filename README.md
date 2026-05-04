@@ -1,4 +1,4 @@
-# 🐛 Bug Tracker SaaS
+# 🐛 Team Task Manager SaaS
 
 <div align="center">
 
@@ -8,7 +8,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13+-blue.svg)](https://postgresql.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-5+-2D3748.svg)](https://prisma.io/)
 
-**A production-ready, multi-tenant issue tracking platform with modern DevOps practices**
+**A production-ready, multi-tenant task tracking platform with modern DevOps practices**
 
 ![App Preview](./client/public/images/image.png)
 
@@ -18,14 +18,14 @@
 
 ## ✨ Key Features
 
-- **Multi-tenant architecture** - Organizations, projects, and issue tracking
+- **Multi-tenant architecture** - Organizations, projects, and task tracking
 - **Google OAuth2 + JWT authentication** - Secure login with google account
 - **Role-based permissions** - Owner and member roles with backend enforcement
 - **Join organizations with invite codes** - Secure team collaboration with invite codes
 - **Soft delete with recovery** - 30-day recovery window for organizations
 - **Safe destructive actions** - Confirmation flows for deletions and removals
-- **Bug lifecycle management** - Status tracking (Open → In Progress → Closed) with priority levels
-- **User dashboard** - Recent organizations and assigned issues at a glance
+- **Task lifecycle management** - Status tracking (Open → In Progress → Closed) with priority levels
+- **User dashboard** - Recent organizations and assigned tasks at a glance
 
 ---
 
@@ -57,8 +57,8 @@
 | Remove Members | ✅ | ❌ |
 | Create Projects | ✅ | ✅ |
 | Edit/Delete Projects | ✅ | ❌ |
-| Create/Assign Bugs | ✅ | ✅ |
-| Close Own/Assigned Bugs | ✅ | ✅ |
+| Create/Assign Tasks | ✅ | ✅ |
+| Close Own/Assigned Tasks | ✅ | ✅ |
 
 ---
 

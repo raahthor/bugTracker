@@ -1,10 +1,10 @@
-import CreateBug from "../../_components/create-bug";
+import CreateBug from "../../_components/create-task";
 import getData from "@/lib/getData";
 import { ProjectData } from "@/types/ProjectData";
-import { Bug, Calendar, FolderOpen } from "lucide-react";
+import { CheckSquare as Bug, Calendar, FolderOpen } from "lucide-react";
 import { ProjSettingsBtn } from "../../_components/project-comps";
 import { Badge } from "@/components/ui/badge";
-import Bugs from "../../_components/bugs";
+import Bugs from "../../_components/tasks";
 
 export default async function ProjectPage({
   params,
@@ -53,7 +53,7 @@ export default async function ProjectPage({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bug className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold">Bugs</h2>
+            <h2 className="text-xl font-semibold">Tasks</h2>
             <Badge
               variant="secondary"
               className="bg-purple-500/20 text-purple-300 border-purple-500/30"

@@ -4,9 +4,9 @@ import { RecentOrganizations } from "./_components/dashComps";
 import getData from "@/lib/getData";
 import UserData from "@/types/userData";
 import { DashboardData } from "@/types/DashboardData";
-import BugArr from "@/components/bugArr";
+import BugArr from "@/components/taskArr";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Bug } from "lucide-react";
+import { Building2, CheckSquare as Bug } from "lucide-react";
 
 export default async function DashboardPage({
   params,
@@ -53,7 +53,7 @@ export default async function DashboardPage({
       <div>
         <div className="flex items-center gap-2 mb-6">
           <Bug className="w-5 h-5 text-primary" />
-          <h2 className="text-xl font-semibold">Recent Bugs Assigned</h2>
+          <h2 className="text-xl font-semibold">Recent Tasks Assigned</h2>
           <Badge variant="secondary" className="ml-2">
             {dashData.recentBugs.length}
           </Badge>

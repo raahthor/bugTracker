@@ -1,4 +1,4 @@
-import { Bug } from "./bug";
+import { Bug } from "./task";
 
 export interface BugExt extends Bug {
   project: { name: string; slug: string; organization: { handle: string } };
