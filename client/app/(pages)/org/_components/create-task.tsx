@@ -71,7 +71,7 @@ function BugDialogBox({
     try {
       setIsSubmitting(true);
       const result = await axios.post(
-        `/api/proxy/api/project/${organization}/${project}/create-bug`,
+        `/api/proxy/api/project/${organization}/${project}/create-task`,
         {
           name: userInput.name.trim(),
           priority: priorityVal || "MEDIUM",
@@ -99,14 +99,14 @@ function BugDialogBox({
       <DialogTrigger asChild>
         <Button>
           <Plus />
-          Create Bug
+          Create Task
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create Bug</DialogTitle>
+          <DialogTitle>Create Task</DialogTitle>
           <DialogDescription>
-            Fill up the details to create new bug.
+            Fill up the details to create new task.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
@@ -151,7 +151,7 @@ function BugDialogBox({
             </div>
             <div className="flex flex-col gap-3">
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Creating ..." : "Create Bug"}
+                {isSubmitting ? "Creating ..." : "Create Task"}
               </Button>
             </div>
           </div>

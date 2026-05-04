@@ -1,4 +1,4 @@
-import { Bug } from "./bug";
+import { Bug } from "./task";
 
 export interface Member {
   user: { id: string; name: string; username: string; avatar: string };

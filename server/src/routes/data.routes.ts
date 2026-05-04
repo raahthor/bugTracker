@@ -8,6 +8,6 @@ const dataRouter = Router();
 
 dataRouter.get("/api/user-data", verifyCookie, sendUserData);
 dataRouter.get("/api/dashboard-data", verifyCookie, sendDashData);
-dataRouter.get("/api/get-myissues", verifyCookie, sendIssues);
+dataRouter.get("/api/get-mytasks", verifyCookie, sendIssues);
 
 export default dataRouter;

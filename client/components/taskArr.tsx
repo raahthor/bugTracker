@@ -1,5 +1,5 @@
 "use client";
-import CloseBug from "@/components/closeBug";
+import CloseBug from "@/components/closeTask";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +12,7 @@ import { BugExt as RecentBug } from "@/types/DashboardData";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Bug, Calendar, Clock, ExternalLink, User } from "lucide-react";
+import { CheckSquare as Bug, Calendar, Clock, ExternalLink, User } from "lucide-react";
 import { useState } from "react";
 
 export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
@@ -133,7 +133,7 @@ export default function BugArr({ bugs }: { bugs: RecentBug[] }) {
               <Bug className="w-8 h-8 text-muted-foreground" />
             </div>
             <CardTitle className="text-muted-foreground text-lg font-medium">
-              No bugs assigned to you
+              No tasks assigned to you
             </CardTitle>
             <CardDescription className="text-base mt-2">
               You&apos;re all caught up! Check back later for new assignments.
@@ -158,7 +158,7 @@ function BugCard({ bug }: { bug: RecentBug }) {
       <div className="w-full flex items-center justify-between">
         <div className="flex  flex-col items-start md:flex-row gap-2">
           <Badge variant="outline" className="bg-yellow-500/30 text-yellow-100">
-            {bug.status}
+            {bug.status === "OPEN" ? "To Do" : bug.status === "IN_PROGRESS" ? "In Progress" : "Done"}
           </Badge>
           <Badge
             variant="outline"
