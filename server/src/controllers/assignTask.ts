@@ -30,7 +30,7 @@ export default async function assignBug(
     if (isMember.status === "CLOSED")
       return res.status(400).json({
         success: false,
-        message: "Closed bugs can't be assigned",
+        message: "Closed tasks can't be assigned",
         data: null,
       });
     if (
@@ -39,7 +39,7 @@ export default async function assignBug(
     )
       return res.status(403).json({
         success: false,
-        message: "Only owner can re-assign a bug",
+        message: "Only owner can re-assign a task",
         data: null,
       });
     const assignedUser = await prisma.bugs.update({
@@ -51,7 +51,7 @@ export default async function assignBug(
     });
     res.status(201).json({
       success: true,
-      message: "Bug assigned successfully",
+      message: "Task assigned successfully",
       data: { assignedUser },
     });
   } catch (err) {
