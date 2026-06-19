@@ -42,7 +42,7 @@ export default async function sendIssues(req: AuthRequest, res: Response) {
 
     res.status(200).json({
       success: true,
-      message: "Task data sent",
+      message: "Bug data sent",
       data: { raisedBugs, assignedBugs },
     });
   } catch (err) {

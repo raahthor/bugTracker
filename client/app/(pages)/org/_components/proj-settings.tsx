@@ -186,8 +186,8 @@ export function DeleteProj({
           <DialogHeader>
             <DialogTitle>Are Sure?</DialogTitle>
             <DialogDescription>
-              This operation is irreversible and along with the project all of
-              its tasks will also be deleted.
+              This operation is irreversible and alongwith the project all of
+              it&apos;s bugs will also be deleted.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-3">

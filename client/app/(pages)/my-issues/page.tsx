@@ -1,7 +1,7 @@
-import BugArr from "@/components/taskArr";
+import BugArr from "@/components/bugArr";
 import getData from "@/lib/getData";
 import { BugExt } from "@/types/DashboardData";
-import { CheckSquare as Bug, User } from "lucide-react";
+import { Bug, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -13,7 +13,7 @@ export default async function MyIssuesPage() {
   const result = await getData<{
     raisedBugs: BugExt[];
     assignedBugs: BugExt[];
-  }>("/api/get-mytasks");
+  }>("/api/get-myissues");
   const raisedBugs = result.data.data.raisedBugs;
 
   return (
@@ -21,7 +21,7 @@ export default async function MyIssuesPage() {
       <div>
         <div className="flex items-center gap-2 mb-3">
           <Bug className="w-5 h-5 text-primary" />
-          <h2 className="text-xl font-semibold">Task(s) Assigned to you:</h2>
+          <h2 className="text-xl font-semibold">Bug(s) Assigned to you:</h2>
           <Badge variant="secondary" className="ml-2">
             {result.data.data.assignedBugs.length}
           </Badge>
@@ -32,7 +32,7 @@ export default async function MyIssuesPage() {
       <div>
         <div className="flex items-center gap-2 mb-3">
           <Bug className="w-5 h-5 text-primary" />
-          <h2 className="text-xl font-semibold">Task(s) Raised by you:</h2>
+          <h2 className="text-xl font-semibold">Bug(s) Raised by you:</h2>
           <Badge variant="secondary" className="ml-2">
             {raisedBugs.length}
           </Badge>
@@ -56,7 +56,7 @@ export default async function MyIssuesPage() {
                       variant="outline"
                       className="bg-yellow-500/30 text-yellow-100"
                     >
-                      {bug.status === "OPEN" ? "To Do" : bug.status === "IN_PROGRESS" ? "In Progress" : "Done"}
+                      {bug.status}
                     </Badge>
                     <Badge
                       variant="outline"
@@ -86,7 +86,7 @@ export default async function MyIssuesPage() {
                   <Bug className="w-8 h-8 text-muted-foreground" />
                 </div>
                 <CardTitle className="text-muted-foreground text-lg font-medium">
-                  No tasks raised by you
+                  No bugs raised by you
                 </CardTitle>
               </CardHeader>
             </Card>

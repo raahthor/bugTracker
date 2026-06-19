@@ -26,7 +26,7 @@ export default function DeleteBug({
   async function closeBug() {
     try {
       const result = await axios.patch(
-        `/api/proxy/api/project/close-task`,
+        `/api/proxy/api/project/close-bug`,
         { bugId },
         {
           withCredentials: true,
@@ -34,7 +34,7 @@ export default function DeleteBug({
       );
 
       if (result.data.success) {
-        toast.success("Task closed");
+        toast.success("Bug closed");
         setIsOpen(null);
         router.refresh();
       }
@@ -47,16 +47,16 @@ export default function DeleteBug({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary">Close Task</Button>
+        <Button variant="secondary">Close Bug</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Close Task</DialogTitle>
+          <DialogTitle>Close Bug</DialogTitle>
           <DialogDescription>Are you sure?</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button variant="secondary" onClick={closeBug}>
-            Close Task
+            Close Bug
           </Button>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
