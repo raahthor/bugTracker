@@ -43,7 +43,7 @@ export default async function closeBug(
     });
     res.status(200).json({
       success: true,
-      message: "Task closed",
+      message: "Bug closed",
       data: null,
     });
   } catch (err) {

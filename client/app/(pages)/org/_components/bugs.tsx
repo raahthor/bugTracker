@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CheckSquare as Bug, Calendar, Clock, User } from "lucide-react";
+import { Bug, Calendar, Clock, User } from "lucide-react";
 import { BugProj, Member } from "@/types/ProjectData";
 import AssigneeSelector from "@/components/assignee-selector";
 import { useState } from "react";
@@ -147,7 +147,7 @@ export default function Bugs({
               <Bug className="w-8 h-8 text-muted-foreground" />
             </div>
             <CardTitle className="text-muted-foreground text-lg font-medium">
-              No tasks
+              No bugs
             </CardTitle>
             <CardDescription className="text-base mt-2">
               You&apos;re all caught up! Check back later for new assignments.
@@ -178,7 +178,7 @@ function BugCard({ bug }: { bug: BugProj }) {
                   "bg-yellow-500/30 text-yellow-100"
             }`}
           >
-            {bug.status === "OPEN" ? "To Do" : bug.status === "IN_PROGRESS" ? "In Progress" : "Done"}
+            {bug.status}
           </Badge>
           <Badge
             variant="outline"
@@ -228,7 +228,7 @@ export function CloseBug({
   async function closeBug() {
     try {
       const result = await axios.patch(
-        `/api/proxy/api/project/close-task`,
+        `/api/proxy/api/project/close-bug`,
         { bugId },
         {
           withCredentials: true,
@@ -236,7 +236,7 @@ export function CloseBug({
       );
 
       if (result.data.success) {
-        toast.success("Task closed");
+        toast.success("Bug closed");
         setIsOpen(null);
         router.refresh();
       }
@@ -249,16 +249,16 @@ export function CloseBug({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary">Close Task</Button>
+        <Button variant="secondary">Close Bug</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Close Task</DialogTitle>
+          <DialogTitle>Close Bug</DialogTitle>
           <DialogDescription>Are you sure?</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button variant="secondary" onClick={closeBug}>
-            Close Task
+            Close Bug
           </Button>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>

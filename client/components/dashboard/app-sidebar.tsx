@@ -3,8 +3,8 @@
 import * as React from "react";
 import {
   IconActivity,
-  IconCircleCheck as IconBug,
-  IconCircleCheckFilled,
+  IconBug,
+  IconBugFilled,
   IconDashboard,
   IconUsersGroup,
 } from "@tabler/icons-react";
@@ -43,8 +43,8 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
         icon: IconUsersGroup,
       },
       {
-        title: "My Tasks",
-        url: "/my-tasks",
+        title: "My Issues",
+        url: "/my-issues",
         icon: IconBug,
       },
       {
@@ -65,9 +65,9 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
             >
               <a href={`/u/${userData.username}`}>
                 <span className="bg-primary rounded-md p-1">
-                  <IconCircleCheckFilled className="!size-6" />
+                  <IconBugFilled className="!size-6" />
                 </span>
-                <span className="text-xl font-semibold">Team Task Manager</span>
+                <span className="text-xl font-semibold">Bug Tracker</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -10,7 +10,7 @@ export default function RaisedBugs({ bugs }: { bugs: BugExt[] }) {
       {bugs.length !== 0 ? (
         bugs.map((bug, idx) => <BugCard key={idx} bug={bug} />)
       ) : (
-        <p>No tasks raised by you.</p>
+        <p>No bugs raised by you.</p>
       )}
     </div>
   );
@@ -33,7 +33,7 @@ function BugCard({ bug }: { bug: BugExt }) {
               : bug.status === "IN_PROGRESS" && "bg-yellow-300"
           }`}
         >
-          {bug.status === "OPEN" ? "To Do" : bug.status === "IN_PROGRESS" ? "In Progress" : "Done"}
+          {bug.status}
         </Badge>
         <div className="h-full border border-black/40" />
         <Badge

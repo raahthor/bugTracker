@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Team Task Manager",
-  description: "A JIRA like task manager",
+  title: "Bug Tracker",
+  description: "A JIRA like bug tracker",
 };
 
 export default function RootLayout({

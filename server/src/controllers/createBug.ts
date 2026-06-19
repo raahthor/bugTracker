@@ -52,7 +52,7 @@ export default async function createBug(
     });
     res.status(201).json({
       success: true,
-      message: "Task created",
+      message: "Bug created",
       data: createdBug,
     });
   } catch (error) {

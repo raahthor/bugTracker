@@ -25,7 +25,7 @@ const staticData = {
     {
       header: "Soft Delete with Recovery",
       description:
-        "Safe data operations with recovery options for organizations and tasks",
+        "Safe data operations with recovery options for organizations and bugs",
       icon: RotateCcw,
     },
     {
@@ -45,7 +45,7 @@ const staticData = {
       icon: Key,
     },
     {
-      header: "Task Lifecycle Management",
+      header: "Bug Lifecycle Management",
       description:
         "Complete workflow with status changes, assignments, and timestamps",
       icon: CheckCircle,
@@ -119,7 +119,7 @@ export default function LandingPage() {
                 <CheckCircle className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">
-                Team Task Manager
+                Bug Tracker
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -142,13 +142,13 @@ export default function LandingPage() {
             </span>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold  mb-6 leading-tight">
-            Simple Task Manager
+            Simple Bug Tracker
             <br />
             <span className="text-primary">SaaS for Teams</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            A web application that helps teams organize projects and track tasks
-            effortlessly. Create organizations, assign tasks, and manage
+            A web application that helps teams organize projects and track bugs
+            effortlessly. Create organizations, assign issues, and manage
             workflows - all from a clean, intuitive dashboard built for small to
             medium teams.
           </p>

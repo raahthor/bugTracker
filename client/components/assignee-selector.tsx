@@ -44,7 +44,7 @@ export default function AssigneeSelector({
   async function assignBug() {
     try {
       const result = await axios.patch(
-        `/api/proxy/api/project/assign-task`,
+        `/api/proxy/api/project/assign-bug`,
         {
           bugId,
           userId: user?.id,

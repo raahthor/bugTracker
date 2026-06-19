@@ -1,4 +1,4 @@
-# 🐛 Team Task Manager SaaS
+# 🐛 Bug Tracker SaaS
 
 <div align="center">
 
@@ -8,9 +8,9 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13+-blue.svg)](https://postgresql.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-5+-2D3748.svg)](https://prisma.io/)
 
-**A production-ready, multi-tenant task tracking platform with modern DevOps practices**
+**A production-ready, multi-tenant issue tracking platform with modern DevOps practices**
 
-<!-- ![App Preview](./client/public/images/image.png) -->
+![App Preview](./client/public/images/image.png)
 
 </div>
 
@@ -18,14 +18,14 @@
 
 ## ✨ Key Features
 
-- **Multi-tenant architecture** - Organizations, projects, and task tracking
+- **Multi-tenant architecture** - Organizations, projects, and issue tracking
 - **Google OAuth2 + JWT authentication** - Secure login with google account
 - **Role-based permissions** - Owner and member roles with backend enforcement
 - **Join organizations with invite codes** - Secure team collaboration with invite codes
 - **Soft delete with recovery** - 30-day recovery window for organizations
 - **Safe destructive actions** - Confirmation flows for deletions and removals
-- **Task lifecycle management** - Status tracking (Open → In Progress → Closed) with priority levels
-- **User dashboard** - Recent organizations and assigned tasks at a glance
+- **Bug lifecycle management** - Status tracking (Open → In Progress → Closed) with priority levels
+- **User dashboard** - Recent organizations and assigned issues at a glance
 
 ---
 
@@ -34,7 +34,7 @@
 **Frontend:** React, Next.js, Tailwind CSS, ShadecnUI  
 **Backend:** Node.js, Express, Prisma ORM, PostgreSQL  
 **Authentication:** Google OAuth2, JWT, http-cookies, Brevo Email Service  
-**DevOps:** Docker, GitHub Actions CI/CD, Vercel, Railway
+**DevOps:** Docker, GitHub Actions CI/CD, Vercel, Render
 
 ---
 
@@ -43,7 +43,7 @@
 - **Docker containerization** - Consistent environments across development and production
 - **GitHub Actions CI/CD** - Automated linting, type checks, tests, and builds
 - **Prisma ORM** - Type-safe database queries and schema migrations
-- **Deployed on Railway + Vercel** - Backend on Railway, Frontend on Vercel
+- **Deployed on Render + Vercel** - Backend on Render, Frontend on Vercel
 - **Google OAuth2 integration** - Secure authentication with Brevo email service
 - **Security-first design** - Role enforcement at API level, not just UI
 
@@ -57,8 +57,8 @@
 | Remove Members | ✅ | ❌ |
 | Create Projects | ✅ | ✅ |
 | Edit/Delete Projects | ✅ | ❌ |
-| Create/Assign Tasks | ✅ | ✅ |
-| Close Own/Assigned Tasks | ✅ | ✅ |
+| Create/Assign Bugs | ✅ | ✅ |
+| Close Own/Assigned Bugs | ✅ | ✅ |
 
 ---
 
@@ -80,8 +80,7 @@ npm run dev
 
 ## 🔗 Links
 
-**Live Demo:** [https://dev-team-tasks.vercel.app]  
-**Repository:** [https://github.com/raahthor/teamTaskManager]
-
+**Live Demo:** [https://devbugs.vercel.app]  
+**Repository:** [https://github.com/raahthor/bugTracker]
 
 ---
