@@ -12,7 +12,7 @@
 
 ![App Preview](./client/public/images/image.png)
 
-</div>
+</div> 
 
 ---
 
