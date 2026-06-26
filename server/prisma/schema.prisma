@@ -4,8 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -107,4 +107,6 @@ model Bugs {
   assignedUser Users?   @relation("AssignedBugs", fields: [assignedTo], references: [id])
   raisedByUser Users    @relation("RaisedBugs", fields: [raisedBy], references: [id])
   project      Projects @relation(fields: [projectId], references: [id])
+
+  @@index([projectId])
 }
