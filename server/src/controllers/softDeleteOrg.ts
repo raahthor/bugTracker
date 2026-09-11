@@ -12,19 +12,20 @@ async function softDelete(orgId: string, ownerId: string) {
     });
     if (!isOrg || isOrg.ownerId !== ownerId) throw new Error("Unauthorized");
 
-    await tx.organizations.update({
-      where: { id: orgId },
-      data: { deletedAt: now },
-    });
-    const projects = await tx.projects.updateMany({
-      where: { orgId },
-      data: { deletedAt: now },
-    });
-
-    const bugs = await tx.bugs.updateMany({
-      where: { project: { orgId } },
-      data: { deletedAt: now },
-    });
+    const [, projects, bugs] = await Promise.all([
+      tx.organizations.update({
+        where: { id: orgId },
+        data: { deletedAt: now },
+      }),
+      tx.projects.updateMany({
+        where: { orgId },
+        data: { deletedAt: now },
+      }),
+      tx.bugs.updateMany({
+        where: { project: { orgId } },
+        data: { deletedAt: now },
+      }),
+    ]);
 
     return {
       message: "Organization soft deleted successfully",

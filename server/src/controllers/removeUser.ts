@@ -4,7 +4,7 @@ import prisma, { TransactionClient } from "../utils/client";
 
 export default async function removeUser(
   req: AuthRequest<{ removeUserId: string; orgId: string }>,
-  res: Response
+  res: Response,
 ) {
   const { id } = req.userData as JWTDecoded;
   const { removeUserId, orgId } = req.body;
@@ -28,17 +28,19 @@ export default async function removeUser(
       });
 
     await prisma.$transaction(async (tx: TransactionClient) => {
-      await tx.organizationUsers.update({
-        where: { userId_orgId: { userId: removeUserId, orgId } },
-        data: { isActive: false },
-      });
-      await tx.bugs.updateMany({
-        where: {
-          assignedTo: removeUserId,
-          project: { orgId },
-        },
-        data: { assignedTo: null },
-      });
+      await Promise.all([
+        tx.organizationUsers.update({
+          where: { userId_orgId: { userId: removeUserId, orgId } },
+          data: { isActive: false },
+        }),
+        tx.bugs.updateMany({
+          where: {
+            assignedTo: removeUserId,
+            project: { orgId },
+          },
+          data: { assignedTo: null },
+        }),
+      ]);
     });
 
     res.status(200).json({

@@ -9,20 +9,20 @@ async function updateDeletedAt(orgId: string, ownerId: string) {
     });
     if (!org) throw new Error("NOTFOUND");
 
-    await tx.organizations.update({
-      where: { id: orgId },
-      data: { deletedAt: null },
-    });
-
-    const projects = await tx.projects.updateMany({
-      where: { orgId: org.id, deletedAt: { not: null } },
-      data: { deletedAt: null },
-    });
-
-    const bugs = await tx.bugs.updateMany({
-      where: { project: { orgId: org.id }, deletedAt: { not: null } },
-      data: { deletedAt: null },
-    });
+    const [, projects, bugs] = await Promise.all([
+      tx.organizations.update({
+        where: { id: orgId },
+        data: { deletedAt: null },
+      }),
+      tx.projects.updateMany({
+        where: { orgId: org.id, deletedAt: { not: null } },
+        data: { deletedAt: null },
+      }),
+      tx.bugs.updateMany({
+        where: { project: { orgId: org.id }, deletedAt: { not: null } },
+        data: { deletedAt: null },
+      }),
+    ]);
 
     return {
       message: "Organization recoverd",
@@ -34,7 +34,7 @@ async function updateDeletedAt(orgId: string, ownerId: string) {
 
 export default async function recoverOrg(
   req: AuthRequest<{ orgId: string }>,
-  res: Response
+  res: Response,
 ) {
   const { id } = req.userData as JWTDecoded;
   const { orgId } = req.body;

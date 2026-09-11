@@ -9,7 +9,7 @@ export default async function updateOrg(
     handle: string;
     newHandle: string;
   }>,
-  res: Response
+  res: Response,
 ) {
   const { id } = req.userData as JWTDecoded;
   const { name, newHandle, description, handle } = req.body;
@@ -22,10 +22,7 @@ export default async function updateOrg(
     });
   try {
     const org = await prisma.organizations.findUnique({
-      where: {
-        handle,
-        ownerId: id,
-      },
+      where: { handle, ownerId: id },
     });
     if (!org)
       return res.status(403).json({
@@ -34,32 +31,27 @@ export default async function updateOrg(
         data: null,
       });
 
-    if (name) {
-      await prisma.organizations.update({
-        where: { handle },
-        data: { name: name },
-      });
-    } else if (newHandle) {
-      const exixtedHandle = await prisma.organizations.findUnique({
+    if (newHandle) {
+      const existedHandle = await prisma.organizations.findUnique({
         where: { handle: newHandle },
       });
-      if (exixtedHandle)
+      if (existedHandle)
         return res.status(409).json({
           success: false,
           message: "Handle already in use",
           data: null,
         });
-
-      await prisma.organizations.update({
-        where: { handle },
-        data: { handle: newHandle },
-      });
-    } else if (description) {
-      await prisma.organizations.update({
-        where: { handle },
-        data: { description: description },
-      });
     }
+
+    await prisma.organizations.update({
+      where: { handle },
+      data: {
+        ...(name && { name }),
+        ...(newHandle && { handle: newHandle }),
+        ...(description && { description }),
+      },
+    });
+
     res.status(200).json({
       success: true,
       message: "Data updated successfully",
