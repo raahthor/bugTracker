@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { JWTDecoded, AuthRequest } from "../types/authRequest";
 import { env } from "../utils/env";
 
-export const verifyCookie = async (
+export const verifyCookie = (
   req: AuthRequest,
   res: Response,
   next: NextFunction

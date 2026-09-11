@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import prisma from "../utils/client";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import { hashPassword } from "../utils/hashPassword";
+import { generateToken } from "../auth/jwt";
+import sendCookie from "../utils/sendCookie";
 interface UserInput {
   name: string;
   username: string;
@@ -44,6 +46,15 @@ export default async function createUser(req: AuthRequest, res: Response) {
       where: { id },
       data: { name, username, password: hashedPass },
     });
+
+    const token = generateToken({
+      id: userData.id,
+      email: userData.email,
+      name: userData.name,
+      username: userData.username,
+      avatar: userData.avatar,
+    });
+    sendCookie(res, token);
 
     res.status(201).json({
       success: true,

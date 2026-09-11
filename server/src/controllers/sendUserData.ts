@@ -1,15 +1,34 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
 import { User } from "../types/user";
 
 export default async function sendUserData(req: AuthRequest, res: Response) {
-  const { id, email } = req.userData as JWTDecoded;
+  const { id, email, name, username, avatar } = req.userData as JWTDecoded;
   try {
+    // If the JWT payload already contains profile data, return it immediately without hitting the DB
+    if (username && name) {
+      return res.status(200).json({
+        success: true,
+        message: "User Found",
+        data: {
+          userData: {
+            id,
+            name,
+            email,
+            username,
+            avatar: avatar || undefined,
+          },
+        },
+      });
+    }
+
+    // Fallback to database lookup if token is missing profile information
     const user = (await prisma.users.findUnique({
       where: { id },
       select: { name: true, email: true, username: true, avatar: true },
     })) as User;
+
     res.status(200).json({
       success: true,
       message: "User Found",

@@ -3,6 +3,9 @@ import { Request } from "express";
 export interface JWTDecoded {
   id: string;
   email: string;
+  name?: string | null;
+  username?: string | null;
+  avatar?: string | null;
 }
 export interface AuthRequest<TBody = unknown> extends Request<{}, any, TBody> {
   cookies: { [key: string]: string };

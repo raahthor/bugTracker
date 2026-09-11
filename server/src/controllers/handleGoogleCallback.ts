@@ -26,7 +26,13 @@ export default function handleGoogleCallback(
         );
 
       const user = userPayload as User;
-      const token = generateToken(user.id, user.email);
+      const token = generateToken({
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        username: user.username,
+        avatar: user.avatar,
+      });
 
       sendCookie(res, token);
 

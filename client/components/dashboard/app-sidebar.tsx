@@ -21,6 +21,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import UserData from "@/types/userData";
+import Link from "next/link";
 
 type CustomSidebarProps = UserData & React.ComponentProps<typeof Sidebar>;
 export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
@@ -63,12 +64,12 @@ export function AppSidebar({ userData, ...props }: CustomSidebarProps) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href={`/u/${userData.username}`}>
+              <Link href={`/u/${userData.username}`}>
                 <span className="bg-primary rounded-md p-1">
                   <IconBugFilled className="!size-6" />
                 </span>
                 <span className="text-xl font-semibold">Bug Tracker</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
