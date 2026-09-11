@@ -14,8 +14,8 @@ const getDirectApiUrl = (endpoint: string): string => {
 
 const getDataInternal = async <T>(
   endpoint: string,
-  red = "/login",
-  message = "Something went wrong"
+  red = "/error",
+  message = "Something went wrong",
 ): Promise<ResponseExt<T>> => {
   try {
     const cookieStore = await cookies();
@@ -23,10 +23,7 @@ const getDataInternal = async <T>(
 
     const response: ResponseExt<T> = await axios.get(
       getDirectApiUrl(endpoint),
-      {
-        headers: { Cookie: cookieHeader },
-        timeout: 10000,
-      }
+      { headers: { Cookie: cookieHeader }, timeout: 10000 },
     );
     return response;
   } catch (err) {
@@ -52,6 +49,4 @@ const getDataInternal = async <T>(
 const getData = cache(getDataInternal);
 export default getData;
 
-export const getUserData = cache(async () => {
-  return getData<UserData>("/api/user-data");
-});
+export const getUserData = () => getData<UserData>("/api/user-data");
