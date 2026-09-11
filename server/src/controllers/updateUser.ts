@@ -6,21 +6,27 @@ import sendCookie from "../utils/sendCookie";
 
 export default async function updateUser(
   req: AuthRequest<{ name: string; username: string }>,
-  res: Response
+  res: Response,
 ) {
   const { id } = req.userData as JWTDecoded;
   const { name, username } = req.body;
 
-  if (!name && !username) return res.status(400);
+  if (!name && !username)
+    return res.status(400).json({
+      success: false,
+      message: "Fields are empty",
+      data: null,
+    });
+
   try {
-    let user;
-    if (name) {
-      user = await prisma.users.update({
-        where: { id },
-        data: { name: name },
-      });
-    }
     if (username) {
+      if (username.length < 4)
+        return res.status(400).json({
+          success: false,
+          message: "Short username",
+          data: null,
+        });
+
       const existedUsername = await prisma.users.findUnique({
         where: { username },
       });
@@ -30,33 +36,29 @@ export default async function updateUser(
           message: "Username already in use",
           data: null,
         });
-      if (username.length < 4)
-        return res.status(400).json({
-          success: false,
-          message: "Short username",
-          data: null,
-        });
-      user = await prisma.users.update({
-        where: { id },
-        data: { username: username },
-      });
     }
 
-    if (user) {
-      const refreshedToken = generateToken({
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        username: user.username,
-        avatar: user.avatar,
-      });
-      sendCookie(res, refreshedToken);
-    }
+    const user = await prisma.users.update({
+      where: { id },
+      data: {
+        ...(name && { name }),
+        ...(username && { username }),
+      },
+    });
+
+    const refreshedToken = generateToken({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      username: user.username,
+      avatar: user.avatar,
+    });
+    sendCookie(res, refreshedToken);
 
     res.status(201).json({
       success: true,
       message: "User updated",
-      data: { username: user?.username },
+      data: { username: user.username },
     });
   } catch (err) {
     res.status(500).json({

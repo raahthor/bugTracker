@@ -5,14 +5,16 @@ import { hashPassword, verifyPassword } from "../utils/hashPassword";
 
 export default async function changePassword(
   req: AuthRequest<{ oldPass: string; newPass: string }>,
-  res: Response
+  res: Response,
 ) {
   const { id } = req.userData as JWTDecoded;
   const { oldPass, newPass } = req.body;
   try {
-    const user = await prisma.users.findUnique({
-      where: { id },
-    });
+    const [user, hash] = await Promise.all([
+      prisma.users.findUnique({ where: { id } }),
+      hashPassword(newPass),
+    ]);
+
     const isPassword = await verifyPassword(user?.password!, oldPass);
     if (!isPassword)
       return res.status(403).json({
@@ -20,7 +22,7 @@ export default async function changePassword(
         message: "Incorrect password",
         data: null,
       });
-    const hash = await hashPassword(newPass);
+
     await prisma.users.update({ where: { id }, data: { password: hash } });
     res.status(200).json({
       success: true,

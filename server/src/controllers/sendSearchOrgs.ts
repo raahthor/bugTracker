@@ -17,25 +17,28 @@ export default async function (req: AuthRequest, res: Response) {
   const { title } = req.params;
   const { id } = req.userData as JWTDecoded;
   try {
-    const userInOrgs = await prisma.organizationUsers.findMany({
-      where: { userId: id },
-      select: { orgId: true, isActive: true },
-    });
-    const orgList = await prisma.organizations.findMany({
-      where: {
-        OR: [
-          { name: { startsWith: title, mode: "insensitive" } },
-          { handle: { startsWith: title, mode: "insensitive" } },
-        ],
-        deletedAt: null,
-      },
-      select: {
-        id: true,
-        name: true,
-        handle: true,
-        owner: { select: { name: true } },
-      },
-    });
+    const [userInOrgs, orgList] = await Promise.all([
+      prisma.organizationUsers.findMany({
+        where: { userId: id },
+        select: { orgId: true, isActive: true },
+      }),
+      prisma.organizations.findMany({
+        where: {
+          OR: [
+            { name: { startsWith: title, mode: "insensitive" } },
+            { handle: { startsWith: title, mode: "insensitive" } },
+          ],
+          deletedAt: null,
+        },
+        select: {
+          id: true,
+          name: true,
+          handle: true,
+          owner: { select: { name: true } },
+        },
+      }),
+    ]);
+
     const searchList = orgList.map((org: Org) => ({
       id: org.id,
       name: org.name,

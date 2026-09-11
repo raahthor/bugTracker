@@ -21,19 +21,19 @@ export default async function createUser(req: AuthRequest, res: Response) {
         data: null,
       });
 
-    const existedUser = await prisma.users.findUnique({
-      where: { id },
-    });
-    if (existedUser?.username !== null)
+    const [existedUser, existedUsername, hashedPass] = await Promise.all([
+      prisma.users.findUnique({ where: { id } }),
+      prisma.users.findUnique({ where: { username } }),
+      hashPassword(password),
+    ]);
+
+    if (!existedUser || existedUser.username !== null)
       return res.status(403).json({
         success: false,
         message: "Your account already exists!",
         data: null,
       });
 
-    const existedUsername = await prisma.users.findUnique({
-      where: { username },
-    });
     if (existedUsername)
       return res.status(409).json({
         success: false,
@@ -41,7 +41,6 @@ export default async function createUser(req: AuthRequest, res: Response) {
         data: null,
       });
 
-    const hashedPass = await hashPassword(password);
     const userData = await prisma.users.update({
       where: { id },
       data: { name, username, password: hashedPass },

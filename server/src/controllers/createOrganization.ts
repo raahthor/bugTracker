@@ -10,7 +10,7 @@ function createJoinCode() {
 
 export default async function createOrganization(
   req: AuthRequest<{ name: string; handle: string; description: string }>,
-  res: Response
+  res: Response,
 ) {
   const { name, handle, description } = req.body;
   const { id, email } = req.userData as JWTDecoded;
@@ -38,15 +38,15 @@ export default async function createOrganization(
         handle,
         description,
         joinCode,
-        owner: { connect: { id } }, // or = ownerId:id,
+        owner: { connect: { id } },
+        members: {
+          create: {
+            role: "OWNER",
+            user: { connect: { id } },
+          },
+        },
       },
-    });
-    const membership = await prisma.organizationUsers.create({
-      data: {
-        role: "OWNER",
-        organization: { connect: { id: createdOrg.id } }, // or = orgId: createdOrg.id,
-        user: { connect: { id } }, // or = userId: id,
-      },
+      include: { members: true }, // optional, if you need membership back
     });
 
     res.status(201).json({

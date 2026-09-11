@@ -16,12 +16,14 @@ export default async function deleteProject(req: AuthRequest, res: Response) {
         data: null,
       });
 
-    const bugs = await prisma.bugs.deleteMany({ where: { projectId: projId } });
-    const delProj = await prisma.projects.delete({ where: { id: projId } });
-    
+    const [bugs, delProj] = await prisma.$transaction([
+      prisma.bugs.deleteMany({ where: { projectId: projId } }),
+      prisma.projects.delete({ where: { id: projId } }),
+    ]);
+
     res.status(200).json({
       success: true,
-      message: "Project delted",
+      message: "Project deleted",
       data: { bugsDeleted: bugs.count, delProj },
     });
   } catch (err) {
