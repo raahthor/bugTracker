@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { OrganizationButtons } from "./_components/dashComps";
 import { RecentOrganizations } from "./_components/dashComps";
-import getData from "@/lib/getData";
-import UserData from "@/types/userData";
+import getData, { getUserData } from "@/lib/getData";
 import { DashboardData } from "@/types/DashboardData";
 import BugArr from "@/components/bugArr";
 import { Badge } from "@/components/ui/badge";
@@ -13,14 +12,17 @@ export default async function DashboardPage({
 }: {
   params: Promise<{ user: string }>;
 }) {
-  const { user } = await params;
-  const resultUser = await getData<UserData>("/api/user-data");
+  const [{ user }, resultUser, resultDash] = await Promise.all([
+    params,
+    getUserData(),
+    getData<DashboardData>("/api/dashboard-data"),
+  ]);
   const userData = resultUser.data.data.userData;
 
   if (user !== userData.username) redirect("/login?message=Unauthorized!");
 
-  const resultDash = await getData<DashboardData>("/api/dashboard-data");
   const dashData = resultDash.data.data;
+
 
   return (
     <div className="container mx-auto px-4 md:px-8 max-w-7xl">

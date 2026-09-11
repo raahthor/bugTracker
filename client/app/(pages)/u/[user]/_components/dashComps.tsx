@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Plus, Building2, ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Card,
   CardHeader,
@@ -12,67 +12,67 @@ import { RecentOrg } from "@/types/DashboardData";
 import { Badge } from "@/components/ui/badge";
 
 export function OrganizationButtons() {
-  const router = useRouter();
   return (
     <>
       <Button
+        asChild
         size="lg"
-        onClick={() => router.push("/create-org")}
-        className="bg-primary  shadow-lg hover:shadow-primary/25 transition-all duration-300 group"
+        className="bg-primary shadow-lg hover:shadow-primary/25 transition-all duration-300 group cursor-pointer"
       >
-        <Plus className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-        Create Organization
+        <Link href="/create-org">
+          <Plus className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+          Create Organization
+        </Link>
       </Button>
       <Button
+        asChild
         size="lg"
         variant="outline"
-        onClick={() => router.push("/join-org")}
-        className="transition-all duration-300 group"
+        className="transition-all duration-300 group cursor-pointer"
       >
-        <Building2 className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-        Join Organization
+        <Link href="/join-org">
+          <Building2 className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
+          Join Organization
+        </Link>
       </Button>
     </>
   );
 }
 
 export function RecentOrganizations({ orgs }: { orgs: RecentOrg[] }) {
-  const router = useRouter();
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-12 ">
       {orgs.length !== 0 ? (
         orgs.map((org, idx) => (
-          <Card
-            key={idx}
-            onClick={() => router.push(`/org/${org.handle}`)}
-            className="@container/card bg-card/50 backdrop-blur-sm  hover:border-primary/50 transition-all duration-300 group cursor-pointer"
-          >
-            <CardHeader className="pb-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center">
-                      <span className="text-white font-semibold text-sm">
-                        {org.name.charAt(0)}
-                      </span>
+          <Link key={idx} href={`/org/${org.handle}`} className="block group">
+            <Card className="@container/card bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 cursor-pointer">
+              <CardHeader className="pb-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center">
+                        <span className="text-white font-semibold text-sm">
+                          {org.name.charAt(0)}
+                        </span>
+                      </div>
+                      <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                        {org.name}
+                      </CardTitle>
                     </div>
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                      {org.name}
-                    </CardTitle>
+                    <CardDescription className="text-base">
+                      {org.description}
+                    </CardDescription>
                   </div>
-                  <CardDescription className="text-base">
-                    {org.description}
-                  </CardDescription>
+                  <div className="flex flex-col items-end gap-2">
+                    <Badge variant="outline" className="text-xs">
+                      @{org.handle}
+                    </Badge>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+                  </div>
                 </div>
-                <div className="flex flex-col items-end gap-2">
-                  <Badge variant="outline" className="text-xs">
-                    @{org.handle}
-                  </Badge>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
+              </CardHeader>
+            </Card>
+          </Link>
         ))
       ) : (
         <p className="text-muted-foreground text-lg font-medium">

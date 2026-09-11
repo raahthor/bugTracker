@@ -1,6 +1,5 @@
 import { Card, CardTitle } from "@/components/ui/card";
-import getData from "@/lib/getData";
-import UserData from "@/types/userData";
+import { getUserData } from "@/lib/getData";
 import { redirect } from "next/navigation";
 import { UpdateName, UpdatePassword, UpdateUsername } from "../_components/settings-comp";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -10,8 +9,10 @@ export default async function UserSettingsPage({
 }: {
   params: Promise<{ user: string }>;
 }) {
-  const { user } = await params;
-  const resultUser = await getData<UserData>("/api/user-data");
+  const [{ user }, resultUser] = await Promise.all([
+    params,
+    getUserData(),
+  ]);
   if (user !== resultUser.data.data.userData.username)
     redirect("/login?message=Unauthorized!");
 

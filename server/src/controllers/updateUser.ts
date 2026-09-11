@@ -1,6 +1,8 @@
 import { Response } from "express";
 import { AuthRequest, JWTDecoded } from "../types/authRequest";
 import prisma from "../utils/client";
+import { generateToken } from "../auth/jwt";
+import sendCookie from "../utils/sendCookie";
 
 export default async function updateUser(
   req: AuthRequest<{ name: string; username: string }>,
@@ -39,6 +41,18 @@ export default async function updateUser(
         data: { username: username },
       });
     }
+
+    if (user) {
+      const refreshedToken = generateToken({
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        username: user.username,
+        avatar: user.avatar,
+      });
+      sendCookie(res, refreshedToken);
+    }
+
     res.status(201).json({
       success: true,
       message: "User updated",

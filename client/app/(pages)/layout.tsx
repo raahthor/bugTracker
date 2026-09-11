@@ -1,8 +1,7 @@
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import getData from "@/lib/getData";
-import UserData from "@/types/userData";
+import { getUserData } from "@/lib/getData";
 import { redirect } from "next/navigation";
 
 export default async function PagesLayout({
@@ -10,7 +9,7 @@ export default async function PagesLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const result = await getData<UserData>("/api/user-data");
+  const result = await getUserData();
   if (!result.data.data.userData.username) redirect("/signup");
 
   return (

@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import RandomFact from "../randomFact";
 
 export function NavMain({
@@ -20,7 +20,6 @@ export function NavMain({
     icon?: Icon;
   }[];
 }) {
-  const router = useRouter();
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -29,14 +28,14 @@ export function NavMain({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
+                asChild
                 tooltip={item.title}
                 className="border-1 py-5 mt-1 hover:border-primary"
-                onClick={() => {
-                  router.push(item.url);
-                }}
               >
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
+                <Link href={item.url}>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

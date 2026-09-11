@@ -11,8 +11,10 @@ export default async function OrganizationsPage({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const { message } = await searchParams;
-  const response = await getData<OrgUsersList>("/api/orgs-list", "/org");
+  const [{ message }, response] = await Promise.all([
+    searchParams,
+    getData<OrgUsersList>("/api/orgs-list", "/org"),
+  ]);
   const orgList = response.data.data.orgList;
   return (
     <>

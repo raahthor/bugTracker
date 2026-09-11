@@ -7,40 +7,18 @@ interface ProxyParams {
   }>;
 }
 
-export async function GET(req: NextRequest, { params }: ProxyParams) {
+async function proxyHandler(req: NextRequest, { params }: ProxyParams) {
   const { path } = await params;
   return handleProxy(req, path);
 }
 
-export async function POST(req: NextRequest, { params }: ProxyParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function PUT(req: NextRequest, { params }: ProxyParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function PATCH(req: NextRequest, { params }: ProxyParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function DELETE(req: NextRequest, { params }: ProxyParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function OPTIONS(req: NextRequest, { params }: ProxyParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
-
-export async function HEAD(req: NextRequest, { params }: ProxyParams) {
-  const { path } = await params;
-  return handleProxy(req, path);
-}
+export const GET = proxyHandler;
+export const POST = proxyHandler;
+export const PUT = proxyHandler;
+export const PATCH = proxyHandler;
+export const DELETE = proxyHandler;
+export const OPTIONS = proxyHandler;
+export const HEAD = proxyHandler;
 
 async function handleProxy(req: NextRequest, pathSegments: string[]) {
   try {
