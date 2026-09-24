@@ -24,9 +24,16 @@ jobs:
     env:
       TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
       TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+      NODE_ENV: test
+      GOOGLE_CLIENT_ID: test
+      GOOGLE_CLIENT_SECRET: test
+      GOOGLE_CALLBACK_URL: http://localhost
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DIRECT_URL: ${{ secrets.DIRECT_URL }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      CLIENT_URL: http://localhost
+      BREVO_API_KEY: test
+      JWT_BREVO_SECRET: test
 
     steps:
       - name: Checkout
