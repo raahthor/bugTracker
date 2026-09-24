@@ -36,7 +36,7 @@ export default async function sendOrgData(req: AuthRequest, res: Response) {
       },
     });
     if (!org)
-      return res.status(400).json({
+      return res.status(403).json({
         success: false,
         message: "You're not a member or Org not found!",
         data: null,
