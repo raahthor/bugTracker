@@ -14,7 +14,6 @@ export default defineConfig({
 
   use: {
     baseURL: "http://localhost:3000",
-    headless: false,
     trace: "on-first-retry",
   },
 
