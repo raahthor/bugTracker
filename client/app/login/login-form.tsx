@@ -40,7 +40,7 @@ export function LoginForm({ message }: { message?: string }) {
           username: userInput.username,
           password: userInput.password,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.data?.success) {
         toast.success(response.data.message);
@@ -71,6 +71,7 @@ export function LoginForm({ message }: { message?: string }) {
               <div className="grid gap-3">
                 <Label htmlFor="username">Username</Label>
                 <Input
+                  id="username"
                   name="username"
                   type="text"
                   value={userInput.username}
@@ -89,6 +90,7 @@ export function LoginForm({ message }: { message?: string }) {
                   </a>
                 </div>
                 <Input
+                  id="password"
                   name="password"
                   type="password"
                   value={userInput.password}

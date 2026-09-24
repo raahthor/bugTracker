@@ -35,7 +35,7 @@ export default function CreateOrgForm() {
   function handleUserInput(
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) {
     const { name, value } = e.target;
     const inputVal = name === "handle" ? value.trim() : value;
@@ -60,7 +60,7 @@ export default function CreateOrgForm() {
           handle: userInput.handle,
           description: userInput.description.trim(),
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.data.success) {
         toast.success(response.data.message);
@@ -89,6 +89,7 @@ export default function CreateOrgForm() {
               <div className="grid gap-3">
                 <Label htmlFor="name">Organization Name</Label>
                 <Input
+                  id="name"
                   name="name"
                   type="text"
                   value={userInput.name}
@@ -99,6 +100,7 @@ export default function CreateOrgForm() {
               <div className="grid gap-3">
                 <Label htmlFor="handle">Handle</Label>
                 <Input
+                  id="handle"
                   name="handle"
                   type="text"
                   value={userInput.handle}
@@ -109,6 +111,7 @@ export default function CreateOrgForm() {
               <div className="grid gap-3">
                 <Label htmlFor="description">About Your Organization</Label>
                 <Textarea
+                  id="description"
                   name="description"
                   value={userInput.description}
                   onChange={handleUserInput}
