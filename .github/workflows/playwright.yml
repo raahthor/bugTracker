@@ -4,14 +4,17 @@ on:
   pull_request:
 
 jobs:
-  test:
+  e2e-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    
+
     defaults:
       run:
-        working-directory: client
+        working-directory: e2e
 
+    env:
+      TEST_USERNAME: ${{secrets.TEST_USERNAME}}
+      TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
