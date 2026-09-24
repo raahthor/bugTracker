@@ -37,6 +37,8 @@ jobs:
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           DATABASE_URL: postgresql://test
           DIRECT_URL: postgresql://test
+          # DATABASE_URL: ${{secrets.DATABASE_URL}}
+          # DIRECT_URL: ${{secrets.DIRECT_URL}}
           CLIENT_URL: http://localhost
           BREVO_API_KEY: test
           JWT_BREVO_SECRET: test
