@@ -20,7 +20,7 @@ async function runCleanUp() {
       },
     });
 
-    const orgIds = organizations.map((org) => org.id);
+    const orgIds = organizations.map((org: { id: string }) => org.id);
 
     // Nothing to clean up
     if (orgIds.length === 0) {
@@ -44,7 +44,7 @@ async function runCleanUp() {
       },
     });
 
-    const projectIds = projects.map((project) => project.id);
+    const projectIds = projects.map((project: { id: string }) => project.id);
 
     // Delete all bugs belonging to those projects
     const bugsDeleted = await tx.bugs.deleteMany({
