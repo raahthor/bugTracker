@@ -1,6 +1,13 @@
 name: Server CI
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "server/**"
+      - ".github/workflows/server-ci.yaml"
+
   pull_request:
     paths:
       - "server/**"
