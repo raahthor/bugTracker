@@ -30,13 +30,26 @@ export default defineConfig({
       command: "npm run dev",
       cwd: "../server",
       port: 4000,
+      timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
+      env: {
+        PORT: "4000",
+        CLIENT_URL: process.env.CLIENT_URL || "http://localhost:3000",
+      },
     },
     {
       command: "npm run dev",
       cwd: "../client",
       port: 3000,
+      timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
+      env: {
+        PORT: "3000",
+        NEXT_PUBLIC_CLIENT_URL:
+          process.env.NEXT_PUBLIC_CLIENT_URL || "http://localhost:3000",
+        NEXT_PUBLIC_API_URL:
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+      },
     },
   ],
 });
